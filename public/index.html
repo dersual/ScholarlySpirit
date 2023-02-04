@@ -35,16 +35,26 @@
       </div>
       <div class="LoginContainer">
         <button>Log in</button>
-        <p>Don't Have An Account? <a>Sign Up</a></p>
+        <p>Don't Have An Account? <span>Sign Up</span></p>
         <!--Login and Sign Up Forms -->
-        <form action="/login-submit" method="post" class = "login-form landingPageForm">   
+        <form action="/login-submit" method="post" class="login-form landingPageForm">
           <label>Email Address</label>
-          <input required type = "email" />  
+          <input required type="email" />
           <label>Password</label>
-          <input required type= "password" />  
-          <button type="submit">Login</button> 
+          <input required type="password" />
+          <button type="submit">Login</button>
         </form>
-        <form action="/register-submit" method="post" class = "signup-form landingPageForm"></form>
+        <form action="/register-submit" method="post" class="signup-form landingPageForm"> 
+          <label>First Name</label> 
+          <input required type = "text"/>  
+          <label>Last Name</label> 
+          <input required type = "text"/> 
+          <label>Email Address</label>
+          <input required type="email" />
+          <label>Password</label>
+          <input required type="password" />
+          <button type="submit">Login</button>
+        </form>
       </div>
     </div>
 

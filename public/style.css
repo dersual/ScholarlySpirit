@@ -17,6 +17,18 @@
     2.7px 47.2px 53.2px -2.1px hsl(var(--shadow-color) / 0.34),
     4px 69.5px 78.3px -2.5px hsl(var(--shadow-color) / 0.34);
 }
+/* animations */
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.65;
+  }
+  to {
+    opacity: 1;
+  }
+}
 *,
 *::before,
 *::after {
@@ -44,7 +56,7 @@ body {
   background-image: linear-gradient(45deg, #dddadc7d, #0d31d080, #07f1f193),
     url("/Assets/ivan-aleksic-PDRFeeDniCk-unsplash.jpg");
   background-repeat: no-repeat;
-  background-size: cover; 
+  background-size: cover;
   background-position: 0;
   font-family: Arial, Helvetica, sans-serif, monospace, "Times New Roman", "Open Sans", "Montserrat";
 }
@@ -87,16 +99,16 @@ h6 {
 .homePage > div:first-child {
   width: max(50%, 340px);
   color: white;
-  font-family: "Montserrat", sans-serif; 
-  padding:20px;  
+  font-family: "Montserrat", sans-serif;
+  padding: 20px;
   text-align: center;
 }
 .homePage > div:first-child > h1 {
-  font-size: max(2.85em, 5.5vw);  
+  font-size: max(2.85em, 5.5vw);
 }
-.homePage > div:first-child > h3 { 
-  margin-top:30px;
-  font-size: max(1.5vw, 20px); 
+.homePage > div:first-child > h3 {
+  margin-top: 30px;
+  font-size: max(1.5vw, 20px);
   font-weight: 300;
 }
 .LoginContainer {
@@ -105,31 +117,35 @@ h6 {
   justify-content: center;
   text-align: center;
   border-radius: 180px;
-  width: clamp(250px, 80%, 365px); 
-  min-height:125px; 
+  width: clamp(250px, 80%, 365px);
+  min-height: 125px;
   padding: 20px 40px;
   box-shadow: var(--shadow-elevation-high);
   background-color: white;
   gap: max(1vw, 8px);
-  font-family: "Open Sans", sans-serif; 
-  font-size: clamp(12px, 1.5vw, 15px)
+  font-family: "Open Sans", sans-serif;
+  font-size: clamp(12px, 1.5vw, 15px);
 }
 .LoginContainer > button {
   background-color: black;
-  border-radius: 30px; 
-  border:none;  
+  border-radius: 30px;
+  border: none;
   color: white;
 }
 .LoginContainer > button:hover {
   background-color: rgb(75, 75, 75);
   color: azure;
   cursor: pointer;
-} 
-a {
+}
+.LoginContainer > p > span {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
   display: inline;
 }
-.landingPageForm { 
-  display:none;  
-  opacity:0; 
-  transition: 0.25s;
-}
+.landingPageForm {
+  display: none;
+  transition: 0.25s;  
+  opacity: 0; 
+} 
+

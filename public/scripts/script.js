@@ -16,18 +16,25 @@ function handleEvents(element, event, funct, type = "add") {
   }
 }
 
-//landing page login and sign up DOM 
-var loginButtons = Array(...document.getElementsByClassName("LoginContainer"))[0].children;  
-handleEvents() 
-function displayLandingPageForms() {  
-    var loginForm = Array(...document.getElementsByClassName("login-form"));  
-    console.log(loginButtons) 
-    loginButtons[0].style.display = "none" 
-    loginButtons[1].style.display = "none"
-    loginForm[0].style.display = "block";  
+//landing page login and sign up DOM
+var loginButtons = document.getElementsByClassName("LoginContainer")[0].children;
+handleEvents(loginButtons[0], "click", displayLandingPageForms);
+handleEvents(loginButtons[1].children[0], "click", displayLandingPageForms);
+function displayLandingPageForms() {
+  var loginForm = document.getElementsByClassName("login-form")[0]; 
+  var signupForm = document.getElementsByClassName("signup-form")[0]
+  console.log(loginButtons);
+  loginButtons[0].style.display = "none";
+  loginButtons[1].style.display = "none";
+  if (this == loginButtons[0]) {
+    loginForm.style.display = "block";
     setTimeout(() => { 
-        loginForm[0].style.opacity = 1;  
-    }, 500)
-   
-    
+      loginForm.style.animation = "fadein 1.2s ease-in" 
+    }, 500);
+  } else if (this == loginButtons[1].children[0]) { 
+    signupForm.style.display = "block";
+    setTimeout(() => { 
+      signupForm.style.animation = "fadein 1.2s ease-in" 
+    }, 500);
+  }
 }
