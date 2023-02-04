@@ -1,0 +1,135 @@
+/*variables here */
+:root {
+  --shadow-color: 206deg 29% 56%;
+  --shadow-elevation-low: 0px 0.7px 0.8px hsl(var(--shadow-color) / 0.34),
+    0.1px 1.2px 1.4px -1.2px hsl(var(--shadow-color) / 0.34),
+    0.2px 2.8px 3.2px -2.5px hsl(var(--shadow-color) / 0.34);
+  --shadow-elevation-medium: 0px 0.7px 0.8px hsl(var(--shadow-color) / 0.36),
+    0.1px 2.3px 2.6px -0.8px hsl(var(--shadow-color) / 0.36),
+    0.3px 5.7px 6.4px -1.7px hsl(var(--shadow-color) / 0.36),
+    0.8px 13.9px 15.7px -2.5px hsl(var(--shadow-color) / 0.36);
+  --shadow-elevation-high: 0px 0.7px 0.8px hsl(var(--shadow-color) / 0.34),
+    0.2px 4.1px 4.6px -0.4px hsl(var(--shadow-color) / 0.34),
+    0.4px 7.6px 8.6px -0.7px hsl(var(--shadow-color) / 0.34),
+    0.7px 12.4px 14px -1.1px hsl(var(--shadow-color) / 0.34),
+    1.2px 19.9px 22.4px -1.4px hsl(var(--shadow-color) / 0.34),
+    1.8px 31px 34.9px -1.8px hsl(var(--shadow-color) / 0.34),
+    2.7px 47.2px 53.2px -2.1px hsl(var(--shadow-color) / 0.34),
+    4px 69.5px 78.3px -2.5px hsl(var(--shadow-color) / 0.34);
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  overflow-x: hidden;
+  position: relative;
+  display: block;
+  transition: 0.25s;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  background-image: linear-gradient(45deg, #dddadc7d, #0d31d080, #07f1f193),
+    url("/Assets/ivan-aleksic-PDRFeeDniCk-unsplash.jpg");
+  background-repeat: no-repeat;
+  background-size: cover; 
+  background-position: 0;
+  font-family: Arial, Helvetica, sans-serif, monospace, "Times New Roman", "Open Sans", "Montserrat";
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+.homePage {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  gap: 50px;
+}
+.homePage > div:first-child {
+  width: max(50%, 340px);
+  color: white;
+  font-family: "Montserrat", sans-serif; 
+  padding:20px;  
+  text-align: center;
+}
+.homePage > div:first-child > h1 {
+  font-size: max(2.85em, 5.5vw);  
+}
+.homePage > div:first-child > h3 { 
+  margin-top:30px;
+  font-size: max(1.5vw, 20px); 
+  font-weight: 300;
+}
+.LoginContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  border-radius: 180px;
+  width: clamp(250px, 80%, 365px); 
+  min-height:125px; 
+  padding: 20px 40px;
+  box-shadow: var(--shadow-elevation-high);
+  background-color: white;
+  gap: max(1vw, 8px);
+  font-family: "Open Sans", sans-serif; 
+  font-size: clamp(12px, 1.5vw, 15px)
+}
+.LoginContainer > button {
+  background-color: black;
+  border-radius: 30px; 
+  border:none;  
+  color: white;
+}
+.LoginContainer > button:hover {
+  background-color: rgb(75, 75, 75);
+  color: azure;
+  cursor: pointer;
+} 
+a {
+  display: inline;
+}
+.landingPageForm { 
+  display:none;  
+  opacity:0; 
+  transition: 0.25s;
+}

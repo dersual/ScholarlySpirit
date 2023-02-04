@@ -1,0 +1,16 @@
+{
+  "name": "scholarly-spirit",
+  "version": "1.0.0",
+  "description": "A computer program designed to track student and reward participation at school events",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Derrick S. <dersu1317@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^6.9.0"
+  }
+}
