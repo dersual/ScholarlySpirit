@@ -35,14 +35,15 @@
       </div>
       <div class="LoginContainer">
         <button>Log in</button>
-        <p>Don't Have An Account? <span>Sign Up</span></p>
+        <p class = "other-opt" >Don't Have An Account? <span>Sign Up</span></p>
         <!--Login and Sign Up Forms -->
         <form action="/login-submit" method="post" class="login-form landingPageForm">
           <label>Email Address</label>
           <input required type="email" />
           <label>Password</label>
-          <input required type="password" />
-          <button type="submit">Login</button>
+          <input required type="password" /> 
+          <button type="submit">Login</button> 
+          <p class = "other-opt">Don't Have An Account? <span>Sign Up</span></p>
         </form>
         <form action="/register-submit" method="post" class="signup-form landingPageForm"> 
           <label>First Name</label> 
@@ -53,7 +54,8 @@
           <input required type="email" />
           <label>Password</label>
           <input required type="password" />
-          <button type="submit">Login</button>
+          <button type="submit">Login</button> 
+          <p class = "other-opt">Have An Account? <span>Login</span></p>
         </form>
       </div>
     </div>

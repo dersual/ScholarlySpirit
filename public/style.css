@@ -18,17 +18,7 @@
     4px 69.5px 78.3px -2.5px hsl(var(--shadow-color) / 0.34);
 }
 /* animations */
-@keyframes fadein {
-  from {
-    opacity: 0;
-  }
-  50% {
-    opacity: 0.65;
-  }
-  to {
-    opacity: 1;
-  }
-}
+
 *,
 *::before,
 *::after {
@@ -126,18 +116,18 @@ h6 {
   font-family: "Open Sans", sans-serif;
   font-size: clamp(12px, 1.5vw, 15px);
 }
-.LoginContainer > button {
+.LoginContainer > button, .landingPageForm > button {
   background-color: black;
   border-radius: 30px;
   border: none;
   color: white;
 }
-.LoginContainer > button:hover {
+.LoginContainer > button:hover, .landingPageForm > button:hover {
   background-color: rgb(75, 75, 75);
   color: azure;
   cursor: pointer;
 }
-.LoginContainer > p > span {
+p.other-opt > span {
   color: blue;
   text-decoration: underline;
   cursor: pointer;
@@ -145,7 +135,28 @@ h6 {
 }
 .landingPageForm {
   display: none;
-  transition: 0.25s;  
-  opacity: 0; 
+  transition: 1.2s;  
+  opacity: 0;  
+  padding: 5px 10px; 
+  text-align: left; 
+  font-family: "Open Sans", sans-serif; 
+}   
+.landingPageForm > input { 
+    width: 100%;
+    padding: 5px 10px;
+    margin: 8px 0;
+    box-sizing: border-box;  
+    display: inline-block; 
+    border-radius:10px; 
+    border-color: #000, #aca8a8; 
+    border-style: inset;
 } 
+.landingPageForm > input:focus-visible { 
+  outline:none;
+}
+.landingPageForm > button { 
+  padding: 10px 20px;  
+  margin-top:5px; 
+  
+}
 
