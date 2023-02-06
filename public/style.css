@@ -157,6 +157,21 @@ p.other-opt > span {
 .landingPageForm > button { 
   padding: 10px 20px;  
   margin-top:5px; 
-  
+} 
+.dashboard { 
+  display:none;  
 }
-
+.dashboard > section { 
+right:0; 
+width:75%; 
+max-height:calc(100vh / 3);  
+}
+.dashboard > nav { 
+width:25%;  
+background:#fff; 
+left: 0;  
+position: sticky; 
+display:flex;  
+flex-direction: column; 
+gap:10px;
+}
