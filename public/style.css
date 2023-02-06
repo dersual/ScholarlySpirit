@@ -165,6 +165,7 @@ p.other-opt > span {
 right:0; 
 width:75%; 
 max-height:calc(100vh / 3);  
+font-family: "Montserrat", sans-serif;
 }
 .dashboard > nav { 
 width:25%;  
