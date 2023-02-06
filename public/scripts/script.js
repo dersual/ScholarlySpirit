@@ -16,10 +16,12 @@ function handleEvents(element, event, funct, type = "add") {
   }
 }
 
-//landing page login and sign up DOM
+//DOM for when logging in and sign up 
+
 var loginButtons = document.getElementsByClassName("LoginContainer")[0].children;
 handleEvents(loginButtons[0], "click", displayLandingPageForms);
-handleEvents(loginButtons[1].children[0], "click", displayLandingPageForms);
+handleEvents(loginButtons[1].children[0], "click", displayLandingPageForms); 
+handleEvents(document.getElementsByClassName("anding-page-submit")[0], "click", displayDashBoard)
 function displayLandingPageForms() {
   var loginForm = document.getElementsByClassName("login-form")[0];
   var signupForm = document.getElementsByClassName("signup-form")[0];
@@ -38,4 +40,8 @@ function displayLandingPageForms() {
       signupForm.style.opacity = 1;
     }, 100);
   }
+}
+function displayDashBoard() { 
+  document.getElementsByClassName("homePage")[0].style.display = "none" 
+  document.getElementsByClassName("dashboard")[0].style.display = "block"
 }
