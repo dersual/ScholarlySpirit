@@ -87,7 +87,7 @@ h6 {
   gap: 50px;
 }
 .homePage > div:first-child {
-  width: max(50%, 340px);
+  width: max(65%, 340px);
   color: white;
   font-family: "Montserrat", sans-serif;
   padding: 20px;
@@ -98,7 +98,7 @@ h6 {
 }
 .homePage > div:first-child > h3 {
   margin-top: 30px;
-  font-size: max(1.5vw, 20px);
+  font-size: clamp(15px,2vw, 25px);
   font-weight: 300;
 }
 .LoginContainer {
@@ -107,14 +107,18 @@ h6 {
   justify-content: center;
   text-align: center;
   border-radius: 180px;
-  width: clamp(250px, 80%, 365px);
-  min-height: 125px;
-  padding: 20px 40px;
+  width: clamp(250px, 90%, 365px);
+  min-height: min(125px, 25vw); 
+  padding-left:5%;  
+  padding-right:5%;
+  padding-top:1%;  
+  padding-bottom:1%;
   box-shadow: var(--shadow-elevation-high);
   background-color: white;
   gap: max(1vw, 8px);
   font-family: "Open Sans", sans-serif;
-  font-size: clamp(12px, 1.5vw, 15px);
+  font-size: clamp(12px, 2.5vw, 15px); 
+  margin-bottom:10px; 
 }
 .LoginContainer > button, .landingPageForm > button {
   background-color: black;
