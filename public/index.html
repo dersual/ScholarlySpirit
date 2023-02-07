@@ -31,60 +31,60 @@
     <div class="homePage">
       <div>
         <h1>Scholarly Spirit</h1>
-        <h3>A program designed to track & encourage student participation at school events.</h3>
+        <h3>Designed to track & encourage student participation at school events.</h3>
       </div>
       <div class="LoginContainer">
         <button>Log in</button>
-        <p class = "other-opt" >Don't Have An Account? <span>Sign Up</span></p>
+        <p class="other-opt">Don't Have An Account? <span>Sign Up</span></p>
         <!--Login and Sign Up Forms -->
         <form action="/login-submit" method="post" class="login-form landingPageForm">
           <label>Email Address</label>
           <input required type="email" />
           <label>Password</label>
-          <input required type="password" /> 
-          <button class = "landing-page-submit" type="submit">Login</button> 
-          <p class = "other-opt">Don't Have An Account? <span>Sign Up</span></p>
+          <input required type="password" />
+          <button class="landing-page-submit" type="submit">Login</button>
+          <p class="other-opt signup-opt">Don't Have An Account? <span>Sign Up</span></p>
         </form>
-        <form action="/register-submit" method="post" class="signup-form landingPageForm"> 
-          <label>First Name</label> 
-          <input required type = "text"/>  
-          <label>Last Name</label> 
-          <input required type = "text"/> 
+        <form action="/register-submit" method="post" class="signup-form landingPageForm">
+          <label>First Name</label>
+          <input required type="text" />
+          <label>Last Name</label>
+          <input required type="text" />
           <label>Email Address</label>
           <input required type="email" />
           <label>Password</label>
           <input required type="password" />
-          <button class = "landing-page-submit" type="submit">Login</button> 
-          <p class = "other-opt">Have An Account? <span>Login</span></p>
+          <button class="landing-page-submit" type="submit">Login</button>
+          <p class="other-opt login-opt">Have An Account? <span>Login</span></p>
         </form>
       </div>
-    </div>  
-    <div class = "dashboard">  
-      <nav> 
-        <div> 
-          <img/> 
+    </div>
+    <div class="dashboard">
+      <nav>
+        <div>
+          <img />
           <span></span>
-        </div> 
-        <div> 
-          <img/> 
+        </div>
+        <div>
+          <img />
           <span></span>
-        </div> 
-        <div> 
-          <img/> 
+        </div>
+        <div>
+          <img />
           <span></span>
-        </div> 
-      </nav> 
-      <section>  
-        <h1>Events</h1>
-      </section> 
-      <section> 
-        <h1>Issuing Rewards</h1>
-      </section> 
-      <section> 
-        <h1> 
-          Student Body 
-        </h1>
-      </section>
+        </div>
+      </nav>
+      <div class="section-container">
+        <section class="events-tab">
+          <h1>Events</h1>
+        </section>
+        <section class="rewards-tab">
+          <h1>Issuing Rewards</h1>
+        </section>
+        <section class="students-tab">
+          <h1>Student Body</h1>
+        </section>
+      </div>
     </div>
     <!--scripts-->
     <script src="scripts/script.js" defer></script>
