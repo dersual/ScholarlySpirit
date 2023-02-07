@@ -17,8 +17,18 @@ lastname: {
     type:String, 
     required:true
 },
-school: {
+schoolCode: {
     type:String, 
-    required:true 
+    required:true
 }
 }); 
+ const schoolSchema = new Schema ({ 
+    name:{ 
+        type:String, 
+        required: true
+    }, 
+    schoolCode:{ 
+        type:String, 
+        required:true
+    }
+ })
