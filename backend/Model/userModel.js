@@ -22,13 +22,3 @@ schoolCode: {
     required:true
 }
 }); 
- const schoolSchema = new Schema ({ 
-    name:{ 
-        type:String, 
-        required: true
-    }, 
-   // schoolCode: , 
-    staff: { 
-        required: true
-    }
- })
