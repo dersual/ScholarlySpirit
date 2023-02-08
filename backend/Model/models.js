@@ -27,8 +27,8 @@ schoolCode: {
         type:String, 
         required: true
     }, 
-    schoolCode:{ 
-        type:String, 
-        required:true
+   // schoolCode: , 
+    staff: { 
+        required: true
     }
  })
