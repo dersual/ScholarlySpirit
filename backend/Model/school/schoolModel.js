@@ -5,14 +5,16 @@ const schoolSchema = new Schema ({
         type: this.ObjectId, 
         required: true
     }, 
-   schoolCode: { 
-    type: ObjectId, 
-    required: true, 
-    unique: true
-   },
+   schoolCode: this.ObjectId,
     staff: {  
         type:Array,
         required: true
+    },
+    students: Array, 
+    events: { 
+       type: Array 
     }
- }) 
+ }); 
+ const school = mongoose.model("School", schoolSchema) 
+ module.exports = school; 
  

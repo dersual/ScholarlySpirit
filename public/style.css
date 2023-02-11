@@ -17,7 +17,9 @@
     9px 55.9px 65.8px -1.9px hsl(var(--shadow-color) / 0.27),
     13.1px 81.8px 96.3px -2.2px hsl(var(--shadow-color) / 0.27);
 }
-
+style {
+  display: none;
+}
 /* animations */
 
 *,
@@ -85,8 +87,8 @@ h6 {
   top: 50%;
   transform: translateY(-50%);
   width: 100%;
-  gap: 50px;
-  margin-bottom: 10px;
+  gap: 50px; 
+  margin-bottom: 20px;
 }
 .homePage > div:first-child {
   width: max(60%, 340px);
@@ -119,7 +121,7 @@ h6 {
   background-color: white;
   gap: max(1vw, 8px);
   font-family: "Open Sans", sans-serif;
-  font-size: clamp(12px, 2.5vw, 15px);
+  font-size: clamp(12px, 2.5vw, 15px); 
 }
 .LoginContainer > button,
 .landingPageForm > button {
@@ -150,6 +152,9 @@ p.other-opt {
   padding: 5px 10px;
   text-align: left;
   font-family: "Open Sans", sans-serif;
+} 
+.landingPageForm > label { 
+  font-weight: 800;
 }
 .landingPageForm > input {
   width: 100%;
@@ -184,7 +189,24 @@ p.other-opt {
   height: calc(100vh / 3);
   font-family: "Montserrat", sans-serif;
   color: #fff;
-  background-color: linear-gradient(45deg, #dddadc96, #0d31d0, #07f1f1);
+  background: linear-gradient(30deg, #205DA4, #07f1f1);
+  font-weight: 100; 
+  border: solid 1px #141a16;
+  border-left: none;
+  border-right: none;   
+  cursor: pointer;
+}  
+.dashboard > div > section > h1 { 
+  top:50%; 
+  transform: translateY(-50%); 
+  font-size: max(5vw, 20px); 
+  padding-left:15px 
+}
+.events-tab {
+ border-top: none !important; 
+}
+.students-tab {
+  border-bottom: none !important;
 }
 .dashboard > nav {
   width: 15%;
@@ -195,9 +217,4 @@ p.other-opt {
   flex-direction: column;
   gap: 10px;
   height: 100%;
-}
-.rewards-tab {
-  border: #aca8a8 solid 2px;
-  border-left: none;
-  border-right: none;
 }

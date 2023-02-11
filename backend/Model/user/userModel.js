@@ -9,16 +9,18 @@ password: {
     type:String, 
     required:true 
 },  
-firstname: {
+name: {
     type:String, 
     required:true 
 },  
-lastname: { 
-    type:String, 
-    required:true
-},
+
 schoolCode: {
-    type:String, 
-    required:true
+    type:String,
+}, 
+acessPermissions: { 
+type:String
 }
-}); 
+
+});  
+const user = new mongoose.model("User", userSchema); 
+module.exports = user; 

@@ -37,7 +37,7 @@
         <button>Log in</button>
         <p class="other-opt">Don't Have An Account? <span>Sign Up</span></p>
         <!--Login and Sign Up Forms -->
-        <form action="/login-submit" method="post" class="login-form landingPageForm">
+        <form action="/loginUser" method="post" class="login-form landingPageForm">
           <label>Email Address</label>
           <input required type="email" />
           <label>Password</label>
@@ -45,16 +45,14 @@
           <button class="landing-page-submit" type="submit">Login</button>
           <p class="other-opt signup-opt">Don't Have An Account? <span>Sign Up</span></p>
         </form>
-        <form action="/register-submit" method="post" class="signup-form landingPageForm">
-          <label>First Name</label>
-          <input required type="text" />
-          <label>Last Name</label>
-          <input required type="text" />
+        <form action="/createUser" method="post" class="signup-form landingPageForm">
+          <label>Name</label>
+          <input name = "name" required type="text" />
           <label>Email Address</label>
-          <input required type="email" />
+          <input name = "email" required type="email" />
           <label>Password</label>
-          <input required type="password" />
-          <button class="landing-page-submit" type="submit">Login</button>
+          <input name = "password" required type="password" />
+          <button method = "post" class="landing-page-submit" type="submit">Login</button>
           <p class="other-opt login-opt">Have An Account? <span>Login</span></p>
         </form>
       </div>
@@ -88,7 +86,9 @@
           <h1>Student Body</h1>
         </section>
       </div>
-    </div>
+    </div> 
+    <!--Events Section--> 
+
     <!--scripts-->
     <script src="scripts/script.js" defer></script>
   </body>
