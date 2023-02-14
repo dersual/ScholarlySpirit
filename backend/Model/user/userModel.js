@@ -18,8 +18,10 @@ schoolCode: {
     type:String,
 }, 
 acessPermissions: { 
-type:String
-}
+type:String, 
+default:"member"
+},  
+token:String 
 
 });  
 const user = new mongoose.model("User", userSchema); 

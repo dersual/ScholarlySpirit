@@ -15,7 +15,7 @@
     3.9px 24.1px 28.4px -1.3px hsl(var(--shadow-color) / 0.27),
     6px 37.1px 43.7px -1.6px hsl(var(--shadow-color) / 0.27),
     9px 55.9px 65.8px -1.9px hsl(var(--shadow-color) / 0.27),
-    13.1px 81.8px 96.3px -2.2px hsl(var(--shadow-color) / 0.27);
+    13.1px 81.8px 96.3px -2.2px hsl(var(--shadow-color) / 0.27); 
 }
 style {
   display: none;
@@ -137,7 +137,7 @@ h6 {
   cursor: pointer;
 }
 p.other-opt > span {
-  color: blue;
+  color: rgb(0, 153, 255);
   text-decoration: underline;
   cursor: pointer;
   display: inline;
@@ -172,6 +172,10 @@ p.other-opt {
 .landingPageForm > button {
   padding: 10px 20px;
   margin-top: 5px;
+} 
+.studentCodePage { 
+  display:none; 
+  
 }
 .dashboard {
   display: none;

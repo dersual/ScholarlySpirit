@@ -28,7 +28,7 @@
         <a href="#">upgrade your browser</a> to improve your experience.
       </p>
     <!-landing page-->
-    <div class="homePage">
+    <div class="homePage page">
       <div>
         <h1>Scholarly Spirit</h1>
         <h3>Designed to track & encourage student participation at school events.</h3>
@@ -37,7 +37,7 @@
         <button>Log in</button>
         <p class="other-opt">Don't Have An Account? <span>Sign Up</span></p>
         <!--Login and Sign Up Forms -->
-        <form action="/loginUser" method="post" class="login-form landingPageForm">
+        <form action="/login" method="post" class="login-form landingPageForm">
           <label>Email Address</label>
           <input required type="email" />
           <label>Password</label>
@@ -45,20 +45,22 @@
           <button class="landing-page-submit" type="submit">Login</button>
           <p class="other-opt signup-opt">Don't Have An Account? <span>Sign Up</span></p>
         </form>
-        <form action="/createUser" method="post" class="signup-form landingPageForm">
+        <form action="/register" method="post" class="signup-form landingPageForm"> 
           <label>Name</label>
           <input name = "name" required type="text" />
           <label>Email Address</label>
           <input name = "email" required type="email" />
           <label>Password</label>
           <input name = "password" required type="password" />
-          <button method = "post" class="landing-page-submit" type="submit">Login</button>
+          <button method = "post" class="landing-page-submit" type="submit">Login</button> 
           <p class="other-opt login-opt">Have An Account? <span>Login</span></p>
         </form>
       </div>
-    </div> 
+    </div>  
+    <!--Page for Student Code --> 
+    <div class = "studentCodePage page"></div>
     <!--Main Dashboard for Teachers--->
-    <div class="dashboard"> 
+    <div class="dashboard page"> 
       <!--Navigation-->
       <nav>
         <div>
