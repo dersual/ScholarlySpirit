@@ -6,7 +6,8 @@ either the environment variable (process.env.PORT) or 3000.
 */ 
 const express = require("express");
 const path = require("path");
-const app = express();
+const app = express(); 
+const bcrypt = require('bcryptjs');
 const port = process.env.PORT || 3000;  
 //connecting to mongodb
 const connectDB = require("./backend/Model/db.js"); 

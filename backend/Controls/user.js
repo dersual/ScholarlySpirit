@@ -2,7 +2,8 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json()); 
+app.use(bodyParser.json());  
+const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 
 exports.createUser = (req, res) => {
