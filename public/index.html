@@ -53,14 +53,28 @@
           <input name = "email" required type="email" />
           <label>Password</label>
           <input name = "password" required type="password" /> 
-          <button method = "post" class="landing-page-submit" type="submit">Sign Up</button> 
+          <button class="landing-page-submit" type="submit">Sign Up</button> 
           <p class="other-opt login-opt">Have An Account? <span>Login</span></p>
         </form>
       </div>
     </div>  
     <!--Page for School Code --> 
     <div class = "schoolCodePage page"> 
-      <div class="LoginContainer"></div>
+      <div class="LoginContainer">  
+        <h2>Hey, you're not in a school yet</h2>
+        <button>
+          <span></span> 
+          <span>Join A School</span>
+        </button> 
+        <button> 
+          <span></span> 
+          <span>Create A New School</span>
+        </button>   
+        <form method = "post" class = "schoolForm addCodeForm"> 
+          <button type = "submit"></button> 
+        </form> 
+        <form class = "schoolForm createSchoolForm"></form>
+      </div> 
     </div>
     <!--Main Dashboard for Teachers--->
     <div class="dashboard page"> 

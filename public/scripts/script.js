@@ -8,12 +8,15 @@ event: Interactive event that runs funct
 funct: the function being run 
 type: defaulty is add, but if anything else remove eventlistener 
 */
-function handleEvents(element, event, funct, type = "add") {
-  if (type == "add") {
-    element.addEventListener(event, funct);
-  } else {
-    element.removeEventListener(event, funct);
+function handleEvents(element, event, funct, type = "add") {   
+  var newFunct = () => {  
+    funct 
   }
+  if (type == "add") { 
+    element.addEventListener(event, newFunct);
+  } else {
+    element.removeEventListener(event, newFunct);
+  } 
 }
 
 //DOM for when logging in and sign up 
@@ -23,13 +26,12 @@ handleEvents(loginButtons[0], "click", displayLandingPageForms);
 Array(...document.getElementsByClassName("other-opt")).forEach(element => {  
   console.log(element.children[0])
   handleEvents(element.children[0], "click", displayLandingPageForms)
-})
+}); 
 handleEvents(loginButtons[1].children[0], "click", displayLandingPageForms); 
-handleEvents(document.getElementsByClassName("landing-page-submit")[0], "click", displayDashBoard)
+handleEvents(document.getElementsByClassName("landing-page-submit")[0], "click", displayDashBoard) 
 function displayLandingPageForms() {
   var loginForm = document.getElementsByClassName("login-form")[0];
   var signupForm = document.getElementsByClassName("signup-form")[0];
-  console.log(loginButtons);
   loginButtons[0].style.display = "none";
   loginButtons[1].style.display = "none";  
   document.body.style.backgroundImage = "none" 
@@ -48,6 +50,10 @@ function displayLandingPageForms() {
       signupForm.style.opacity = 1;
     }, 100);
   }
+} 
+function displayPages(prevPage, newPage, displayOpt = "block") { 
+  prevPage.style.display = "none" 
+  newPage.style.display = displayOpt; 
 }
 function displayDashBoard() { 
   document.getElementsByClassName("homePage")[0].style.display = "none" 

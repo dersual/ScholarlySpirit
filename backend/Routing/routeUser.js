@@ -11,7 +11,8 @@ router.post("/login", async (req,res) => {
   try {   
      //check if user exists  
      if(await user.findOne({ email: req.body.email }) && bcrypt.compare(req.body.password, user.password)) {  
-      //do stuff 
+      //do stuff  
+      
     }  
     else {  
       res.status(400).json({error: "Username or Password is wrong"}) 
