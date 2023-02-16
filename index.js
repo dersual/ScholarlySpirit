@@ -4,7 +4,8 @@ Requires the Express and Path modules,
 creates an Express app, and sets the port to  
 either the environment variable (process.env.PORT) or 3000.  
 */ 
-const express = require("express");
+const express = require("express"); 
+require('dotenv').config();
 const path = require("path");
 const app = express(); 
 const bcrypt = require('bcryptjs');

@@ -4,10 +4,9 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());  
 const bcrypt = require('bcryptjs');
-const User = require('../models/userModel.js');
-const mongoose = require("mongoose"); 
+const User = require('../Model/user/userModel.js');
 
-exports.createUser = (req, res) => {  
+exports.createUser = async (req, res) => {  
   
   req.body.password = await bcrypt.hash(req.body.password, 10)
   const user = new User(req.body);

@@ -1,13 +1,13 @@
 const express = require('express');  
-const user = require("./Controls/user.js") 
 const router = express.Router();  
 const path = require("path");  
-const bcrypt = require("bcrypt")    
+const bcrypt = require("bcryptjs")   
+const user = require("../Controls/user.js")   
 router.post('/register', (req, res) => {
   user.createUser(req,res) 
 
   }) 
-router.post("/login", (req,res) => {     
+router.post("/login", async (req,res) => {     
   try {   
      //check if user exists  
      if(await user.findOne({ email: req.body.email }) && bcrypt.compare(req.body.password, user.password)) {  

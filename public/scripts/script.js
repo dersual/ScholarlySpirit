@@ -31,7 +31,9 @@ function displayLandingPageForms() {
   var signupForm = document.getElementsByClassName("signup-form")[0];
   console.log(loginButtons);
   loginButtons[0].style.display = "none";
-  loginButtons[1].style.display = "none"; 
+  loginButtons[1].style.display = "none";  
+  document.body.style.backgroundImage = "none" 
+  document.body.style.background = "#dddadc"
   loginButtons[0].parentElement.style.borderRadius = "50px"
   if (this == loginButtons[0] || this == document.getElementsByClassName("login-opt")[0].children[0]) {
     loginForm.style.display = "block"; 

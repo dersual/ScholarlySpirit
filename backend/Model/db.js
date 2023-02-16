@@ -1,10 +1,10 @@
 // url: mongodb+srv://dersu1317:<password>@scholarlyspirit-cluster.lmzj292.mongodb.net/?retryWrites=true&w=majority
-const mongoose = require("mongoose");
+const mongoose = require("mongoose"); 
 mongoose.set("strictQuery", false);
 const connectToDB = async () => {
   try {
     await mongoose.connect(
-      `mongodb+srv://${process.env.USERNAME}:${process.env.USERNAME}@${process.env.CLUSTER}.lmzj292.mongodb.net/?retryWrites=true&w=majority`,
+      process.env.MONGODB_URI,
       {
         useNewUrlParser: true,
         useUnifiedTopology: true

@@ -173,7 +173,7 @@ p.other-opt {
   padding: 10px 20px;
   margin-top: 5px;
 } 
-.studentCodePage { 
+.schoolCodePage { 
   display:none; 
   
 }
@@ -192,14 +192,19 @@ p.other-opt {
   width: 100%;
   height: calc(100vh / 3);
   font-family: "Montserrat", sans-serif;
-  color: #fff;
-  background: linear-gradient(30deg, #205DA4, #07f1f1);
+  color: #205DA4;
+  background: #dddadc;
   font-weight: 100; 
   border: solid 1px #141a16;
   border-left: none;
   border-right: none;   
-  cursor: pointer;
-}  
+  cursor: pointer; 
+  transition:1.25s;
+}   
+.dashboard > div > section:hover { 
+  color: #fff;
+  background: linear-gradient(30deg, #205DA4, #07f1f1);
+}
 .dashboard > div > section > h1 { 
   top:50%; 
   transform: translateY(-50%); 
@@ -221,4 +226,4 @@ p.other-opt {
   flex-direction: column;
   gap: 10px;
   height: 100%;
-}
+} 
