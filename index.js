@@ -9,11 +9,15 @@ require('dotenv').config();
 const path = require("path");
 const app = express(); 
 const bcrypt = require('bcryptjs');
-const port = process.env.PORT || 3000;  
+const port = process.env.PORT || 3000;   
+const bodyParser = require('body-parser');
 //connecting to mongodb
 const connectDB = require("./backend/Model/db.js"); 
 connectDB(); 
-
+// Parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+// Parse application/json
+app.use(bodyParser.json())
 /* 
 File System (fs) module to read all the files in the "backend/Routing" folder  
 and run the middleware in each file.  

@@ -33,26 +33,30 @@
         <h1>Scholarly Spirit</h1>
         <h3>Designed to track & encourage student participation at school events.</h3>
       </div>
-      <div class="LoginContainer">
+      <div class="LoginContainer"> 
         <button>Log in</button>
-        <p class="other-opt">Don't Have An Account? <span>Sign Up</span></p>
+        <p class="other-opt">Don't Have An Account? <span>Sign Up</span></p>  
+        <div><i class="arrow left"></i></div>
         <!--Login and Sign Up Forms -->
-        <form action="/login" method="post" class="login-form landingPageForm">
+        <form action="/login" method="post" class="login-form landingPageForm"> 
+          <h2>Login</h2>
           <label>Email Address</label>
-          <input required type="email" />
+          <input autocomplete="off" name = "email" required type="email" />
           <label>Password</label>
-          <input required type="password" /> 
+          <input name = "password" required type="password" /> 
           <span>Email Address or Password is incorrect</span>
           <button class="landing-page-submit" type="submit">Login</button>
           <p class="other-opt signup-opt">Don't Have An Account? <span>Sign Up</span></p>
         </form>
-        <form action="/register" method="post" class="signup-form landingPageForm"> 
-          <label>Name</label>
-          <input name = "name" required type="text" />
+        <form action="/register" method="post" class="signup-form landingPageForm">  
+          <h2>Register Account</h2>
+          <label>Name (First & Last Name)</label>
+          <input autocomplete="off" name = "name" required type="text" />
           <label>Email Address</label>
-          <input name = "email" required type="email" />
+          <input autocomplete="off" name = "email" required type="email" />
           <label>Password</label>
-          <input name = "password" required type="password" /> 
+          <input name = "password" required type="password" />  
+          <span>Already Made An Account</span>
           <button class="landing-page-submit" type="submit">Sign Up</button> 
           <p class="other-opt login-opt">Have An Account? <span>Login</span></p>
         </form>
