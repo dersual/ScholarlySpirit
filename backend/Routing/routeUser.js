@@ -8,13 +8,13 @@ const UserModel = require("../Model/user/userModel")
 router.post("/register", async (req, res) => {
   try {    
    if(await UserModel.findOne({email: req.body.email}))  {    
-    res.status(400).send("Account Seems To Have Already Been Made")
+    res.status(409).send("Account Seems To Have Already Been Made")
    } 
    else {
     User.createUser(req, res); 
    }
   } catch (error) {
-    console.log(error);
+    res.status(400).json({ error });
   }
  
 });

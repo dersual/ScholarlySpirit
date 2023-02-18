@@ -93,7 +93,6 @@ function displayDashBoard() {
   document.body.style.backgroundImage = "none";
   document.body.style.background = "#dddadc";
 }
-handleEvents(document.getElementsByClassName("signup-form")[0], "submit", onRegister);
 async function onLogin() {}
 async function onRegister(event) { 
   //fix register
@@ -103,19 +102,21 @@ async function onRegister(event) {
     const response = await fetch("/register", {
       method: "POST",
       body: data,
-    });
-    const result = await response.json();
-    if (!result.ok) {
+    }); 
+    const result = await response.json(); 
+    console.log(result)
+    if (!result.ok) { 
+      if (result == "Account Seems To Have Already Been Made") {
+        document
+          .getElementsByClassName("signup-form")[0]
+          .getElementsByTagName("span")[0].style.display = "block";
+      } 
       throw new Error(error);
     } else {
       console.log(result);
     }
   } catch (error) {
-    if (error == "Account Seems To Have Already Been Made") {
-      document
-        .getElementsByClassName("signup-form")[0]
-        .getElementsByTagName("span")[0].style.display = "block";
-    } 
     console.log(error)
   }
 }
+handleEvents(document.getElementsByClassName("signup-form")[0], "submit", onRegister);
