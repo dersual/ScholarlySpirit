@@ -35,13 +35,13 @@
       </div>
       <div class="LoginContainer">
         <button>Log in</button>
-        <p class="other-opt">Don't Have An Account? <span>Sign Up</span></p> 
+        <p class="other-opt">Don't Have An Account? <span>Sign Up</span></p>
         <div>
           <i
             data-close-target=".login-form, .signup-form"
             data-open-target=".LoginContainer > button:first-child, .LoginContainer > p.other-opt:nth-child(2), .homePage > div:first-child"
-            data-display-type ="block, block" 
-            data-opentarget-exclusive = "[2]" 
+            data-display-type="block, block"
+            data-opentarget-exclusive="[2]"
             data-x-pos="15px"
             data-y-pos="20px"
             class="arrow left"
@@ -74,13 +74,13 @@
     </div>
     <!--Page for School Code -->
     <div class="schoolCodePage page">
-      <div class="LoginContainer"> 
+      <div class="LoginContainer">
         <div>
           <i
             data-close-target=".schoolCodePage"
             data-open-target=".homePage"
-            data-display-type ="flex" 
-            data-opentarget-exclusive 
+            data-display-type="flex"
+            data-opentarget-exclusive
             data-x-pos="15px"
             data-y-pos="20px"
             class="arrow left"
@@ -94,22 +94,43 @@
         <button>
           <span></span>
           <span>Create A New School</span>
-        </button> 
+        </button>
         <div>
           <i
-            data-close-target=".login-form, .signup-form"
-            data-open-target=".LoginContainer > button:first-child, .LoginContainer > p.other-opt:nth-child(2), .homePage > div:first-child"
-            data-display-type ="block, block" 
-            data-opentarget-exclusive = "[2]" 
+            data-close-target=".addCodeForm, .createSchoolForm"
+            data-open-target=".schoolCodePage > .LoginContainer > div,.schoolCodePage > .LoginContainer > h2, .schoolCodePage > .LoginContainer > button:first-of-type, div.schoolCodePage > div.LoginContainer > button:nth-child(4) "
+            data-opentarget-exclusive
+            data-display-type="block, block, block"
             data-x-pos="15px"
             data-y-pos="20px"
             class="arrow left"
           ></i>
         </div>
-        <form method="post" class="schoolForm addCodeForm"> 
-          <button type="submit"></button>
+        <form method="post" class="schoolForm addCodeForm">
+          <label>School Code</label>
+          <input
+            autocomplete="off"
+            type="text"
+            placeholder="Input unqiue code for your school"
+            required
+          />
+          <button type="submit">Submit</button>
         </form>
-        <form class="schoolForm createSchoolForm"></form>
+        <form method="post" class="schoolForm createSchoolForm">
+          <label>School Name</label>
+          <input autocomplete="off" type="text" name="name" required />
+          <div>
+            <div>
+              <label>Lowest Grade Level</label>
+              <input type="number" name="lowestGradeLevel" required min="1" max="12" />
+            </div>
+            <div>
+              <label>Highest Grade Level</label>
+              <input type="number" name="highestGradeLevel" required min="1" max="12"/>
+            </div>
+          </div>
+          <button type="submit">Submit</button>
+        </form>
       </div>
     </div>
     <!--Main Dashboard for Teachers--->

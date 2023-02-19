@@ -9,16 +9,20 @@ const eventSchema = new Schema({
     type: Date,
     required: true,
   },
-  isActive: boolean,
+  isActive: { 
+    type:Boolean,  
+    default:true 
+  },
   schoolCode: {
-    type: String,
+    type: mongoose.Schema.ObjectId, 
+    ref:"School",
     required: true,
   },
   pointsRewarded: {
     type: Number,
     required: true,
   },
-  studentParticipating: { type: mongoose.Schema.Types.ObjectId, ref: "Student" },
+  studentParticipating: [{ type: mongoose.Schema.Types.ObjectId, ref: "Student" }],
 });
 const event = mongoose.model("Events", eventSchema); 
 module.exports = event;

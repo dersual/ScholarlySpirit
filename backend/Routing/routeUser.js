@@ -18,7 +18,7 @@ router.post("/setup-user", async (req, res) => {
 });
 router.post("/register", async (req, res) => {
   try { 
-    User.createUser(req.body, res); 
+    User.createUser(req, res); 
     res.status(200).json(User)
   } catch (error) { 
     res.json({error})

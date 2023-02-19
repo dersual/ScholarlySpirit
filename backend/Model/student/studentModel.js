@@ -13,6 +13,11 @@ const studentSchema = new Schema ({
     email: { 
         type:String, 
         required:true
+    }, 
+    schoolCode: { 
+        type:mongoose.Schema.Types.ObjectId,  
+        ref: "School",  
+        required:true 
     }
 }) 
 const student = mongoose.model("Student", studentSchema) 

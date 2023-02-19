@@ -5,21 +5,22 @@ const schoolSchema = new Schema({
     type: String,
     required: true,
   },
-  lowestGrade: {
-    type: Number,
-    required: true,
-  },
-  highestGrade: {
-    type: Number,
-    required: true,
-  },
-  schoolCode: this.ObjectId,
-  staff: {
-    type: Array,
-    required: true,
-  },
-  students: { type: mongoose.Schema.Types.ObjectId, ref: "Student" },
-  events: { type: mongoose.Schema.Types.ObjectId, ref: "Student" },
+  grades: [
+    {
+      type: Number,
+      required: true,
+    },
+  ],
+  schoolCode: Schema.ObjectId,
+  staff: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+  ],
+  students: [{ type: mongoose.Schema.Types.ObjectId, ref: "Student" }],
+  events: [{ type: mongoose.Schema.Types.ObjectId, ref: "Events" }],
 });
 const school = mongoose.model("School", schoolSchema);
 module.exports = school;

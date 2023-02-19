@@ -150,14 +150,16 @@ h6 {
   font-size: clamp(12px, 2.5vw, 15px);
 }
 .LoginContainer > button,
-.landingPageForm > button {
+.landingPageForm > button,
+form > button {
   background-color: var(--main-color);
   border-radius: 30px;
   border: none;
   color: #fff;
 }
 .LoginContainer > button:hover,
-.landingPageForm > button:hover {
+.landingPageForm > button:hover,
+form > button:hover {
   background-color: #0478fc;
   color: azure;
   cursor: pointer;
@@ -186,15 +188,19 @@ p.other-opt {
   font-family: "Open Sans", sans-serif;
   color: var(--dark-textColor);
 }
-.landingPageForm > h2 {
+.landingPageForm > h2,
+.schoolForm > h2 {
   text-align: center;
 }
 .landingPageForm > label,
-.landingPageForm > h2 {
+.landingPageForm > h2,
+.schoolForm > label,
+.schoolForm > h2 {
   font-weight: 800;
   margin-top: 5px;
 }
-.landingPageForm > input {
+.landingPageForm > input,
+.schoolForm > input {
   width: 100%;
   padding: 5px 10px;
   margin: 8px 0;
@@ -205,10 +211,11 @@ p.other-opt {
   border-color: #000, #aca8a8;
   border-style: inset;
 }
-.landingPageForm > input:focus-visible {
+input:focus-visible {
   outline: none;
 }
-.landingPageForm > button {
+.landingPageForm > button,
+.schoolForm > button {
   padding: 10px 20px;
   margin-top: 5px;
 }
@@ -253,6 +260,47 @@ p.other-opt {
 }
 .schoolCodePage > div.LoginContainer > form {
   display: none;
+  gap: 10px;
+}
+.schoolForm > input,
+.schoolForm > div > div > input {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+  margin: 0;
+  text-align: center;
+} 
+.schoolForm > div > div > label  { 
+  font-weight: 800;
+  margin-top: 5px; 
+  text-align: center;
+}
+.schoolForm > div > div > input[type="number"]::-webkit-inner-spin-button,
+.schoolForm > div > div > input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.schoolForm > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+}
+.schoolForm > div > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.schoolForm {
+  grid-row: span 2;
+  justify-self: stretch;
+  align-self: stretch;
+  grid-column: 1/5;
+  justify-items: center;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 .dashboard {
   display: none;

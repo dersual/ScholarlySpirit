@@ -145,13 +145,11 @@ Array(...arrow).forEach((element) => {
   // assign the click event to all open targets and closed targets
   for (var r = 0; r < closedTargets.length; r++) {
     for (var c = 0; c < openTargets.length; c++) {
-      handleEvents(
-        parent,
-        "click",
-        displayPages,
-        "add",
-        [document.querySelector(closedTargets[r]), document.querySelector(openTargets[c]),  displayTypes[c]],
-      );
+      handleEvents(parent, "click", displayPages, "add", [
+        document.querySelector(closedTargets[r]),
+        document.querySelector(openTargets[c]),
+        displayTypes[c],
+      ]);
     }
   }
   // assign the click event to hide the parent node when it is clicked
@@ -169,11 +167,11 @@ Array(...arrow).forEach((element) => {
 
 // function to display pages with a fade-in effect
 function displayPages(prevPage, newPage, displayOpt = "block") {
-  prevPage.style.opacity = 0; 
-  prevPage.style.display = "none"; 
-  var opacity = 0; 
-  newPage.style.opacity = opacity 
-  newPage.style.display = displayOpt; 
+  prevPage.style.opacity = 0;
+  prevPage.style.display = "none";
+  var opacity = 0;
+  newPage.style.opacity = opacity;
+  newPage.style.display = displayOpt;
   var intervalID = setInterval(function () {
     if (opacity < 1) {
       opacity = opacity + 0.25;
@@ -203,8 +201,8 @@ async function onLogin() {
 async function setUpUser(event) {
   // Prevent the default form submission behavior
   event.preventDefault();
-  //display arrow 
-  arrow[1].parentNode.style.display = "block"
+  //display arrow
+  arrow[1].parentNode.style.display = "block";
   // Get the form data
   const data = new URLSearchParams(new FormData(document.getElementsByClassName("signup-form")[0]));
 
@@ -232,11 +230,14 @@ async function setUpUser(event) {
       }
     })
     .then((data) => {
-      // Process the JSON data returned from the server 
-      displayPages(document.getElementsByClassName("homePage")[0], document.getElementsByClassName("schoolCodePage")[0]) 
-      sessionStorage.setItem("email", data.email)
-      sessionStorage.setItem("name", data.name) 
-      sessionStorage.setItem("password", data.password)
+      // Process the JSON data returned from the server
+      displayPages(
+        document.getElementsByClassName("homePage")[0],
+        document.getElementsByClassName("schoolCodePage")[0]
+      );
+      sessionStorage.setItem("email", data.email);
+      sessionStorage.setItem("name", data.name);
+      sessionStorage.setItem("password", data.password);
     })
     .catch((error) => {
       // Log the error
@@ -246,3 +247,29 @@ async function setUpUser(event) {
 
 // Register the onRegister function to be called when the form is submitted
 handleEvents(document.getElementsByClassName("signup-form")[0], "submit", setUpUser);
+handleEvents(
+  document.querySelector("div.schoolCodePage > div.LoginContainer > button:first-of-type"),
+  "click",
+  function () { 
+    document.querySelector("div.schoolCodePage > div.LoginContainer").children[4].style.display = "block"
+    for (var i = 0; i < 4; i++) {
+      displayPages(
+        document.querySelector("div.schoolCodePage > div.LoginContainer").children[i],
+        document.getElementsByClassName("addCodeForm")[0],
+        "flex"
+      );
+    }
+  }
+);
+handleEvents(document.querySelector("div.schoolCodePage > div.LoginContainer > button:nth-child(4)"), 
+"click", function(){  
+  document.querySelector("div.schoolCodePage > div.LoginContainer").children[4].style.display = "block"
+  for (var i = 0; i < 4; i++) { 
+    console.log()
+    displayPages(
+      document.querySelector("div.schoolCodePage > div.LoginContainer").children[i],
+      document.getElementsByClassName("createSchoolForm")[0],
+      "flex"
+    );
+  }
+});
