@@ -28,60 +28,92 @@
         <a href="#">upgrade your browser</a> to improve your experience.
       </p>
     <!-landing page-->
-    <div class="homePage page">
+    <div class="homePage">
       <div>
         <h1>Scholarly Spirit</h1>
         <h3>Designed to track & encourage student participation at school events.</h3>
       </div>
-      <div class="LoginContainer"> 
+      <div class="LoginContainer">
         <button>Log in</button>
-        <p class="other-opt">Don't Have An Account? <span>Sign Up</span></p>  
-        <div><i class="arrow left"></i></div>
+        <p class="other-opt">Don't Have An Account? <span>Sign Up</span></p> 
+        <div>
+          <i
+            data-close-target=".login-form, .signup-form"
+            data-open-target=".LoginContainer > button:first-child, .LoginContainer > p.other-opt:nth-child(2), .homePage > div:first-child"
+            data-display-type ="block, block" 
+            data-opentarget-exclusive = "[2]" 
+            data-x-pos="15px"
+            data-y-pos="20px"
+            class="arrow left"
+          ></i>
+        </div>
         <!--Login and Sign Up Forms -->
-        <form action="/login" method="post" class="login-form landingPageForm"> 
+        <form action="/login" method="post" class="login-form landingPageForm">
           <h2>Login</h2>
           <label>Email Address</label>
-          <input autocomplete="off" name = "email" required type="email" />
+          <input autocomplete="off" name="email" required type="email" />
           <label>Password</label>
-          <input name = "password" required type="password" /> 
+          <input name="password" required type="password" />
           <span>Email Address or Password is incorrect</span>
           <button class="landing-page-submit" type="submit">Login</button>
           <p class="other-opt signup-opt">Don't Have An Account? <span>Sign Up</span></p>
         </form>
-        <form action="/register" method="post" class="signup-form landingPageForm">  
+        <form action="/register" method="post" class="signup-form landingPageForm">
           <h2>Register Account</h2>
           <label>Name (First & Last Name)</label>
-          <input autocomplete="off" name = "name" required type="text" />
+          <input autocomplete="off" name="name" required type="text" />
           <label>Email Address</label>
-          <input autocomplete="off" name = "email" required type="email" />
+          <input autocomplete="off" name="email" required type="email" />
           <label>Password</label>
-          <input name = "password" required type="password" />  
-          <span>Already Made An Account</span>
-          <button class="landing-page-submit" type="submit">Sign Up</button> 
+          <input name="password" required type="password" />
+          <span>Email already linked with an account</span>
+          <button class="landing-page-submit" type="submit">Sign Up</button>
           <p class="other-opt login-opt">Have An Account? <span>Login</span></p>
         </form>
       </div>
-    </div>  
-    <!--Page for School Code --> 
-    <div class = "schoolCodePage page"> 
-      <div class="LoginContainer">  
+    </div>
+    <!--Page for School Code -->
+    <div class="schoolCodePage page">
+      <div class="LoginContainer"> 
+        <div>
+          <i
+            data-close-target=".schoolCodePage"
+            data-open-target=".homePage"
+            data-display-type ="flex" 
+            data-opentarget-exclusive 
+            data-x-pos="15px"
+            data-y-pos="20px"
+            class="arrow left"
+          ></i>
+        </div>
         <h2>Hey, you're not in a school yet</h2>
         <button>
-          <span></span> 
+          <span></span>
           <span>Join A School</span>
-        </button> 
-        <button> 
-          <span></span> 
+        </button>
+        <button>
+          <span></span>
           <span>Create A New School</span>
-        </button>   
-        <form method = "post" class = "schoolForm addCodeForm"> 
-          <button type = "submit"></button> 
-        </form> 
-        <form class = "schoolForm createSchoolForm"></form>
-      </div> 
+        </button> 
+        <div>
+          <i
+            data-close-target=".login-form, .signup-form"
+            data-open-target=".LoginContainer > button:first-child, .LoginContainer > p.other-opt:nth-child(2), .homePage > div:first-child"
+            data-display-type ="block, block" 
+            data-opentarget-exclusive = "[2]" 
+            data-x-pos="15px"
+            data-y-pos="20px"
+            class="arrow left"
+          ></i>
+        </div>
+        <form method="post" class="schoolForm addCodeForm"> 
+          <button type="submit"></button>
+        </form>
+        <form class="schoolForm createSchoolForm"></form>
+      </div>
     </div>
     <!--Main Dashboard for Teachers--->
-    <div class="dashboard page"> 
+    <div class="dashboard page">
       <!--Navigation-->
       <nav>
         <div>
@@ -96,7 +128,7 @@
           <img />
           <span></span>
         </div>
-      </nav> 
+      </nav>
       <!--Sections-->
       <div class="section-container">
         <section class="events-tab">
@@ -109,8 +141,8 @@
           <h1>Student Body</h1>
         </section>
       </div>
-    </div> 
-    <!--Events Section--> 
+    </div>
+    <!--Events Section-->
 
     <!--scripts-->
     <script src="scripts/script.js" defer></script>

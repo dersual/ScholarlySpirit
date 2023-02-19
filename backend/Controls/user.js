@@ -1,19 +1,17 @@
-var express = require('express');
+var express = require("express");
 var app = express();
-var bodyParser = require('body-parser');
+var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());  
-const bcrypt = require('bcryptjs');
-const User = require('../Model/user/userModel.js');
+app.use(bodyParser.json());
+const bcrypt = require("bcryptjs");
+const User = require("../Model/user/userModel.js");
 
-exports.createUser = async (req, res) => {  
-  
-  req.body.password = await bcrypt.hash(req.body.password, 10)
+exports.createUser = async (req, res) => {
   const user = new User(req.body);
   user.save((err, user) => {
     if (err) {
       return res.status(400).json({
-        error: 'Failed to save user in DB'
+        error: "Failed to save user in DB",
       });
     }
     res.json({ user });
@@ -24,7 +22,7 @@ exports.getUser = (req, res) => {
   User.findById(req.params.id, (err, user) => {
     if (err || !user) {
       return res.status(400).json({
-        error: 'User not found'
+        error: "User not found",
       });
     }
     res.json(user);
@@ -39,7 +37,7 @@ exports.updateUser = (req, res) => {
     (err, user) => {
       if (err) {
         return res.status(400).json({
-          error: 'You are not authorized to update this user'
+          error: "You are not authorized to update this user",
         });
       }
       res.json(user);
@@ -48,18 +46,14 @@ exports.updateUser = (req, res) => {
 };
 
 exports.deleteUser = (req, res) => {
-  User.findByIdAndRemove(
-    { _id: req.params.id },
-    { useFindAndModify: false },
-    (err, user) => {
-      if (err) {
-        return res.status(400).json({
-          error: 'Failed to delete user'
-        });
-      }
-      res.json({
-        message: 'Deletion was a success'
+  User.findByIdAndRemove({ _id: req.params.id }, { useFindAndModify: false }, (err, user) => {
+    if (err) {
+      return res.status(400).json({
+        error: "Failed to delete user",
       });
     }
-  );
+    res.json({
+      message: "Deletion was a success",
+    });
+  });
 };
