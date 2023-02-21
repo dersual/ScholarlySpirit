@@ -116,17 +116,17 @@ Array(...arrow).forEach((element) => {
   // get the display types for the open targets
   var displayTypes = element.dataset.displayType.split(",");
   // check if there are any exclusive targets that should be handled separately
-  var exclusionIndex;
-  var exclusiveTargets = [];
+  var exclusionIndexArr;
+  var exclusiveTargetsArr = [];
   if (element.dataset.opentargetExclusive.length > 0) {
     // if there are exclusive targets, get their indices and remove them from the openTargets list
-    exclusionIndex = JSON.parse(element.dataset.opentargetExclusive);
-    exclusionIndex.forEach((index) => {
+    exclusionIndexArr = JSON.parse(element.dataset.opentargetExclusive);
+    exclusionIndexArr.forEach((index) => {
       var target = openTargets.splice(index, 1);
-      exclusiveTargets.push(target);
+      exclusiveTargetsArr.push(target);
     });
     // loop through the exclusive targets and assign the click event to each one
-    exclusiveTargets.forEach((target) => {
+    exclusiveTargetsArr.forEach((target) => {
       handleEvents(
         parent,
         "click",
