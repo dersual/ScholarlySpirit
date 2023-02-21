@@ -15,12 +15,11 @@ const schoolSchema = new Schema({
   staff: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "User",
+      ref: "users",
     },
   ],
-  students: [{ type: mongoose.Schema.Types.ObjectId, ref: "Student" }],
-  events: [{ type: mongoose.Schema.Types.ObjectId, ref: "Events" }],
+  students: [{ type: mongoose.Schema.Types.ObjectId, ref: "students" }],
+  events: [{ type: mongoose.Schema.Types.ObjectId, ref: "events" }],
 });
 const school = mongoose.model("School", schoolSchema);
 module.exports = school;

@@ -107,7 +107,7 @@ Array(...arrow).forEach((element) => {
   parent.style.left = element.dataset.xPos;
   parent.style.width = "15px";
   parent.style.overflowX = "visible";
-  parent.style.zindex = 2;
+  parent.style.zIndex = 2;
   parent.style.display = "none";
   // get the list of targets to be closed by clicking on the arrow
   var closedTargets = element.dataset.closeTarget.split(",");
@@ -221,7 +221,7 @@ async function setUpUser(event) {
             .getElementsByTagName("span")[0].style.display = "block";
         }
         // Throw an error
-        throw new Error(response.headers);
+        throw new Error(response.statusText);
       } else {
         // If the response is OK, log the response and return the JSON data
         console.log("works");
@@ -242,16 +242,158 @@ async function setUpUser(event) {
     .catch((error) => {
       // Log the error
       console.error(error);
+      if (error.response) {
+        error.json().then((errorMessage) => {
+          console.error(errorMessage.error);
+        });
+      }
     });
 }
-
-// Register the onRegister function to be called when the form is submitted
+async function createSchool() {
+  var newData = new FormData(document.getElementsByClassName("createSchoolForm")[0]);
+  var lowestGradeLvl = newData.get("lowestGradeLevel");
+  var highestGradeLvl = newData.get("highestGradeLevel");
+  var allGrades = [];
+  for (var i = parseInt(lowestGradeLvl); i <= parseInt(highestGradeLvl); i++) {
+    console.log(i);
+    allGrades.push(i);
+  }
+  newData.append("grades", JSON.stringify(allGrades));
+  const schoolData = new URLSearchParams(newData);
+  console.log(schoolData);
+  await fetch("/createSchool", {
+    method: "POST",
+    body: schoolData,
+  })
+    .then((response) => {
+      if (!response.ok) {
+        // If not Ok throw an error
+        if (response.status === 409) {
+          document
+            .getElementsByClassName("schoolForm")[1]
+            .getElementsByTagName("span")[0].style.display = "block";
+        }
+        throw new Error(response.statusText);
+      } else {
+        return response.json();
+      }
+    })
+    .then((data) => {
+      sessionStorage.setItem("schoolCode", data._id);
+    })
+    .catch((error) => {
+      console.error(error);
+      if (error.response) {
+        error.json().then((errorMessage) => {
+          console.error(errorMessage.error);
+        });
+      }
+    });
+}
+async function register() {
+  const sessionData = new FormData();
+  sessionData.append("email", sessionStorage.getItem("email"));
+  sessionData.append("name", sessionStorage.getItem("name"));
+  sessionData.append("password", sessionStorage.getItem("password"));
+  sessionData.append("schoolCode", sessionStorage.getItem("schoolCode"));
+  const userData = new URLSearchParams(sessionData);
+  await fetch("/register", {
+    method: "POST",
+    body: userData,
+  })
+    .then((response) => {
+      if (!response.ok) {
+        // If not Ok throw an error
+        throw new Error(response.statusText);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      sessionStorage.setItem("id", data._id);
+      var url = "/addStaff/" + data._id + "/" + data.schoolCode;
+      return fetch(url, {
+        method: "POST",
+      });
+    })
+    .then((response) => {
+      if (!response.ok) {
+        // If not Ok throw an error
+        throw new Error(response.statusText);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => {
+      console.error(error);
+      if (error.response) {
+        error.json().then((errorMessage) => {
+          console.error(errorMessage.error);
+        });
+      }
+    });
+}
+async function useSchoolCodeAndRegister(event) {
+  event.preventDefault(); 
+   // Convert form data to object 
+  const formData = new FormData(document.getElementsByClassName("addCodeForm")[0]);
+  const data = Object.fromEntries(formData.entries());
+  console.log(data)
+  // Store data in session storage
+  sessionStorage.setItem("schoolCode", data.schoolCode) 
+  console.log(sessionStorage.getItem("schoolCode")) 
+  await register(); 
+}
+async function createSchoolAndRegister(event) {
+  event.preventDefault();
+  await createSchool();
+  await register();
+  await changeUserPermissions("admin");
+}
+async function changeUserPermissions(status = "member") {
+  var url = "/updateUserWthChanges/" + sessionStorage.getItem("id");
+  await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ accessPermissions: status }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        // If not Ok throw an error
+        throw new Error(response.statusText);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      sessionStorage.clear();
+    })
+    .catch((error) => {
+      console.error(error);
+      if (error.response) {
+        error.json().then((errorMessage) => {
+          console.error(errorMessage.error);
+        });
+      }
+    });
+}
+//call setUpUser function to be called when the form is submitted
 handleEvents(document.getElementsByClassName("signup-form")[0], "submit", setUpUser);
+//call createSchoolAndRegister function when called
+handleEvents(
+  document.getElementsByClassName("createSchoolForm")[0],
+  "submit",
+  createSchoolAndRegister
+);
+handleEvents(document.getElementsByClassName("addCodeForm")[0], "submit", useSchoolCodeAndRegister);
 handleEvents(
   document.querySelector("div.schoolCodePage > div.LoginContainer > button:first-of-type"),
   "click",
-  function () { 
-    document.querySelector("div.schoolCodePage > div.LoginContainer").children[4].style.display = "block"
+  function () {
+    document.querySelector("div.schoolCodePage > div.LoginContainer").children[4].style.display =
+      "block";
     for (var i = 0; i < 4; i++) {
       displayPages(
         document.querySelector("div.schoolCodePage > div.LoginContainer").children[i],
@@ -261,15 +403,49 @@ handleEvents(
     }
   }
 );
-handleEvents(document.querySelector("div.schoolCodePage > div.LoginContainer > button:nth-child(4)"), 
-"click", function(){  
-  document.querySelector("div.schoolCodePage > div.LoginContainer").children[4].style.display = "block"
-  for (var i = 0; i < 4; i++) { 
-    console.log()
-    displayPages(
-      document.querySelector("div.schoolCodePage > div.LoginContainer").children[i],
-      document.getElementsByClassName("createSchoolForm")[0],
-      "flex"
-    );
+handleEvents(
+  document.querySelector("div.schoolCodePage > div.LoginContainer > button:nth-child(4)"),
+  "click",
+  function () {
+    document.querySelector("div.schoolCodePage > div.LoginContainer").children[4].style.display =
+      "block";
+    for (var i = 0; i < 4; i++) {
+      displayPages(
+        document.querySelector("div.schoolCodePage > div.LoginContainer").children[i],
+        document.getElementsByClassName("createSchoolForm")[0],
+        "flex"
+      );
+    }
   }
-});
+);
+var minGradeInput = document.getElementsByClassName("lowestGradeLvlInput")[0];
+var maxGradeInput = document.getElementsByClassName("highestGradeLvlInput")[0];
+function imposeMinMaxGrades(el) {
+  setTimeout(function () {
+    minGradeInput.max = parseInt(maxGradeInput.value);
+    maxGradeInput.min = parseInt(minGradeInput.value);
+    if (minGradeInput.max == NaN) {
+      minGradeInput.max = 12;
+    }
+    if (maxGradeInput.min == NaN) {
+      maxGradeInput.min = 1;
+    }
+    imposeMinMax(el);
+  }, 750);
+}
+function imposeMinMax(el) {
+  if (el.value != "") {
+    if (parseInt(el.value) < parseInt(el.min)) {
+      el.value = el.min;
+    }
+    if (parseInt(el.value) > parseInt(el.max)) {
+      el.value = el.max;
+    }
+  }
+}
+minGradeInput.oninput = function () {
+  imposeMinMaxGrades(minGradeInput);
+};
+maxGradeInput.oninput = function () {
+  imposeMinMaxGrades(maxGradeInput);
+};

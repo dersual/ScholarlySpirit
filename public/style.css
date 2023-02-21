@@ -164,7 +164,7 @@ form > button:hover {
   color: azure;
   cursor: pointer;
 }
-.landingPageForm > span {
+.landingPageForm > span, .schoolForm > span {
   display: none;
   color: #ff0707;
   margin-bottom: 5px;
@@ -269,7 +269,8 @@ input:focus-visible {
   border-right: none;
   border-radius: 0;
   margin: 0;
-  text-align: center;
+  text-align: center; 
+  width:100%
 } 
 .schoolForm > div > div > label  { 
   font-weight: 800;
@@ -286,11 +287,9 @@ input:focus-visible {
   flex-direction: row;
   justify-content: center;
   gap: 10px;
-}
+} 
 .schoolForm > div > div {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+width:50%; 
 }
 .schoolForm {
   grid-row: span 2;

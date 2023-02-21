@@ -7,22 +7,17 @@ const UserModel = require("../Model/user/userModel");
 router.post("/setup-user", async (req, res) => {
   try {
     if (await UserModel.findOne({ email: req.body.email })) {
-      res.status(409).header({ error: "Account Seems To Have Already Been Made" });
+      res.status(409).json({ error: "Account Seems To Have Already Been Made" });
     } else {
       const password = await bcrypt.hash(req.body.password, 10);
       res.json({ email: req.body.email, name: req.body.name, password: password });
     }
   } catch (error) {
-    res.status(400).header({ error });
+    res.status(400).json({ error });
   }
 });
 router.post("/register", async (req, res) => {
-  try { 
-    User.createUser(req, res); 
-    res.status(200).json(User)
-  } catch (error) { 
-    res.json({error})
-  }
+    await User.createUser(req, res); 
 });
 router.post("/login", async (req, res) => {
   try {
@@ -36,9 +31,11 @@ router.post("/login", async (req, res) => {
       res.status(400).json({ error: "Username or Password is wrong" });
     }
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).json({ error: error.message });
   }
 });
-router.post("/addSchoolCode/:id", (req, res) => {});
-router.post("/changeAccessPermissions/:id", (req, res) => {});
+router.post("/joinSchool/:id", (req, res) => {});
+router.post("/updateUserWthChanges/:id", async (req, res) => { 
+  User.updateUser(req, res);
+});
 module.exports = router;

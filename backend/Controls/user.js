@@ -6,15 +6,17 @@ app.use(bodyParser.json());
 const bcrypt = require("bcryptjs");
 const User = require("../Model/user/userModel.js");
 
-exports.createUser = async (req, res) => {
+exports.createUser = async (req, res) => { 
+  console.log(req.body.schoolCode)
   const user = new User(req.body);
   user.save((err, user) => {
-    if (err) {
+    if (err) { 
+      console.error(err)
       return res.status(400).json({
         error: "Failed to save user in DB",
       });
     }
-    res.json({ user });
+    res.json(user);
   });
 };
 

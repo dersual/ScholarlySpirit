@@ -15,10 +15,10 @@ const userSchema = new Schema({
   },
   schoolCode: { 
     type:mongoose.Schema.Types.ObjectId,  
-    ref: "School",  
+    ref: "schools",  
     required:true 
 },
-  acessPermissions: {
+  accessPermissions: {
     type: String,
     default: "member",
   },

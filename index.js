@@ -20,6 +20,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Parse application/json
 app.use(bodyParser.json());
 app.use(helmet());
+// Set the Content-Security-Policy header
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+      "font-src": ["'self'", "https://fonts.gstatic.com", "https://kit.fontawesome.com", "'unsafe-inline'"],
+      "style-src": ["'self'", "https://fonts.googleapis.com", "'unsafe-inline'"],
+    },
+  })
+); 
+app.use((req, res, next) => {
+  res.setHeader("Content-Security-Policy", "script-src 'self' https://kit.fontawesome.com "); 
+  next();
+});
 /* 
 File System (fs) module to read all the files in the "backend/Routing" folder  
 and run the middleware in each file.  

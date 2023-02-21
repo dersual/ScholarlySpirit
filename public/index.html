@@ -5,7 +5,14 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title></title>
-    <meta name="description" content="" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="script-src 'self' https://kit.fontawesome.com https://kit.fontawesome.com/eb633b28da.js"
+    />
+    <meta
+      name="description"
+      content="ScholarlySpirit is an application designed track & encourage student participation at school events."
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -20,6 +27,7 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&display=swap"
       rel="stylesheet"
     />
+    <script src="https://kit.fontawesome.com/eb633b28da.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <!--[if lt IE 7]>
@@ -88,11 +96,11 @@
         </div>
         <h2>Hey, you're not in a school yet</h2>
         <button>
-          <span></span>
+          <span style="color: #fff; font-size: 2.5em"><i class="fa-solid fa-plus"></i></span>
           <span>Join A School</span>
         </button>
         <button>
-          <span></span>
+          <span style="color: #fff; font-size: 2.5em"><i class="fa-solid fa-school"></i></span>
           <span>Create A New School</span>
         </button>
         <div>
@@ -112,21 +120,37 @@
             autocomplete="off"
             type="text"
             placeholder="Input unqiue code for your school"
-            required
+            required 
+            name = "schoolCode"
           />
           <button type="submit">Submit</button>
         </form>
         <form method="post" class="schoolForm createSchoolForm">
           <label>School Name</label>
-          <input autocomplete="off" type="text" name="name" required />
+          <input autocomplete="off" type="text" name="name" required /> 
+          <span>School Seems to have already been made</span>
           <div>
             <div>
               <label>Lowest Grade Level</label>
-              <input type="number" name="lowestGradeLevel" required min="1" max="12" />
+              <input
+                class="lowestGradeLvlInput"
+                type="number"
+                name="lowestGradeLevel"
+                required
+                min="1"
+                max="12"
+              />
             </div>
             <div>
               <label>Highest Grade Level</label>
-              <input type="number" name="highestGradeLevel" required min="1" max="12"/>
+              <input
+                class="highestGradeLvlInput"
+                type="number"
+                name="highestGradeLevel"
+                required
+                min="1"
+                max="12"
+              />
             </div>
           </div>
           <button type="submit">Submit</button>
