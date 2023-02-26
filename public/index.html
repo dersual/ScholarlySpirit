@@ -50,10 +50,11 @@
             data-open-target=".LoginContainer > button:first-child, .LoginContainer > p.other-opt:nth-child(2), .homePage > div:first-child"
             data-display-type="block, block"
             data-opentarget-exclusive="[2]"
-            data-x-pos="15px"
-            data-y-pos="20px"
+            data-x-pos="-15px"
+            data-y-pos="-20px"
             class="arrow left"
-          ></i>
+          ></i> 
+          <p>Go Back</p>
         </div>
         <!--Login and Sign Up Forms -->
         <form action="/login" method="post" class="login-form landingPageForm">
@@ -89,10 +90,11 @@
             data-open-target=".homePage"
             data-display-type="flex"
             data-opentarget-exclusive
-            data-x-pos="15px"
-            data-y-pos="20px"
+            data-x-pos="-15px"
+            data-y-pos="-20px"
             class="arrow left"
-          ></i>
+          ></i> 
+          <p>Go Back</p>
         </div>
         <h2>Hey, you're not in a school yet</h2>
         <button>
@@ -110,9 +112,10 @@
             data-opentarget-exclusive
             data-display-type="block, block, block"
             data-x-pos="15px"
-            data-y-pos="20px"
+            data-y-pos="120px"
             class="arrow left"
-          ></i>
+          ></i> 
+          <p>Go Back</p>
         </div>
         <form method="post" class="schoolForm addCodeForm">
           <label>School Code</label>
@@ -120,14 +123,15 @@
             autocomplete="off"
             type="text"
             placeholder="Input unqiue code for your school"
-            required 
-            name = "schoolCode"
-          />
+            required
+            name="schoolCode"
+          /> 
+          <span>This School Code Doesn't Exist</span>
           <button type="submit">Submit</button>
         </form>
         <form method="post" class="schoolForm createSchoolForm">
           <label>School Name</label>
-          <input autocomplete="off" type="text" name="name" required /> 
+          <input autocomplete="off" type="text" name="name" required />
           <span>School Seems to have already been made</span>
           <div>
             <div>
@@ -188,7 +192,23 @@
       </div>
     </div>
     <!--Events Section-->
-
+    <!--Overlay Section-->
+    <div id="overlay" class="overlay">
+      <div class="after-register-notice">
+        <p> 
+          <h1>Notice After User Signup</h1>
+          A new user account has been created with the credentials you entered. For the last
+          step please go to the email you put as your email address here and verify that it is the
+          right account. 
+          <b>  
+          Disclaimer: IF YOU DO NOT VERIFY IN THE NEXT 15 MINUTES THEN THE
+          ACCOUNT YOU JUST CREATED WILL HAVE BEEN DELETED 
+          </b>
+        </p>
+        <button></button>
+        <button></button>
+      </div>
+    </div>
     <!--scripts-->
     <script src="scripts/script.js" defer></script>
   </body>

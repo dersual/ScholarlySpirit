@@ -1,67 +1,54 @@
-var express = require("express");
-var app = express();
-var bodyParser = require("body-parser");
+const express = require("express");
+const app = express();
+const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-const School = require("../Model/school/schoolModel.js");
-const User = require("../Model/user/userModel.js");
+const School = require("../Model/schoolModel.js");
+const User = require("../Model/userModel.js");
+const eventModel = require("../Model/eventModel");
+const Student = require("../Model/studentModel");
 const mongoose = require("mongoose");
 
-exports.newSchool = (req, res) => {
-  req.body.grades = JSON.parse(req.body.grades);
-  const school = new School(req.body);
-  school.save((err, school) => {
-    if (err) {
-      console.error(err);
-      return res.status(400).json({
-        error: "Failed to save school in DB",
-      });
-    }
-
-    res.status(200).json(school);
-  });
+exports.newSchool = async (req, res) => {
+  try {
+    req.body.grades = JSON.parse(req.body.grades);
+    const school = new School(req.body);
+    await school.save();
+    return res.status(200).json(school);
+  } catch (error) {
+    console.error(error);
+    // return res.status(400).json({error: "Failed to save school in DB"});
+    throw new Error("Failed to save school in DB");
+  }
 };
-exports.getSchool = (req, res) => {
-  School.findById(req.params.id, (err, school) => {
-    if (err || !school) {
-      return res.status(400).json({
-        error: "School not found",
-      });
-    }
-    res.json(school);
-  });
-};
-exports.addNewFaculty = (req, res) => {
-  School.findById(req.params.schoolCode, (err, school) => {
-    if (err) {
-      return res.status(500).send(err);
-    }
-
-    if (!school) {
-      return res.status(404).send("Matching document not found");
-    }
-
-    User.findById(req.params.id, (err, user) => {
-      if (err) {
-        return res.status(500).send(err);
-      }
-
-      if (!user) {
-        return res.status(404).send("Matching document not found");
-      }
-
-      // Add the user to the staff array
-      school.staff.push(user._id);
-
-      // Save the updated school document
-      school.save((err) => {
-        if (err) {
-          return res.status(500).send(err);
-        }
-        res.json(school);
-      });
+exports.getSchool = async (req, res) => {
+  try {
+    const school = await School.findById(req.params.id);
+    return res.status(200).json(school);
+  } catch (error) {
+    return res.status(400).json({
+      error: "School not found",
     });
-  });
+  }
+};
+exports.addNewFaculty = async (req, res) => {
+  try {
+    const school = await School.findById(req.params.schoolCode);
+    const user = await User.findById(req.params.id);
+    if (!school || !user) {
+      return res.status(404).json({error: "Matching document not found"});
+    } else { 
+      if(school.staff.length == 0) { 
+        user.accessPermissions = "admin" 
+        await user.save()
+      }
+      school.staff.push(user._id);
+      await school.save();
+      return res.status(200).json(school);
+    }
+  } catch (error) {
+    return res.status(500).json({ error });
+  }
 };
 exports.addNewStudents = (req, res) => {};
 exports.addNewEvent = (req, res) => {};

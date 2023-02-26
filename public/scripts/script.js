@@ -102,13 +102,14 @@ Array(...arrow).forEach((element) => {
   // get the parent node of the 'arrow' element
   var parent = element.parentNode;
   // set the parent node's position and display properties
-  parent.style.position = "absolute";
-  parent.style.top = element.dataset.yPos;
-  parent.style.left = element.dataset.xPos;
-  parent.style.width = "15px";
+  parent.style.marginBottom = element.dataset.yPos;
+  parent.style.left =  element.dataset.xPos;
+  parent.style.width = "26%"; 
   parent.style.overflowX = "visible";
   parent.style.zIndex = 2;
-  parent.style.display = "none";
+  parent.style.display = "none"; 
+  parent.style.cursor = "pointer" 
+  parent.style.textAlign = "left"
   // get the list of targets to be closed by clicking on the arrow
   var closedTargets = element.dataset.closeTarget.split(",");
   // get the list of targets to be opened by clicking on the arrow
@@ -203,33 +204,32 @@ async function setUpUser(event) {
   event.preventDefault();
   //display arrow
   arrow[1].parentNode.style.display = "block";
-  // Get the form data
-  const data = new URLSearchParams(new FormData(document.getElementsByClassName("signup-form")[0]));
-
-  // Send the form data to the server
-  await fetch("/setup-user", {
-    method: "POST",
-    body: data,
-  })
-    .then((response) => {
-      // Check if the response is not OK
-      if (!response.ok) {
-        // If the response status is 409 (Conflict), display an error message
-        if (response.status === 409) {
-          document
-            .getElementsByClassName("signup-form")[0]
-            .getElementsByTagName("span")[0].style.display = "block";
-        }
-        // Throw an error
-        throw new Error(response.statusText);
-      } else {
-        // If the response is OK, log the response and return the JSON data
-        console.log("works");
-        console.log(response);
-        return response.json();
+  try {
+    // Get the form data
+    const formdata = new URLSearchParams(
+      new FormData(document.getElementsByClassName("signup-form")[0])
+    );
+    // Send the form data to the server
+    const response = await fetch("/setup-user", {
+      method: "POST",
+      body: formdata,
+    });
+    // Check if the response is not OK
+    if (!response.ok) {
+      // If the response status is 409 (Conflict), display an error message
+      if (response.status === 409) {
+        document
+          .getElementsByClassName("signup-form")[0]
+          .getElementsByTagName("span")[0].style.display = "block";
       }
-    })
-    .then((data) => {
+      // Throw an error 
+      const error = await response.json()
+      throw new Error(error.error);
+    } else {
+      // If the response is OK, log the response and return the JSON data
+      console.log("works");
+      console.log(response);
+      const data = response.json();
       // Process the JSON data returned from the server
       displayPages(
         document.getElementsByClassName("homePage")[0],
@@ -238,146 +238,109 @@ async function setUpUser(event) {
       sessionStorage.setItem("email", data.email);
       sessionStorage.setItem("name", data.name);
       sessionStorage.setItem("password", data.password);
-    })
-    .catch((error) => {
-      // Log the error
-      console.error(error);
-      if (error.response) {
-        error.json().then((errorMessage) => {
-          console.error(errorMessage.error);
-        });
-      }
-    });
+    }
+  } catch (error) {
+    // Log the error
+    console.error(error);
+    throw new Error(error)
+  }
 }
 async function createSchool() {
-  var newData = new FormData(document.getElementsByClassName("createSchoolForm")[0]);
-  var lowestGradeLvl = newData.get("lowestGradeLevel");
-  var highestGradeLvl = newData.get("highestGradeLevel");
-  var allGrades = [];
-  for (var i = parseInt(lowestGradeLvl); i <= parseInt(highestGradeLvl); i++) {
-    console.log(i);
-    allGrades.push(i);
-  }
-  newData.append("grades", JSON.stringify(allGrades));
-  const schoolData = new URLSearchParams(newData);
-  console.log(schoolData);
-  await fetch("/createSchool", {
-    method: "POST",
-    body: schoolData,
-  })
-    .then((response) => {
-      if (!response.ok) {
-        // If not Ok throw an error
-        if (response.status === 409) {
-          document
-            .getElementsByClassName("schoolForm")[1]
-            .getElementsByTagName("span")[0].style.display = "block";
-        }
-        throw new Error(response.statusText);
-      } else {
-        return response.json();
-      }
-    })
-    .then((data) => {
-      sessionStorage.setItem("schoolCode", data._id);
-    })
-    .catch((error) => {
-      console.error(error);
-      if (error.response) {
-        error.json().then((errorMessage) => {
-          console.error(errorMessage.error);
-        });
-      }
+  try {
+    var newData = new FormData(document.getElementsByClassName("createSchoolForm")[0]);
+    var lowestGradeLvl = newData.get("lowestGradeLevel");
+    var highestGradeLvl = newData.get("highestGradeLevel");
+    var allGrades = [];
+    for (var i = parseInt(lowestGradeLvl); i <= parseInt(highestGradeLvl); i++) {
+      console.log(i);
+      allGrades.push(i);
+    }
+    newData.append("grades", JSON.stringify(allGrades));
+    const schoolData = new URLSearchParams(newData);
+    const response = await fetch("/createSchool", {
+      method: "POST",
+      body: schoolData,
     });
+    if (!response.ok) {
+      if (response.status === 409) {
+        document
+          .getElementsByClassName("schoolForm")[1]
+          .getElementsByTagName("span")[0].style.display = "block";
+      } 
+      const error = await response.json()
+      throw new Error(error.error);
+    } else {
+      const data = await response.json();  
+      sessionStorage.setItem("schoolCode", data._id);
+    }
+  } catch (error) {
+   console.error(error) 
+   throw new Error(error)
+  }
 }
 async function register() {
-  const sessionData = new FormData();
-  sessionData.append("email", sessionStorage.getItem("email"));
-  sessionData.append("name", sessionStorage.getItem("name"));
-  sessionData.append("password", sessionStorage.getItem("password"));
-  sessionData.append("schoolCode", sessionStorage.getItem("schoolCode"));
-  const userData = new URLSearchParams(sessionData);
-  await fetch("/register", {
-    method: "POST",
-    body: userData,
-  })
-    .then((response) => {
-      if (!response.ok) {
-        // If not Ok throw an error
-        throw new Error(response.statusText);
+  try {
+    const sessionData = new FormData();
+    sessionData.append("email", sessionStorage.getItem("email"));
+    sessionData.append("name", sessionStorage.getItem("name"));
+    sessionData.append("password", sessionStorage.getItem("password"));
+    sessionData.append("schoolCode", sessionStorage.getItem("schoolCode"));
+    const userData = new URLSearchParams(sessionData);
+    const response = await fetch("/register", {
+      method: "POST",
+      body: userData,
+    });
+    if (!response.ok) {
+      // If not Ok throw an error 
+      if(response.status === 404) { 
+        document.querySelector(".addCodeForm > span").style.display = "block"
       }
-      return response.json();
-    })
-    .then((data) => {
+      const error = await response.json()
+      throw new Error(error.error);
+    } else {
+      const data = await response.json();
       sessionStorage.setItem("id", data._id);
       var url = "/addStaff/" + data._id + "/" + data.schoolCode;
-      return fetch(url, {
+      const response2 = await fetch(url, {
         method: "POST",
       });
-    })
-    .then((response) => {
       if (!response.ok) {
         // If not Ok throw an error
-        throw new Error(response.statusText);
+        const error = await response.json()
+        throw new Error(error.error);
       }
-      return response.json();
-    })
-    .then((data) => {
-      return data;
-    })
-    .catch((error) => {
-      console.error(error);
-      if (error.response) {
-        error.json().then((errorMessage) => {
-          console.error(errorMessage.error);
-        });
-      }
-    });
+      //display notice for user 
+      const user = await response2.json(); 
+      
+      return user;
+    }
+  } catch (error) {
+    console.error(error); 
+  throw new Error(error)
+  }
 }
 async function useSchoolCodeAndRegister(event) {
-  event.preventDefault(); 
-   // Convert form data to object 
+  event.preventDefault();
+  // Convert form data to object
   const formData = new FormData(document.getElementsByClassName("addCodeForm")[0]);
   const data = Object.fromEntries(formData.entries());
-  console.log(data)
   // Store data in session storage
-  sessionStorage.setItem("schoolCode", data.schoolCode) 
-  console.log(sessionStorage.getItem("schoolCode")) 
-  await register(); 
+  sessionStorage.setItem("schoolCode", data.schoolCode); 
+  try {
+    await register();
+  } catch (error) {
+    console.error(error)  
+  }
 }
 async function createSchoolAndRegister(event) {
-  event.preventDefault();
+  event.preventDefault(); 
+  try {
   await createSchool();
   await register();
-  await changeUserPermissions("admin");
-}
-async function changeUserPermissions(status = "member") {
-  var url = "/updateUserWthChanges/" + sessionStorage.getItem("id");
-  await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ accessPermissions: status }),
-  })
-    .then((response) => {
-      if (!response.ok) {
-        // If not Ok throw an error
-        throw new Error(response.statusText);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      sessionStorage.clear();
-    })
-    .catch((error) => {
-      console.error(error);
-      if (error.response) {
-        error.json().then((errorMessage) => {
-          console.error(errorMessage.error);
-        });
-      }
-    });
+  } catch (error) { 
+    console.error(error) 
+    
+  }
 }
 //call setUpUser function to be called when the form is submitted
 handleEvents(document.getElementsByClassName("signup-form")[0], "submit", setUpUser);

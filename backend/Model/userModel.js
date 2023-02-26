@@ -22,7 +22,7 @@ const userSchema = new Schema({
     type: String,
     default: "member",
   },
-  authorizationToken: String,
+  //authorizationToken: String,
 });
 const user = new mongoose.model("User", userSchema);
 module.exports = user;

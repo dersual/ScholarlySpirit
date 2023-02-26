@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../Controls/user.js");
-const UserModel = require("../Model/user/userModel");
+const UserModel = require("../Model/userModel.js");
 router.post("/setup-user", async (req, res) => {
   try {
     if (await UserModel.findOne({ email: req.body.email })) {
@@ -17,7 +17,7 @@ router.post("/setup-user", async (req, res) => {
   }
 });
 router.post("/register", async (req, res) => {
-    await User.createUser(req, res); 
+  User.createUser(req, res);
 });
 router.post("/login", async (req, res) => {
   try {
@@ -35,7 +35,7 @@ router.post("/login", async (req, res) => {
   }
 });
 router.post("/joinSchool/:id", (req, res) => {});
-router.post("/updateUserWthChanges/:id", async (req, res) => { 
+router.post("/updateUserWthChanges/:id", async (req, res) => {
   User.updateUser(req, res);
 });
 module.exports = router;
