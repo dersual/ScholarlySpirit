@@ -1,3 +1,4 @@
+//Everything regarding DOM manipulation 
 // Declare empty objects for user and school data
 let user = {};
 let school = {};
@@ -192,9 +193,77 @@ function displayDashBoard() {
   // Set the background of the body element
   document.body.style.backgroundImage = "none";
   document.body.style.background = "linear-gradient(30deg, #205da4, #07f1f1)";
+} 
+//display schoolCodeForm
+handleEvents(
+  document.querySelector("div.schoolCodePage > div.LoginContainer > button:first-of-type"),
+  "click",
+  function () {
+    document.querySelector("div.schoolCodePage > div.LoginContainer").children[4].style.display =
+      "block";
+    for (var i = 0; i < 4; i++) {
+      //display addCodeForm
+      displayPages(
+        document.querySelector("div.schoolCodePage > div.LoginContainer").children[i],
+        document.getElementsByClassName("addCodeForm")[0],
+        "flex"
+      );
+    }
+  }
+);
+handleEvents(
+  document.querySelector("div.schoolCodePage > div.LoginContainer > button:nth-child(4)"),
+  "click",
+  function () {
+    document.querySelector("div.schoolCodePage > div.LoginContainer").children[4].style.display =
+      "block";
+    for (var i = 0; i < 4; i++) {
+      displayPages(
+        document.querySelector("div.schoolCodePage > div.LoginContainer").children[i],
+        document.getElementsByClassName("createSchoolForm")[0],
+        "flex"
+      );
+    }
+  }
+);
+var minGradeInput = document.getElementsByClassName("lowestGradeLvlInput")[0];
+var maxGradeInput = document.getElementsByClassName("highestGradeLvlInput")[0];
+function imposeMinMaxGrades(el) {
+  setTimeout(function () {
+    minGradeInput.max = parseInt(maxGradeInput.value);
+    maxGradeInput.min = parseInt(minGradeInput.value);
+    if (minGradeInput.max == NaN) {
+      minGradeInput.max = 12;
+    }
+    if (maxGradeInput.min == NaN) {
+      maxGradeInput.min = 1;
+    }
+    imposeMinMax(el);
+  }, 850);
 }
+function imposeMinMax(el) {
+  if (el.value != "") {
+    if (parseInt(el.value) < parseInt(el.min)) {
+      el.value = el.min;
+    }
+    if (parseInt(el.value) > parseInt(el.max)) {
+      el.value = el.max;
+    }
+  }
+}
+minGradeInput.oninput = function () {
+  imposeMinMaxGrades(minGradeInput);
+};
+maxGradeInput.oninput = function () {
+  imposeMinMaxGrades(maxGradeInput);
+}; 
+
+
+
 //Fetching routes(involves sending & getting data)
-// This function is called when the user submits the signup form, prepares user data for sign up function later
+// This function is called when the user submits the signup form, prepares user data for sign up function later 
+
+
 async function setUpUser(event) {
   // Prevent the default form submission behavior
   event.preventDefault();
@@ -379,69 +448,7 @@ handleEvents(
 handleEvents(document.getElementsByClassName("addCodeForm")[0], "submit", useSchoolCodeAndRegister);
 //call loginAndDisplayDashboard when form submitted
 handleEvents(document.getElementsByClassName("login-form")[0], "submit", loginAndDisplayDashboard);
-//display schoolCodeForm
-handleEvents(
-  document.querySelector("div.schoolCodePage > div.LoginContainer > button:first-of-type"),
-  "click",
-  function () {
-    document.querySelector("div.schoolCodePage > div.LoginContainer").children[4].style.display =
-      "block";
-    for (var i = 0; i < 4; i++) {
-      //display addCodeForm
-      displayPages(
-        document.querySelector("div.schoolCodePage > div.LoginContainer").children[i],
-        document.getElementsByClassName("addCodeForm")[0],
-        "flex"
-      );
-    }
-  }
-);
-handleEvents(
-  document.querySelector("div.schoolCodePage > div.LoginContainer > button:nth-child(4)"),
-  "click",
-  function () {
-    document.querySelector("div.schoolCodePage > div.LoginContainer").children[4].style.display =
-      "block";
-    for (var i = 0; i < 4; i++) {
-      displayPages(
-        document.querySelector("div.schoolCodePage > div.LoginContainer").children[i],
-        document.getElementsByClassName("createSchoolForm")[0],
-        "flex"
-      );
-    }
-  }
-);
-var minGradeInput = document.getElementsByClassName("lowestGradeLvlInput")[0];
-var maxGradeInput = document.getElementsByClassName("highestGradeLvlInput")[0];
-function imposeMinMaxGrades(el) {
-  setTimeout(function () {
-    minGradeInput.max = parseInt(maxGradeInput.value);
-    maxGradeInput.min = parseInt(minGradeInput.value);
-    if (minGradeInput.max == NaN) {
-      minGradeInput.max = 12;
-    }
-    if (maxGradeInput.min == NaN) {
-      maxGradeInput.min = 1;
-    }
-    imposeMinMax(el);
-  }, 850);
-}
-function imposeMinMax(el) {
-  if (el.value != "") {
-    if (parseInt(el.value) < parseInt(el.min)) {
-      el.value = el.min;
-    }
-    if (parseInt(el.value) > parseInt(el.max)) {
-      el.value = el.max;
-    }
-  }
-}
-minGradeInput.oninput = function () {
-  imposeMinMaxGrades(minGradeInput);
-};
-maxGradeInput.oninput = function () {
-  imposeMinMaxGrades(maxGradeInput);
-};
+
 var overlayButtons = document.getElementsByClassName("overlay-buttons");
 Array(...overlayButtons).forEach((button) => {
   handleEvents(button, "click", async function () {
