@@ -103,13 +103,15 @@ Array(...arrow).forEach((element) => {
   var parent = element.parentNode;
   // set the parent node's position and display properties
   parent.style.marginBottom = element.dataset.yPos;
-  parent.style.left =  element.dataset.xPos;
-  parent.style.width = "26%"; 
+  parent.style.marginTop = "10px";
+  parent.style.marginLeft = "5%";
+  parent.style.left = element.dataset.xPos;
+  parent.style.width = "clamp(75px, 26%, 80px)";
   parent.style.overflowX = "visible";
   parent.style.zIndex = 2;
-  parent.style.display = "none"; 
-  parent.style.cursor = "pointer" 
-  parent.style.textAlign = "left"
+  parent.style.display = "none";
+  parent.style.cursor = "pointer";
+  parent.style.textAlign = "left";
   // get the list of targets to be closed by clicking on the arrow
   var closedTargets = element.dataset.closeTarget.split(",");
   // get the list of targets to be opened by clicking on the arrow
@@ -187,18 +189,12 @@ function displayDashBoard() {
   // Hide the home page and display the dashboard
   document.getElementsByClassName("homePage")[0].style.display = "none";
   document.getElementsByClassName("dashboard")[0].style.display = "block";
-
   // Set the background of the body element
   document.body.style.backgroundImage = "none";
-  document.body.style.background = "#dddadc";
+  document.body.style.background = "linear-gradient(30deg, #205da4, #07f1f1)";
 }
-
-// This function is called when the user logs in
-async function onLogin() {
-  // TODO: add login functionality
-}
-
-// This function is called when the user submits the signup form
+//Fetching routes(involves sending & getting data)
+// This function is called when the user submits the signup form, prepares user data for sign up function later
 async function setUpUser(event) {
   // Prevent the default form submission behavior
   event.preventDefault();
@@ -222,14 +218,12 @@ async function setUpUser(event) {
           .getElementsByClassName("signup-form")[0]
           .getElementsByTagName("span")[0].style.display = "block";
       }
-      // Throw an error 
-      const error = await response.json()
+      // Throw an error
+      const error = await response.json();
       throw new Error(error.error);
     } else {
       // If the response is OK, log the response and return the JSON data
-      console.log("works");
-      console.log(response);
-      const data = response.json();
+      const data = await response.json();
       // Process the JSON data returned from the server
       displayPages(
         document.getElementsByClassName("homePage")[0],
@@ -242,9 +236,9 @@ async function setUpUser(event) {
   } catch (error) {
     // Log the error
     console.error(error);
-    throw new Error(error)
   }
 }
+//Create School
 async function createSchool() {
   try {
     var newData = new FormData(document.getElementsByClassName("createSchoolForm")[0]);
@@ -252,7 +246,6 @@ async function createSchool() {
     var highestGradeLvl = newData.get("highestGradeLevel");
     var allGrades = [];
     for (var i = parseInt(lowestGradeLvl); i <= parseInt(highestGradeLvl); i++) {
-      console.log(i);
       allGrades.push(i);
     }
     newData.append("grades", JSON.stringify(allGrades));
@@ -266,18 +259,18 @@ async function createSchool() {
         document
           .getElementsByClassName("schoolForm")[1]
           .getElementsByTagName("span")[0].style.display = "block";
-      } 
-      const error = await response.json()
+      }
+      const error = await response.json();
       throw new Error(error.error);
     } else {
-      const data = await response.json();  
+      const data = await response.json();
       sessionStorage.setItem("schoolCode", data._id);
     }
   } catch (error) {
-   console.error(error) 
-   throw new Error(error)
+    throw new Error(error);
   }
 }
+//Sign Up User
 async function register() {
   try {
     const sessionData = new FormData();
@@ -291,32 +284,54 @@ async function register() {
       body: userData,
     });
     if (!response.ok) {
-      // If not Ok throw an error 
-      if(response.status === 404) { 
-        document.querySelector(".addCodeForm > span").style.display = "block"
+      // If not Ok throw an error
+      if (response.status === 404) {
+        document.querySelector(".addCodeForm > span").style.display = "block";
       }
-      const error = await response.json()
+      const error = await response.json();
       throw new Error(error.error);
     } else {
-      const data = await response.json();
-      sessionStorage.setItem("id", data._id);
-      var url = "/addStaff/" + data._id + "/" + data.schoolCode;
+      const data = await response.json(); 
+      sessionStorage.setItem("id", data._id); 
+      var url = "/addStaff/" + data._id + "/" + data.schoolCode; 
       const response2 = await fetch(url, {
         method: "POST",
       });
       if (!response.ok) {
         // If not Ok throw an error
-        const error = await response.json()
+        const error = await response.json();
         throw new Error(error.error);
+      } else {
+      //display notice for user
+      const user = await response2.json();
+      document.getElementById("overlay").style.display = "block";
+      document.getElementById("after-register-notice").style.display = "flex";
+      return user; 
       }
-      //display notice for user 
-      const user = await response2.json(); 
-      
-      return user;
     }
   } catch (error) {
-    console.error(error); 
-  throw new Error(error)
+    throw new Error(error);
+  }
+}
+async function login() {
+  try {
+    const formData = new FormData(document.getElementsByClassName("login-form")[0]);
+    const dataForFetch = new URLSearchParams(formData);
+    const response = await fetch("/login", {
+      method: "POST",
+      body: dataForFetch,
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      if (error.error === "Username or Password is wrong") {
+        document.querySelector(".login-form > span").style.display = "block";
+      }
+      throw new Error(error.error);
+    } else {
+      const data = await response.json();
+    }
+  } catch (error) {
+    throw new Error(error);
   }
 }
 async function useSchoolCodeAndRegister(event) {
@@ -325,32 +340,46 @@ async function useSchoolCodeAndRegister(event) {
   const formData = new FormData(document.getElementsByClassName("addCodeForm")[0]);
   const data = Object.fromEntries(formData.entries());
   // Store data in session storage
-  sessionStorage.setItem("schoolCode", data.schoolCode); 
+  sessionStorage.setItem("schoolCode", data.schoolCode);
   try {
     await register();
   } catch (error) {
-    console.error(error)  
+    console.error(error);
   }
 }
 async function createSchoolAndRegister(event) {
-  event.preventDefault(); 
+  event.preventDefault();
   try {
-  await createSchool();
-  await register();
-  } catch (error) { 
-    console.error(error) 
-    
+    await createSchool();
+    await register();
+  } catch (error) {
+    console.error(error);
+  }
+}
+async function loginAndDisplayDashboard(event) {
+  event.preventDefault();
+  try {
+    await login();
+    displayDashBoard();
+  } catch (error) {
+    console.error(error);
   }
 }
 //call setUpUser function to be called when the form is submitted
 handleEvents(document.getElementsByClassName("signup-form")[0], "submit", setUpUser);
+
 //call createSchoolAndRegister function when called
 handleEvents(
   document.getElementsByClassName("createSchoolForm")[0],
   "submit",
   createSchoolAndRegister
 );
+
+//call useSchoolCodeAndRegist function when form submitted
 handleEvents(document.getElementsByClassName("addCodeForm")[0], "submit", useSchoolCodeAndRegister);
+//call loginAndDisplayDashboard when form submitted
+handleEvents(document.getElementsByClassName("login-form")[0], "submit", loginAndDisplayDashboard);
+//display schoolCodeForm
 handleEvents(
   document.querySelector("div.schoolCodePage > div.LoginContainer > button:first-of-type"),
   "click",
@@ -358,6 +387,7 @@ handleEvents(
     document.querySelector("div.schoolCodePage > div.LoginContainer").children[4].style.display =
       "block";
     for (var i = 0; i < 4; i++) {
+      //display addCodeForm
       displayPages(
         document.querySelector("div.schoolCodePage > div.LoginContainer").children[i],
         document.getElementsByClassName("addCodeForm")[0],
@@ -394,7 +424,7 @@ function imposeMinMaxGrades(el) {
       maxGradeInput.min = 1;
     }
     imposeMinMax(el);
-  }, 750);
+  }, 850);
 }
 function imposeMinMax(el) {
   if (el.value != "") {
@@ -412,3 +442,35 @@ minGradeInput.oninput = function () {
 maxGradeInput.oninput = function () {
   imposeMinMaxGrades(maxGradeInput);
 };
+var overlayButtons = document.getElementsByClassName("overlay-buttons");
+Array(...overlayButtons).forEach((button) => {
+  handleEvents(button, "click", async function () {
+    document.getElementById("overlay").style.display = "none";
+    Array(...document.querySelectorAll("#overlay > *")).forEach((parent) => {
+      parent.style.display = "none";
+    });
+    switch (Array(...overlayButtons).indexOf(button)) {
+      case 0:
+        try {  
+          window.event.preventDefault();
+          const sessionData = new FormData();
+          sessionData.append("email", sessionStorage.getItem("email"));
+          sessionData.append("id", sessionStorage.getItem("id"));
+          const userData = new URLSearchParams(sessionData);
+          const response = await fetch("/sendVerifyEmail", {
+            method: "POST",
+            body: userData,
+          });
+          if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.error);
+          } else {
+            window.location.reload();
+          }
+        } catch (error) {
+          console.error(error);
+        }
+        break;
+    }
+  });
+});

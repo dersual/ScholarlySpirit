@@ -14,7 +14,7 @@
       content="ScholarlySpirit is an application designed track & encourage student participation at school events."
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="./styles/style.css"/>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!----Open Sans Font with weights of 300, 500, 800 -->
@@ -50,7 +50,7 @@
             data-open-target=".LoginContainer > button:first-child, .LoginContainer > p.other-opt:nth-child(2), .homePage > div:first-child"
             data-display-type="block, block"
             data-opentarget-exclusive="[2]"
-            data-x-pos="-15px"
+            data-x-pos="-10px"
             data-y-pos="-20px"
             class="arrow left"
           ></i> 
@@ -90,8 +90,8 @@
             data-open-target=".homePage"
             data-display-type="flex"
             data-opentarget-exclusive
-            data-x-pos="-15px"
-            data-y-pos="-20px"
+            data-x-pos="-10px"
+            data-y-pos="-15px"
             class="arrow left"
           ></i> 
           <p>Go Back</p>
@@ -108,10 +108,10 @@
         <div>
           <i
             data-close-target=".addCodeForm, .createSchoolForm"
-            data-open-target=".schoolCodePage > .LoginContainer > div,.schoolCodePage > .LoginContainer > h2, .schoolCodePage > .LoginContainer > button:first-of-type, div.schoolCodePage > div.LoginContainer > button:nth-child(4) "
+            data-open-target=".schoolCodePage > .LoginContainer > div, .schoolCodePage > .LoginContainer > h2, .schoolCodePage > .LoginContainer > button:first-of-type, div.schoolCodePage > div.LoginContainer > button:nth-child(4) "
             data-opentarget-exclusive
             data-display-type="block, block, block"
-            data-x-pos="15px"
+            data-x-pos="5px"
             data-y-pos="120px"
             class="arrow left"
           ></i> 
@@ -164,18 +164,26 @@
     <!--Main Dashboard for Teachers--->
     <div class="dashboard page">
       <!--Navigation-->
-      <nav>
+      <nav> 
+        <div id = "profile">
+          <span><i class="fa-solid fa-user"></i></span>
+          <span>Profile</span> 
+        </div>  
         <div>
-          <img />
-          <span></span>
+          <span><i class="fa-solid fa-gears"></i></span>
+          <span>Settings</span>
+        </div> 
+        <div> 
+          <span><i class="fa-solid fa-house-chimney"></i></span> 
+          <span>Dashboard</span>
         </div>
         <div>
-          <img />
-          <span></span>
+          <span><i class="fa-solid fa-chalkboard-user"></i></span>
+          <span>Faculty</span>
         </div>
-        <div>
-          <img />
-          <span></span>
+        <div> 
+          <span><i class="fa-solid fa-question"></i></span> 
+          <span>Help</span>
         </div>
       </nav>
       <!--Sections-->
@@ -194,19 +202,18 @@
     <!--Events Section-->
     <!--Overlay Section-->
     <div id="overlay" class="overlay">
-      <div class="after-register-notice">
+      <div id="after-register-notice">
         <p> 
           <h1>Notice After User Signup</h1>
-          A new user account has been created with the credentials you entered. For the last
-          step please go to the email you put as your email address here and verify that it is the
-          right account. 
+          A new user account has been created with the credentials you provided.<br> <br>For the last
+          step, please go to the email address you provided and verify that it is the correct account.
           <b>  
-          Disclaimer: IF YOU DO NOT VERIFY IN THE NEXT 15 MINUTES THEN THE
-          ACCOUNT YOU JUST CREATED WILL HAVE BEEN DELETED 
+            DISCLAIMER: IF YOU DO NOT VERIFY WITHIN THE NEXT 15 MINUTES, THE ACCOUNT YOU HAVE JUST CREATED WILL BE DELETED.
           </b>
-        </p>
-        <button></button>
-        <button></button>
+        </p>  
+        <div>
+        <button class = "overlay-buttons">Ok &gt;</button> 
+      </div>
       </div>
     </div>
     <!--scripts-->

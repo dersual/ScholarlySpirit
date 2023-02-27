@@ -18,7 +18,10 @@ const studentSchema = new Schema ({
         type:mongoose.Schema.Types.ObjectId,  
         ref: "School",  
         required:true 
-    }
+    }, 
+    rewards: [{  
+        type: Object   
+    }]
 }) 
 const student = mongoose.model("Student", studentSchema) 
 module.exports = student; 

@@ -1,11 +1,12 @@
-var express = require("express");
-var app = express();
-var bodyParser = require("body-parser");
+const express = require("express");
+const app = express();
+const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 const bcrypt = require("bcryptjs");
 const User = require("../Model/userModel.js");
-const mongoose = require("mongoose");
+const mongoose = require("mongoose"); 
+const mail = require("../configs/emailingConfig.js")
 exports.createUser = async (req, res) => {
   console.log(req.body.schoolCode);
   try {
@@ -17,8 +18,8 @@ exports.createUser = async (req, res) => {
       } else {
         console.log("id works");
         const user = new User(req.body);
-        const savedUser = await user.save();
-        return res.json(savedUser);
+        const savedUser = await user.save();   
+        return res.status(200).json(savedUser);
       }
     } else {
       return res.status(404).json({

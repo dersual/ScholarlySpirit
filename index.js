@@ -13,7 +13,7 @@ const port = process.env.PORT || 3000;
 const bodyParser = require("body-parser");
 const helmet = require("helmet");
 //connecting to mongodb
-const connectDB = require("./backend/Model/db.js");
+const connectDB = require("./backend/configs/db.js");
 connectDB();
 // Parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -25,13 +25,18 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-      "font-src": ["'self'", "https://fonts.gstatic.com", "https://kit.fontawesome.com", "'unsafe-inline'"],
+      "font-src": [
+        "'self'",
+        "https://fonts.gstatic.com",
+        "https://kit.fontawesome.com",
+        "'unsafe-inline'",
+      ],
       "style-src": ["'self'", "https://fonts.googleapis.com", "'unsafe-inline'"],
     },
   })
-); 
+);
 app.use((req, res, next) => {
-  res.setHeader("Content-Security-Policy", "script-src 'self' https://kit.fontawesome.com "); 
+  res.setHeader("Content-Security-Policy", "script-src 'self' https://kit.fontawesome.com ");
   next();
 });
 /* 
@@ -47,12 +52,9 @@ fs.readdirSync(path.join(__dirname, "backend", "Routing")).forEach((file) => {
   Routing for the files in the frontend public folder 
   Has to be done after routing for backend files
   */
-app.use(express.static("public"));
+app.use(express.static(__dirname + "/public"));
 app.use("/Assets", express.static("backend/Assets"));
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public/index.html"));
-  res.sendFile(path.join(__dirname, "backend/Assets"));
-});
+
 //Create localhost server.
 app.listen(port, () => {
   console.log(`Server running on ${port}`);

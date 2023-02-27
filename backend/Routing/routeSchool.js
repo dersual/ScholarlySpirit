@@ -16,6 +16,6 @@ router.post("/createSchool", async (req, res) => {
   }
 }); 
 router.post("/addStaff/:id/:schoolCode", async (req, res) => {
-  School.addNewFaculty(req, res);
+ await School.addNewFaculty(req, res);
 });
 module.exports = router;

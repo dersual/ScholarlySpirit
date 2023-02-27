@@ -34,19 +34,20 @@ exports.getSchool = async (req, res) => {
 exports.addNewFaculty = async (req, res) => {
   try {
     const school = await School.findById(req.params.schoolCode);
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.params.id); 
     if (!school || !user) {
       return res.status(404).json({error: "Matching document not found"});
     } else { 
       if(school.staff.length == 0) { 
         user.accessPermissions = "admin" 
-        await user.save()
+        await user.save();
       }
       school.staff.push(user._id);
       await school.save();
       return res.status(200).json(school);
     }
-  } catch (error) {
+  } catch (error) { 
+    console.error(error)
     return res.status(500).json({ error });
   }
 };

@@ -13,15 +13,18 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  schoolCode: { 
-    type:mongoose.Schema.Types.ObjectId,  
-    ref: "schools",  
-    required:true 
-},
+  schoolCode: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "schools",
+    required: true,
+  },
   accessPermissions: {
     type: String,
     default: "member",
   },
+  emailVerified: { type: Boolean, default: false },
+  verificationToken: { type: String, default: null },
+  createdAt: { type: Date, default: Date.now }, 
   //authorizationToken: String,
 });
 const user = new mongoose.model("User", userSchema);
