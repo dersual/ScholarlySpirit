@@ -141,7 +141,9 @@ async function login() {
       }
       throw new Error(error.error);
     } else {
-      const data = await response.json();
+      const data = await response.json();  
+      console.log(data)
+      localStorage.setItem("UserId", data)
     }
   } catch (error) {
     throw new Error(error);
@@ -159,7 +161,8 @@ async function useSchoolCodeAndRegister(event) {
   } catch (error) {
     console.error(error);
   }
-}
+} 
+
 async function createSchoolAndRegister(event) {
   event.preventDefault();
   try {
@@ -173,7 +176,11 @@ async function loginAndDisplayDashboard(event) {
   event.preventDefault();
   try {
     await login();
-    displayDashBoard();
+    // Hide the home page and display the dashboard
+  displayPages(document.getElementsByClassName("homePage")[0], document.getElementsByClassName("dashboard")[0] )
+  // Set the background of the body element
+  document.body.style.backgroundImage = "none";
+  document.body.style.background = "linear-gradient(30deg, #205da4, #07f1f1)";
   } catch (error) {
     console.error(error);
   }

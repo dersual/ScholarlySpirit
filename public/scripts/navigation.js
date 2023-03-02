@@ -124,15 +124,6 @@ Array(...arrow).forEach((element) => {
   );
 });
 
-// This function is called when the user clicks on the dashboard button
-function displayDashBoard() {
-  // Hide the home page and display the dashboard
-  document.getElementsByClassName("homePage")[0].style.display = "none";
-  document.getElementsByClassName("dashboard")[0].style.display = "block";
-  // Set the background of the body element
-  document.body.style.backgroundImage = "none";
-  document.body.style.background = "linear-gradient(30deg, #205da4, #07f1f1)";
-} 
 //display schoolCodeForm
 handleEvents(
   document.querySelector("div.schoolCodePage > div.LoginContainer > button:first-of-type"),
