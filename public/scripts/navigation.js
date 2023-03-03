@@ -112,16 +112,9 @@ Array(...arrow).forEach((element) => {
     }
   }
   // assign the click event to hide the parent node when it is clicked
-  handleEvents(
-    parent,
-    "click",
-    function (el) {
-      el.style.display = "none";
-    },
-    "add",
-    [],
-    true
-  );
+  handleEvents(parent, "click", function (el) {
+      el.style.display = "none"; 
+    }, "add", [], true);
 });
 
 //display schoolCodeForm
@@ -187,8 +180,12 @@ minGradeInput.oninput = function () {
 maxGradeInput.oninput = function () {
   imposeMinMaxGrades(maxGradeInput);
 }; 
-//set dashboard nav text to displayedOnMobile = false 
+//set attributes for dahsboard-tabs
 Array(...document.getElementsByClassName("dashboard-tab")).forEach(tab => { 
-  tab.setAttribute("displayedOnMobile", false)
+  tab.setAttribute("displayedOnMobile", false)  
+  tab.setAttribute("toggled", false) 
+  if(tab === document.getElementById("home")) { 
+    tab.setAttribute("toggled", true)
+  }
 })
 

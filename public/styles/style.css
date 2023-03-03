@@ -421,15 +421,26 @@ div > div > div:has(.arrow) {
   border-bottom: solid 1px var(--grey-color);
 }
 .dashboard-tab > span:nth-child(1) {
-  color: var(--dark-textColor);
   font-size: clamp(12px, 12vw, 45px);
 }
 .dashboard-tab > span:nth-child(2) {
-  color: var(--grey-color);
   font-size: clamp(12px, 5vw, 18px);
 }
 @media screen and (max-width: 550px) {
-  .dashboard-tab > *:nth-child(2)[displayedOnMobile="false"] {
+  .dashboard-tab[displayedOnMobile="false"] > *:nth-child(2) {
     display: none !important;
-  }
+  } 
 }
+.dashboard-tab[toggled="false"] > span:nth-child(1){ 
+  color: var(--dark-textColor);
+} 
+.dashboard-tab[toggled = "false"] > span:nth-child(2){ 
+  color: var(--grey-color);
+}  
+.dashboard-tab[toggled = "false"]:hover {    
+  background-color: var(--dark-textColor);
+} 
+.dashboard-tab[toggled = "true"] {  
+  color: var(--main-color);   
+  background-color: var(--dark-textColor);
+} 

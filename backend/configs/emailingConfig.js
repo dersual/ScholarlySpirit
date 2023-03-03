@@ -37,7 +37,6 @@ exports.sendGuideEmail = async (email, id) => {
 };
 exports.notifyAdminOnJoinedMember = async (email, name, schoolName) => {
   try {
-    console.log(email);
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: email,
@@ -47,6 +46,20 @@ exports.notifyAdminOnJoinedMember = async (email, name, schoolName) => {
     };
     await transporter.sendMail(mailOptions);
   } catch (error) {
-    throw new Error(error);
+    throw new Error("Error in sending email");
   }
-};
+}; 
+exports.notifyStudentOfNewPoints = async (studentEmail, studentName, pointsRewarded, event) => { 
+  try {
+    const mailOptions = { 
+      from: process.env.EMAIL_USER, 
+      to: studentEmail, 
+      subject: "Notification on points rewarded from an event", 
+      html: `Hi! <br> <br> Notifying you that for going to ${event}, 
+      you just have received ${pointsRewarded}`
+    } 
+    await transporter.sendMail(mailOptions); 
+  } catch (error) { 
+    throw new Error("Error in sending email")
+  }
+}

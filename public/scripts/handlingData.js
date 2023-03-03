@@ -141,7 +141,6 @@ async function login() {
       throw new Error(error.error);
     } else {
       const data = await response.json();
-      console.log(data);
       localStorage.setItem("UserId", data);
     }
   } catch (error) {
