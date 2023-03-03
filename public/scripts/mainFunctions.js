@@ -10,7 +10,7 @@ export function handleEvents(element, event, funct, type = "add", params = [], u
     var newFunct = null;
   
     // Check if params array is empty
-    if (params.length == 0) {
+    if (params.length === 0) {
       // If usingThis is true, create a new function that calls funct with 'this'
       if (usingThis) {
         newFunct = function () {
@@ -26,14 +26,14 @@ export function handleEvents(element, event, funct, type = "add", params = [], u
   
     // If newFunct was created, add or remove the event listener using the new function
     if (newFunct !== null) {
-      if (type == "add") {
+      if (type === "add") {
         element.addEventListener(event, newFunct);
       } else {
         element.removeEventListener(event, newFunct);
       }
     } else {
       // Otherwise, add or remove the event listener using the original function
-      if (type == "add") {
+      if (type === "add") {
         element.addEventListener(event, funct);
       } else {
         element.removeEventListener(event, funct);

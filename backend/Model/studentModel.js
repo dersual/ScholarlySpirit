@@ -20,7 +20,8 @@ const studentSchema = new Schema ({
         required:true 
     }, 
     rewards: [{  
-        type: Object   
+        type: mongoose.Schema.Types.ObjectId,  
+        ref: "studentRewards"   
     }]
 }) 
 const student = mongoose.model("Student", studentSchema) 

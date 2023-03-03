@@ -164,24 +164,38 @@
     <!--Main Dashboard for Teachers--->
     <div class="dashboard page">
       <!--Navigation-->
-      <nav> 
-        <div id = "profile">
+      <nav>  
+        <div class = "dashboard-tab" id ="sign-out">
+          <i
+            data-close-target=".dashboard"
+            data-open-target=".homePage"
+            data-opentarget-exclusive
+            data-display-type="flex"
+            data-x-pos="45%"
+            data-y-pos="0px"
+            class="arrow left"
+          ></i> 
+          <p>Go Back</p>
+        </div>
+        <div class = "dashboard-tab" id = "profile">
           <span><i class="fa-solid fa-user"></i></span>
           <span>Profile</span> 
-        </div>  
+        </div>   
+        <!---
         <div>
           <span><i class="fa-solid fa-gears"></i></span>
           <span>Settings</span>
-        </div> 
-        <div> 
+        </div>  
+      -->
+        <div class = "dashboard-tab"> 
           <span><i class="fa-solid fa-house-chimney"></i></span> 
           <span>Dashboard</span>
         </div>
-        <div>
+        <div class = "dashboard-tab">
           <span><i class="fa-solid fa-chalkboard-user"></i></span>
           <span>Faculty</span>
         </div>
-        <div> 
+        <div class = "dashboard-tab"> 
           <span><i class="fa-solid fa-question"></i></span> 
           <span>Help</span>
         </div>
@@ -217,8 +231,8 @@
       </div>
     </div>
     <!--scripts--> 
-    <script src="scripts/mainFunctions.js" defer></script> 
-    <script src="scripts/handlingData.js" defer></script> 
-   <script src = "scripts/navigation.js" defer></script>
+    <script src="scripts/mainFunctions.js" type = "module" defer></script> 
+    <script src="scripts/handlingData.js" type = "module" defer></script> 
+   <script src = "scripts/navigation.js" type = "module" defer></script>
   </body>
 </html>

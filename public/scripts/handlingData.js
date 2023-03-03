@@ -1,18 +1,17 @@
-import { handleEvents, displayPages } from "./mainFunctions";
-//Everything regarding DOM manipulation 
+import { handleEvents, displayPages } from "./mainFunctions.js";
+//Everything regarding DOM manipulation
 // Declare empty objects for user and school data
 let user = {};
 let school = {};
 
 //Fetching routes(involves sending & getting data)
-// This function is called when the user submits the signup form, prepares user data for sign up function later 
-
+// This function is called when the user submits the signup form, prepares user data for sign up function later
 
 async function setUpUser(event) {
   // Prevent the default form submission behavior
   event.preventDefault();
-  //display arrow
-  arrow[1].parentNode.style.display = "block";
+  //display arrow at School Form Page Intro
+  document.getElementsByClassName("arrow")[1].parentNode.style.display = "block";
   try {
     // Get the form data
     const formdata = new URLSearchParams(
@@ -104,9 +103,9 @@ async function register() {
       const error = await response.json();
       throw new Error(error.error);
     } else {
-      const data = await response.json(); 
-      sessionStorage.setItem("id", data._id); 
-      var url = "/addStaff/" + data._id + "/" + data.schoolCode; 
+      const data = await response.json();
+      sessionStorage.setItem("id", data._id);
+      var url = "/handleFacultyRoleInSchool/" + data._id + "/" + data.schoolCode;
       const response2 = await fetch(url, {
         method: "POST",
       });
@@ -115,11 +114,11 @@ async function register() {
         const error = await response.json();
         throw new Error(error.error);
       } else {
-      //display notice for user
-      const user = await response2.json();
-      document.getElementById("overlay").style.display = "block";
-      document.getElementById("after-register-notice").style.display = "flex";
-      return user; 
+        //display notice for user
+        const user = await response2.json();
+        document.getElementById("overlay").style.display = "block";
+        document.getElementById("after-register-notice").style.display = "flex";
+        return user;
       }
     }
   } catch (error) {
@@ -141,9 +140,9 @@ async function login() {
       }
       throw new Error(error.error);
     } else {
-      const data = await response.json();  
-      console.log(data)
-      localStorage.setItem("UserId", data)
+      const data = await response.json();
+      console.log(data);
+      localStorage.setItem("UserId", data);
     }
   } catch (error) {
     throw new Error(error);
@@ -161,7 +160,7 @@ async function useSchoolCodeAndRegister(event) {
   } catch (error) {
     console.error(error);
   }
-} 
+}
 
 async function createSchoolAndRegister(event) {
   event.preventDefault();
@@ -177,10 +176,12 @@ async function loginAndDisplayDashboard(event) {
   try {
     await login();
     // Hide the home page and display the dashboard
-  displayPages(document.getElementsByClassName("homePage")[0], document.getElementsByClassName("dashboard")[0] )
-  // Set the background of the body element
-  document.body.style.backgroundImage = "none";
-  document.body.style.background = "linear-gradient(30deg, #205da4, #07f1f1)";
+    displayPages(
+      document.getElementsByClassName("homePage")[0],
+      document.getElementsByClassName("dashboard")[0]
+    );  
+    //display sign-out arrow
+    document.getElementById("sign-out").style.display = "block";
   } catch (error) {
     console.error(error);
   }
@@ -209,7 +210,7 @@ Array(...overlayButtons).forEach((button) => {
     });
     switch (Array(...overlayButtons).indexOf(button)) {
       case 0:
-        try {  
+        try {
           window.event.preventDefault();
           const sessionData = new FormData();
           sessionData.append("email", sessionStorage.getItem("email"));
@@ -222,7 +223,7 @@ Array(...overlayButtons).forEach((button) => {
           if (!response.ok) {
             const error = await response.json();
             throw new Error(error.error);
-          } else {
+          } else { 
             window.location.reload();
           }
         } catch (error) {

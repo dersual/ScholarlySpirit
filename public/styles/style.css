@@ -17,11 +17,11 @@
     13.1px 81.8px 96.3px -2.2px hsl(var(--shadow-color) / 0.27);
   --main-color: #1985a1;
   --light-mainColor: #07f1f1;
-  --dark-textColor: #46494c; 
-  --grey-color: #c5c3c6;  
-  --lightest-color: #fffbfe;  
-  --darkest-color:#0c120c; 
-} 
+  --dark-textColor: #46494c;
+  --grey-color: #c5c3c6;
+  --lightest-color: #fffbfe;
+  --darkest-color: #0c120c;
+}
 /*variables here */
 style {
   display: none;
@@ -107,16 +107,14 @@ h6 {
   left: 50%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
-  display: none;  
-  border-radius:10px !important;  
-
-  
-} 
-#overlay > div > div {   
-  flex-direction: row-reverse; 
-  flex-wrap: wrap;   
-  justify-content: space-between; 
-} 
+  display: none;
+  border-radius: 10px !important;
+}
+#overlay > div > div {
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
 .homePage {
   display: flex;
   flex-wrap: wrap;
@@ -157,19 +155,21 @@ h6 {
   border-right: solid var(--dark-textColor) 3px;
   border-left: solid 3px transparent;
   border-bottom: solid var(--dark-textColor) 3px;
-  border-top: solid 3px transparent; 
+  border-top: solid 3px transparent;
   cursor: pointer;
-} 
-.arrow + p { 
-  display:inline;  
-  color: var(--dark-textColor) 
+}
+.arrow + p {
+  display: inline;
+  color: var(--dark-textColor);
+  font-size: clamp(12px, 2vw, 15px);
 }
 
 .left {
   transform: rotate(135deg);
   -webkit-transform: rotate(135deg);
 }
-.LoginContainer, #overlay > div {
+.LoginContainer,
+#overlay > div {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -189,7 +189,8 @@ h6 {
 }
 .LoginContainer > button,
 .landingPageForm > button,
-form > button, .overlay-buttons {
+form > button,
+.overlay-buttons {
   background-color: var(--main-color);
   border-radius: 30px;
   border: none;
@@ -197,7 +198,8 @@ form > button, .overlay-buttons {
 }
 .LoginContainer > button:hover,
 .landingPageForm > button:hover,
-form > button:hover, .overlay-buttons:hover {
+form > button:hover,
+.overlay-buttons:hover {
   background-color: #0478fc;
   color: azure;
   cursor: pointer;
@@ -216,8 +218,8 @@ p.other-opt > span {
   display: inline;
 }
 p.other-opt {
-  margin-top: 5px; 
-  font-size: clamp(12px,2vw,14px);
+  margin-top: 5px;
+  font-size: clamp(12px, 2vw, 14px);
 }
 
 .landingPageForm {
@@ -249,14 +251,15 @@ p.other-opt {
   box-sizing: border-box;
   display: inline-block;
   border-radius: 10px;
-  border-color: var(--main-color); 
+  border-color: var(--main-color);
   border-style: solid;
 }
 input:focus-visible {
   outline: none;
 }
 .landingPageForm > button,
-.schoolForm > button, .overlay-buttons {
+.schoolForm > button,
+.overlay-buttons {
   padding: 10px 20px;
   margin-top: 5px;
 }
@@ -278,21 +281,20 @@ input:focus-visible {
   padding-bottom: 20px;
   padding-right: 30px;
   justify-content: center;
-} 
-div > div > div:has(.arrow) { 
-    grid-row: 1;
-    grid-column: 1/5;
-    align-self: start;
-    justify-self: stretch;
+}
+div > div > div:has(.arrow) {
+  grid-row: 1;
+  grid-column: 1/5;
+  align-self: start;
+  justify-self: stretch;
 }
 .schoolCodePage > div.LoginContainer > h2 {
-  grid-column: 1/5; 
-  grid-row:1;
+  grid-column: 1/5;
+  grid-row: 1;
   justify-self: stretch;
   border-bottom: #dddadc solid 1px;
-  align-self: end; 
-  font-size: clamp(20px,2.5vw,25px); 
-  
+  align-self: end;
+  font-size: clamp(20px, 2.5vw, 25px);
 }
 .schoolCodePage > div.LoginContainer > button {
   grid-row: 2 / span 2;
@@ -341,7 +343,7 @@ div > div > div:has(.arrow) {
   width: 50%;
 }
 .schoolForm {
-  grid-row: 1/span 2;
+  grid-row: 1 / span 2;
   justify-self: stretch;
   align-self: stretch;
   grid-column: 1/5;
@@ -355,37 +357,37 @@ div > div > div:has(.arrow) {
   height: 100%;
   width: 100%;
 }
-.dashboard > div {
+.section-container {
   position: absolute;
   right: 0;
   top: 0;
-  width: 85%; 
-  padding:30px 40px;  
-  display:flex;  
-  align-items: center; 
-  justify-content: center;  
-  flex-direction: column; 
-  height:100%;  
+  width: 85%;
+  padding: 30px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
   gap: 30px;
+  background: linear-gradient(30deg, var(--main-color), var(--light-mainColor));
 }
 .dashboard > div > section {
-  width: 50%; 
+  width: 50%;
   text-align: center;
   height: calc(100vh / 3.25);
   font-family: "Montserrat", sans-serif;
   color: #205da4;
   background: #c5c3c6;
   font-weight: 100;
-  cursor: pointer; 
-  border-radius:50px; 
-  transition: 1.25s; 
+  cursor: pointer;
+  border-radius: 50px;
+  transition: 1.25s;
   overflow-y: hidden;
 }
 .dashboard > div > section:hover {
   color: var(--lightest-color);
   background: linear-gradient(30deg, #205da4, #07f1f1);
   border: solid 1px var(--dark-textColor);
-
 }
 .dashboard > div > section > h1 {
   top: 50%;
@@ -401,16 +403,33 @@ div > div > div:has(.arrow) {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  height: 100%;   
-} 
-.dashboard > nav > div { 
-  border-top:solid 1px var(--grey-color);    
-  display: flex;  
-  flex-direction: column;
-}   
-.dashboard > nav > div > span:nth-child(1) { 
-  color: var(--dark-textColor)
+  height: 100%;
 }
-.dashboard > nav > div > span:nth-child(2) { 
-  color: var(--grey-color)
+.dashboard-tab {
+  border-top: solid 1px var(--grey-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  justify-content: center;
+}
+.dashboard-tab:first-child {
+  border-top: none;
+  transform: translateX(-50%);
+}
+.dashboard-tab:last-child {
+  border-bottom: solid 1px var(--grey-color);
+}
+.dashboard-tab > span:nth-child(1) {
+  color: var(--dark-textColor);
+  font-size: clamp(12px, 12vw, 45px);
+}
+.dashboard-tab > span:nth-child(2) {
+  color: var(--grey-color);
+  font-size: clamp(12px, 5vw, 18px);
+}
+@media screen and (max-width: 550px) {
+  .dashboard-tab > *:nth-child(2)[displayedOnMobile="false"] {
+    display: none !important;
+  }
 }

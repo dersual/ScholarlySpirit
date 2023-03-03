@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const jwt = require("jsonwebtoken");
-const SchoolModel = require("../Model/schoolModel.js");
+const jwt = require("jsonwebtoken"); 
+const mail = require("../configs/emailingConfig");
+const SchoolModel = require("../Model/schoolModel.js"); 
 const School = require("../Controls/school.js");
 router.post("/createSchool", async (req, res) => {
   try {
@@ -15,7 +16,7 @@ router.post("/createSchool", async (req, res) => {
     res.status(400).json({error: err.message})
   }
 }); 
-router.post("/addStaff/:id/:schoolCode", async (req, res) => {
- await School.addNewFaculty(req, res);
+router.post("/handleFacultyRoleInSchool/:id/:schoolCode", async (req, res) => {
+ await School.handleRolesOnJoin(req, res);
 });
 module.exports = router;

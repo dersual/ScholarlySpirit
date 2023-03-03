@@ -8,9 +8,9 @@ const express = require("express");
 require("dotenv").config();
 const path = require("path");
 const app = express();
-const bcrypt = require("bcryptjs");
 const port = process.env.PORT || 3000;
-const bodyParser = require("body-parser");
+const bodyParser = require("body-parser");  
+const utils = require("./backend/utils/utilsIndex.js")
 const helmet = require("helmet");
 //connecting to mongodb
 const connectDB = require("./backend/configs/db.js");
@@ -54,7 +54,7 @@ fs.readdirSync(path.join(__dirname, "backend", "Routing")).forEach((file) => {
   */
 app.use(express.static(__dirname + "/public"));
 app.use("/Assets", express.static("backend/Assets"));
-
+utils.allUtils();
 //Create localhost server.
 app.listen(port, () => {
   console.log(`Server running on ${port}`);

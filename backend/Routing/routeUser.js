@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const auth = require("../configs/jwtConfigs"); 
-const mail = require("../configs/emailingConfig")
+const auth = require("../configs/jwtConfigs");
+const mail = require("../configs/emailingConfig");
 const User = require("../Controls/user.js");
 const UserModel = require("../Model/userModel");
 router.post("/setup-user", async (req, res) => {
@@ -43,10 +43,10 @@ router.post("/login", async (req, res) => {
 });
 router.post("/sendVerifyEmail", async (req, res) => {
   try {
-   await mail.sendVerificationEmail(req.body.email, req.body.id);
-    res.json(200).json({success: true});
-  } catch (error) { 
-    res.status(400).json({error: error.message})
+    await mail.sendVerificationEmail(req.body.email, req.body.id);
+    res.status(200).json({ success: true });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 });
 router.get("/user", auth.authenticateToken, async (req, res) => {
@@ -63,7 +63,7 @@ router.get("/verifyEmail/:token", async (req, res) => {
       throw new Error("User not found.");
     }
 
-    if (user.isVerified) {
+    if (user.emailVerified) {
       return res.status(400).json({ message: "Email address already verified." });
     }
 
@@ -71,9 +71,9 @@ router.get("/verifyEmail/:token", async (req, res) => {
     const tokenIssuedAt = new Date(jwt.decode(req.params.token).iat * 1000);
     const tokenExpiresAt = new Date(tokenIssuedAt.getTime() + 15 * 60 * 1000);
 
-    if (now > tokenExpiresAt) {   
-      await user.remove(); 
-      throw new Error("Verification link has expired. And Now Your Account Has Been Deleted"); 
+    if (now > tokenExpiresAt) {
+      await user.remove();
+      throw new Error("Verification link has expired. And Now Your Account Has Been Deleted");
     }
 
     user.emailVerified = true;
@@ -86,12 +86,6 @@ router.get("/verifyEmail/:token", async (req, res) => {
 });
 router.post("/updateUser/:id", async (req, res) => {
   User.updateUser(req, res);
-});
-//router.get("/", async (req, res) => {
-/*  const fifteenMinutesAgo = new Date(Date.now() - 15 * 60 * 1000);
-  UserModel.deleteMany({
-    verified: false,
-    createdAt: { $lt: fifteenMinutesAgo },
-  }).exec();*/
-//});
+}); 
+
 module.exports = router;

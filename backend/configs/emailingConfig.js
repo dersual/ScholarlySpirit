@@ -1,9 +1,8 @@
 const nodemailer = require("nodemailer");
-const jwt = require("jsonwebtoken");
 const auth = require("./jwtConfigs");
-const transporter = nodemailer.createTransport({     
-  service: "gmail", 
-   secure: true,
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  secure: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASSWORD,
@@ -11,8 +10,8 @@ const transporter = nodemailer.createTransport({
 });
 
 exports.sendVerificationEmail = async (email, id) => {
-  try { 
-    const token = auth.generateEmailVertificationToken({id});
+  try {
+    const token = auth.generateEmailVertificationToken({ id });
     const verificationLink = `http://localhost:3000/verifyEmail/${token}`;
     const mailOptions = {
       from: process.env.EMAIL_USER,
@@ -20,18 +19,34 @@ exports.sendVerificationEmail = async (email, id) => {
       subject: "Verify your email address",
       html: `Click <a href="${verificationLink}">here</a> to verify your email address.`,
     };
-    await transporter.sendMail(mailOptions); 
-    return `Mail sent`
+    await transporter.sendMail(mailOptions);
   } catch (error) {
-    console.error(error); 
-    throw new Error(error)
+    console.error(error);
+    throw new Error(error);
   }
 };
-exports.sendGuideEmail = (email, id) => {
-  const mailOptions = {
-    from: process.env.EMAIL_USER,
-    to: email,
-    subject: "Short Guide on how to use Scholarly Spirit",
-    html: `Hi`,
-  };
+exports.sendGuideEmail = async (email, id) => {
+  try {
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Short Guide On How To Use Scholarly Spirit",
+      html: `Hello`,
+    };
+  } catch (error) {}
+};
+exports.notifyAdminOnJoinedMember = async (email, name, schoolName) => {
+  try {
+    console.log(email);
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Notification On New User Joining",
+      html: `Hi! <br> <br> Just wanted to notify you that a new user named ${name} just joined your school, ${schoolName}.  
+      <br> <br> From: Scholarly Spirit`
+    };
+    await transporter.sendMail(mailOptions);
+  } catch (error) {
+    throw new Error(error);
+  }
 };

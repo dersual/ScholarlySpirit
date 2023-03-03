@@ -1,4 +1,4 @@
-import { handleEvents, displayPages } from "./mainFunctions"; 
+import { handleEvents, displayPages } from "./mainFunctions.js"; 
 
 // DOM for when logging in and sign up
 // Get login buttons and attach event listeners
@@ -28,7 +28,7 @@ function displayLandingPageForms(el) {
   loginButtons[0].parentElement.style.borderRadius = "50px";
 
   // If the login button was clicked, show the login form and fade it in
-  if (el == loginButtons[0] || el == document.getElementsByClassName("login-opt")[0].children[0]) {
+  if (el === loginButtons[0] || el === document.getElementsByClassName("login-opt")[0].children[0]) {
     loginForm.style.display = "block";
     signupForm.style.display = "none";
     setTimeout(() => {
@@ -37,8 +37,8 @@ function displayLandingPageForms(el) {
   }
   // If the signup button was clicked, show the signup form and fade it in
   else if (
-    el == loginButtons[1].children[0] ||
-    el == document.getElementsByClassName("signup-opt")[0].children[0]
+    el === loginButtons[1].children[0] ||
+    el === document.getElementsByClassName("signup-opt")[0].children[0]
   ) {
     signupForm.style.display = "block";
     Array(...signupForm.getElementsByTagName("input")).forEach((input) => {
@@ -162,10 +162,10 @@ function imposeMinMaxGrades(el) {
   setTimeout(function () {
     minGradeInput.max = parseInt(maxGradeInput.value);
     maxGradeInput.min = parseInt(minGradeInput.value);
-    if (minGradeInput.max == NaN) {
+    if (minGradeInput.max === NaN) {
       minGradeInput.max = 12;
     }
-    if (maxGradeInput.min == NaN) {
+    if (maxGradeInput.min === NaN) {
       maxGradeInput.min = 1;
     }
     imposeMinMax(el);
@@ -187,5 +187,8 @@ minGradeInput.oninput = function () {
 maxGradeInput.oninput = function () {
   imposeMinMaxGrades(maxGradeInput);
 }; 
-
+//set dashboard nav text to displayedOnMobile = false 
+Array(...document.getElementsByClassName("dashboard-tab")).forEach(tab => { 
+  tab.setAttribute("displayedOnMobile", false)
+})
 
