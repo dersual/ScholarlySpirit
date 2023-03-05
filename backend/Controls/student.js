@@ -6,9 +6,11 @@ app.use(bodyParser.json());
 const bcrypt = require("bcryptjs");
 const Student = require("../Model/studentModel.js");
 const mongoose = require("mongoose");
-exports.createAStudent = async (req, request) => {};
-exports.createStudents = async (req, request) => {};
-exports.getStudent = async (req, request) => { 
+exports.createAStudent = async (req, res) => {};
+exports.createStudents = async (req, res) => { 
+  
+};
+exports.getAStudent = async (req, res) => { 
     try {
         const student = await Student.findById(req.params.id);
         if (!student) {
@@ -22,4 +24,12 @@ exports.getStudent = async (req, request) => {
           error: "Internal server error",
         });
       }
-};
+}; 
+exports.getStudents = async (req, res) => { 
+  try {
+    const students = await Student.find({schoolCode: req.user.userSchoolCode}, { name: 1, email: 1, points:1 })    
+    return res.status(200).json({students}) 
+  } catch (error) {
+    throw new Error(error)
+  }
+  }    

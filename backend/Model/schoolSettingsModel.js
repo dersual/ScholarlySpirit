@@ -14,22 +14,22 @@ const settingsSchema = new Schema({
   topTen: {
     type: String,
     required: true,
-    enum: ["In Each Grade", "In All Of School"], 
-    default: "In Each Grade"
+    enum: ["In Each Grade", "In All Of School"],
+    default: "In Each Grade",
   },
   prizeList: {
     type: Array,
     default: [
-      { place: 1, reward: "Free Parking for a Month" },
-      { place: 2, reward: "Free Access To Events For Two Weeks" },
-      { place: 3, reward: "Free Food For A Week" },
-      { place: 4, reward: "Free School Spirit Ware of Any Your Choosing" },
-      { place: 5, reward: "Free Homework Pass For Any Assignment of Your Choosing" },
-      { place: 6, reward: "Free Homework Pass For Any Assignment of Your Choosing" },
-      { place: 7, reward: "Free Homework Pass For Any Assignment of Your Choosing" },
-      { place: 8, reward: "Free Homework Pass For Any Assignment of Your Choosing" },
-      { place: 9, reward: "Free Homework Pass For Any Assignment of Your Choosing" },
-      { place: 10, reward: "Free Homework Pass For Any Assignment of Your Choosing" },
+      { place: 1, reward: { name: "Free Parking for a Month" } },
+      { place: 2, reward: { name: "Free Access To Events For Two Weeks" } },
+      { place: 3, reward: { name: "Free Food For A Week" } },
+      { place: 4, reward: { name: "Free School Spirit Ware of Any Your Choosing" } },
+      { place: 5, reward: { name: "Free Homework Pass For Any Assignment of Your Choosing" } },
+      { place: 6, reward: { name: "Free Homework Pass For Any Assignment of Your Choosing" } },
+      { place: 7, reward: { name: "Free Homework Pass For Any Assignment of Your Choosing" } },
+      { place: 8, reward: { name: "Free Homework Pass For Any Assignment of Your Choosing" } },
+      { place: 9, reward: { name: "Free Homework Pass For Any Assignment of Your Choosing" } },
+      { place: 10, reward: { name: "Free Homework Pass For Any Assignment of Your Choosing" } },
     ],
   } /*
   validate: {

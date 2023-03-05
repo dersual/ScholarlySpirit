@@ -7,11 +7,11 @@ let school = {};
 //Fetching routes(involves sending & getting data)
 // This function is called when the user submits the signup form, prepares user data for sign up function later
 
-async function setUpUser(event) {
+export async function setUpUser(event) {
   // Prevent the default form submission behavior
   event.preventDefault();
   //display arrow at School Form Page Intro
-  document.getElementsByClassName("arrow")[1].parentNode.style.display = "block";
+  document.getElementsByClassName("arrow")[1].parentNode.style.display = "flex";
   try {
     // Get the form data
     const formdata = new URLSearchParams(
@@ -47,7 +47,9 @@ async function setUpUser(event) {
     }
   } catch (error) {
     // Log the error
-    console.error(error);
+    if (error.message !== "Account Seems To Have Already Been Made") {
+      alert(error.message);
+    }
   }
 }
 //Create School
@@ -79,7 +81,7 @@ async function createSchool() {
       sessionStorage.setItem("schoolCode", data._id);
     }
   } catch (error) {
-    throw new Error(error);
+    throw new Error(error.message);
   }
 }
 //Sign Up User
@@ -117,12 +119,12 @@ async function register() {
         //display notice for user
         const user = await response2.json();
         document.getElementById("overlay").style.display = "block";
-        document.getElementById("after-register-notice").style.display = "flex";
+        document.getElementById("after-register-notice").setAttribute("toggled", true);
         return user;
       }
     }
   } catch (error) {
-    throw new Error(error);
+    throw new Error(error.message);
   }
 }
 async function login() {
@@ -141,13 +143,64 @@ async function login() {
       throw new Error(error.error);
     } else {
       const data = await response.json();
-      localStorage.setItem("UserId", data);
+      localStorage.setItem("accessToken", JSON.stringify(data.accessToken));
+      localStorage.setItem("refreshToken", JSON.stringify(data.refreshToken));
+      localStorage.setItem("LoginStatus", "true");
     }
   } catch (error) {
-    throw new Error(error);
+    throw new Error(error.message);
   }
 }
-async function useSchoolCodeAndRegister(event) {
+async function getData(fetchUrl) {
+  const accessToken = JSON.parse(localStorage.getItem("accessToken"));
+  const refreshToken = JSON.parse(localStorage.getItem("refreshToken"));
+  try {
+    const response = await fetch(fetchUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+        "Refresh-Token": refreshToken,
+      },
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error);
+    } else {
+      if (response.headers.get("refresh-token")) {
+        localStorage.setItem(
+          "accessToken",
+          JSON.stringify(response.headers.get("access-token"))
+        );
+        localStorage.setItem(
+          "refreshToken",
+          JSON.stringify(response.headers.get("refresh-token"))
+        );
+      }
+      const data = await response.json();
+      return data;
+    }
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+async function getFaculty() {
+  try {
+    const data = await getData("/getFaculty");
+    return data;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+async function getStudents() {
+  try {
+    const data = await getData("/getStudents");
+    return data;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+export async function useSchoolCodeAndRegister(event) {
   event.preventDefault();
   // Convert form data to object
   const formData = new FormData(document.getElementsByClassName("addCodeForm")[0]);
@@ -157,20 +210,20 @@ async function useSchoolCodeAndRegister(event) {
   try {
     await register();
   } catch (error) {
-    console.error(error);
+    alert(error.message);
   }
 }
 
-async function createSchoolAndRegister(event) {
+export async function createSchoolAndRegister(event) {
   event.preventDefault();
   try {
     await createSchool();
     await register();
   } catch (error) {
-    console.error(error);
+    alert(error.message);
   }
 }
-async function loginAndDisplayDashboard(event) {
+export async function loginAndDisplayDashboard(event) {
   event.preventDefault();
   try {
     await login();
@@ -178,57 +231,94 @@ async function loginAndDisplayDashboard(event) {
     displayPages(
       document.getElementsByClassName("homePage")[0],
       document.getElementsByClassName("dashboard")[0]
-    );  
+    );
+    Array(...document.getElementsByClassName("dashboard-tab")).forEach((tab) => {
+      tab.setAttribute("displayedOnMobile", false);
+      tab.setAttribute("toggled", false);
+      if (tab === document.getElementById("home")) {
+        tab.setAttribute("toggled", true);
+      }
+    });
     //display sign-out arrow
-    document.getElementById("sign-out").style.display = "block";
+    document.getElementById("sign-out").style.display = "flex";
   } catch (error) {
-    console.error(error);
+    if (error.message !== "Username or Password is wrong") {
+      alert(error.message);
+    }
   }
 }
+export async function displayFaculty(event) {
+  event.preventDefault();
+  try {
+    document.getElementById("facultyDisplay").innerHTML = "";
+    let val = document.getElementById("facultyInput").value.toLowerCase();
+    const data = await getFaculty();
+    const faculty = data.staff;
+    const user = data.user;
+    let facultyFiltered = faculty.filter(
+      (staff) =>
+        staff.name !== user[0].name &&
+        (staff.name.includes(val) || staff.email.includes(val))
+    );
+    generateSearchCards(user, document.getElementById("facultyDisplay"), "", "userCard");
+    generateSearchCards(
+      facultyFiltered,
+      document.getElementById("facultyDisplay"),
+      user[0].accessPermissions
+    );
+    //regenerate cards
+    setTimeout(function () {
+      if (
+        document.getElementById("facultyDisplay").children.length >
+        user.length + facultyFiltered.length
+      ) {
+        document.getElementById("facultyDisplay").innerHTML = "";
+        generateSearchCards(
+          user,
+          document.getElementById("facultyDisplay"),
+          "",
+          "userCard"
+        );
+        generateSearchCards(
+          facultyFiltered,
+          document.getElementById("facultyDisplay"),
+          user[0].accessPermissions
+        );
+      }
+    }, 1000);
+  } catch (error) {
+    alert(`Sorry an error just occured and it says, ${error.message}`);
+  }
+}
+function setNewRefreshToken() {}
 //call setUpUser function to be called when the form is submitted
-handleEvents(document.getElementsByClassName("signup-form")[0], "submit", setUpUser);
-
-//call createSchoolAndRegister function when called
-handleEvents(
-  document.getElementsByClassName("createSchoolForm")[0],
-  "submit",
-  createSchoolAndRegister
-);
-
-//call useSchoolCodeAndRegist function when form submitted
-handleEvents(document.getElementsByClassName("addCodeForm")[0], "submit", useSchoolCodeAndRegister);
-//call loginAndDisplayDashboard when form submitted
-handleEvents(document.getElementsByClassName("login-form")[0], "submit", loginAndDisplayDashboard);
-
-var overlayButtons = document.getElementsByClassName("overlay-buttons");
-Array(...overlayButtons).forEach((button) => {
-  handleEvents(button, "click", async function () {
-    document.getElementById("overlay").style.display = "none";
-    Array(...document.querySelectorAll("#overlay > *")).forEach((parent) => {
-      parent.style.display = "none";
-    });
-    switch (Array(...overlayButtons).indexOf(button)) {
-      case 0:
-        try {
-          window.event.preventDefault();
-          const sessionData = new FormData();
-          sessionData.append("email", sessionStorage.getItem("email"));
-          sessionData.append("id", sessionStorage.getItem("id"));
-          const userData = new URLSearchParams(sessionData);
-          const response = await fetch("/sendVerifyEmail", {
-            method: "POST",
-            body: userData,
-          });
-          if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.error);
-          } else { 
-            window.location.reload();
-          }
-        } catch (error) {
-          console.error(error);
-        }
-        break;
+function generateSearchCards(
+  data,
+  appendElement,
+  role = "member",
+  addClass = undefined,
+  extraBody = undefined
+) {
+  data.forEach((element) => {
+    const cardTemplate = document.querySelector("[data-search-template]");
+    const card = cardTemplate.content.cloneNode(true).children[0];
+    if (addClass) {
+      /*const cardContainer = card.querySelector("[data-container]");
+      cardContainer.classList.add(addClass);*/
+      card.classList.add(addClass);
     }
+    if (extraBody) {
+      const cardXtraBody = card.querySelector("[data-body-extra]");
+      cardXtraBody.textContent = extraBody;
+      cardXtraBody.style.display = "block";
+    }
+    if (role === "admin") {
+      card.querySelector("[data-admin-body]").style.display = "block";
+    }
+    const title = card.querySelector("[data-title]");
+    const body = card.querySelector("[data-body]");
+    title.textContent = element.name;
+    body.textContent = element.email;
+    appendElement.append(card);
   });
-});
+}

@@ -10,7 +10,11 @@ const rewardSchema = new Schema({
     required: true,
     enum: ["duration-based", "instant-based"],  
     default:"instant-based"
-  },
+  }, 
+  active: { 
+    type: Boolean,
+    default: false
+  }
 });
 const reward = mongoose.model("reward", rewardSchema);
 module.exports = reward;

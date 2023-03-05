@@ -23,9 +23,12 @@ const userSchema = new Schema({
     default: "member",
   },
   emailVerified: { type: Boolean, default: false },
-  verificationToken: { type: String, default: null },
   createdAt: { type: Date, default: Date.now }, 
-  //authorizationToken: String,
+  refreshTokens:  {
+    type: [String],
+    default: []
+  }
 });
-const user = new mongoose.model("User", userSchema);
+const user = new mongoose.model("User", userSchema); 
+
 module.exports = user;

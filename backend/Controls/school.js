@@ -2,21 +2,21 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json()); 
-const mail = require("../configs/emailingConfig")
+app.use(bodyParser.json());
+const mail = require("../configs/emailingConfig");
 const School = require("../Model/schoolModel.js");
 const User = require("../Model/userModel.js");
 const Event = require("../Model/eventModel");
-const Student = require("../Model/studentModel"); 
-const Setting = require("../Model/schoolSettingsModel")
+const Student = require("../Model/studentModel");
+const Setting = require("../Model/schoolSettingsModel");
 const mongoose = require("mongoose");
 exports.newSchool = async (req, res) => {
   try {
     req.body.grades = JSON.parse(req.body.grades);
-    const school = new School(req.body); 
-    const setting = new Setting(); 
-    await setting.save(); 
-    school.setting = setting._id; 
+    const school = new School(req.body);
+    const setting = new Setting();
+    await setting.save();
+    school.setting = setting._id;
     await school.save();
     return res.status(200).json(school);
   } catch (error) {
@@ -27,7 +27,7 @@ exports.newSchool = async (req, res) => {
 };
 exports.getSchool = async (req, res) => {
   try {
-    const school = await School.findById(req.params.id);
+    const school = await School.findById(req.user.userSchoolCode);
     return res.status(200).json(school);
   } catch (error) {
     return res.status(400).json({
@@ -38,29 +38,61 @@ exports.getSchool = async (req, res) => {
 exports.handleRolesOnJoin = async (req, res) => {
   try {
     const school = await School.findById(req.params.schoolCode);
-    const user = await User.findById(req.params.id); 
+    const user = await User.findById(req.params.id);
     if (!school || !user) {
-      return res.status(404).json({error: "Matching document not found"});
-    } else {    
-      const staff = await User.find({schoolCode: req.params.schoolCode}) 
-      if(staff.length === 1) { 
-        user.accessPermissions = "admin" 
+      return res.status(404).json({ error: "Matching document not found" });
+    } else {
+      const staff = await User.find({ schoolCode: req.params.schoolCode });
+      if (staff.length === 1) {
+        user.accessPermissions = "admin";
         await user.save();
-      } 
-      else{    
-        //get admin in the school.staff 
-        const admins = await User.find({schoolCode: req.params.schoolCode, accessPermissions: "admin"})   
-        for(i in admins) {   
-          console.log(admins[i])
-          await mail.notifyAdminOnJoinedMember(admins[i].email, user.name, school.name)
+        mail.sendSchoolCode(user.email, school._id);
+      } else {
+        //get admin in the school.staff
+        const admins = await User.find({
+          schoolCode: req.params.schoolCode,
+          accessPermissions: "admin",
+        });
+        for (i in admins) {
+          console.log(admins[i]);
+          await mail.notifyAdminOnJoinedMember(admins[i].email, user.name, school.name);
         }
       }
       return res.status(200).json(school);
     }
-  } catch (error) { 
-    console.error(error)
+  } catch (error) {
+    console.error(error);
     return res.status(500).json({ error });
   }
 };
-exports.addNewStudents = (req, res) => {};
-exports.addNewEvent = (req, res) => {};
+exports.getAllFaculty = async (req, res) => {
+  try {
+    const staff = await User.find({ schoolCode: req.user.userSchoolCode }, { name: 1, email: 1 });
+    const user = await User.find(
+      { _id: req.user.userID },
+      { name: 1, accessPermissions: 1, email: 1 }
+    );
+    return res.status(200).json({ staff, user });
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+exports.changeSchoolCode = async (req, res) => {
+  try {
+    const school = School.findById({ _id: req.user.userSchoolCode });
+    const newSchool = School.create({ ...school.toObject(), _id: mongoose.Types.ObjectId() });
+    await newSchool.save();
+    await User.updateMany({ schoolCode: req.user.userSchoolCode }, { schoolCode: newSchool._id });
+    await Student.updateMany(
+      { schoolCode: req.user.userSchoolCode },
+      { schoolCode: newSchool._id }
+    );
+    await Event.updateMany({ schoolCode: req.user.userSchoolCode }, { schoolCode: newSchool._id });
+    await school.deleteOne();
+    const admin = User.findById({ _id: req.user.userID });
+    await mail.sendSchoolCode(admin.email, newSchool._id);
+  } catch (error) {
+    throw new Error("Could not change School Code");
+  }
+};

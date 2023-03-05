@@ -4,6 +4,11 @@ const eventSchema = new Schema({
   name: {
     type: String,
     required: true,
+  }, 
+  type: { 
+    type:String, 
+    required: true, 
+    enum:["Sporting", "Non-Sporting"]
   },
   dateEnding: {
     type: Date,

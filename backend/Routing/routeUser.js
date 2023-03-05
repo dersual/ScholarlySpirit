@@ -31,9 +31,11 @@ router.post("/login", async (req, res) => {
         userSchoolCode: user.schoolCode,
         userPermissions: user.accessPermisions,
       };
+      user.refreshTokens = [];
+      await user.save();
       const accessToken = auth.generateAccessToken(userdata);
-      const refreshToken = auth.generateRefreshToken(userdata);
-      return res.status(200).json({ accessToken: accessToken, refreshToken: refreshToken });
+      const refreshToken = await auth.generateRefreshToken(userdata);
+      return res.status(200).json({ accessToken: accessToken, refreshToken: refreshToken }); 
     } else {
       throw new Error("Username or Password is wrong");
     }
@@ -41,6 +43,7 @@ router.post("/login", async (req, res) => {
     return res.status(400).json({ error: error.message });
   }
 });
+router.post("/forgotPassword", async (req, res) => {});
 router.post("/sendVerifyEmail", async (req, res) => {
   try {
     await mail.sendVerificationEmail(req.body.email, req.body.id);
@@ -49,8 +52,7 @@ router.post("/sendVerifyEmail", async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
-router.get("/user", auth.authenticateToken, async (req, res) => {
-  req.params.id = req.user._id;
+router.get("/getUser", auth.authenticateToken, async (req, res) => {
   await User.getUser(req, res);
 });
 router.get("/verifyEmail/:token", async (req, res) => {
@@ -84,8 +86,8 @@ router.get("/verifyEmail/:token", async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
-router.post("/updateUser/:id", async (req, res) => {
+router.post("/updateUser", async (req, res) => {
   User.updateUser(req, res);
-}); 
+});
 
 module.exports = router;

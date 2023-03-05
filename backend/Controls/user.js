@@ -8,7 +8,6 @@ const User = require("../Model/userModel.js");
 const mongoose = require("mongoose"); 
 const mail = require("../configs/emailingConfig.js")
 exports.createUser = async (req, res) => {
-  console.log(req.body.schoolCode);
   try {
     if (mongoose.Types.ObjectId.isValid(req.body.schoolCode)) {
       if (String(new mongoose.Types.ObjectId(req.body.schoolCode)) != req.body.schoolCode) {
@@ -36,13 +35,13 @@ exports.createUser = async (req, res) => {
 
 exports.getUser = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.user.userID);
     if (!user) {
       return res.status(404).json({
         error: "User not found",
       });
     }
-    res.json(user);
+    res.status(200).json(user);
   } catch (err) {
     return res.status(500).json({
       error: "Internal server error",
@@ -53,7 +52,7 @@ exports.getUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
   try {
     const user = await User.findByIdAndUpdate(
-      { _id: req.params.id },
+      { _id: req.user.userID },
       { $set: req.body },
       { new: true, useFindAndModify: false }
     );
@@ -69,7 +68,7 @@ exports.updateUser = async (req, res) => {
 };
 
 exports.deleteUser = async (req, res) => {
-  User.findByIdAndRemove({ _id: req.params.id }, { useFindAndModify: false }, (err, user) => {
+  User.findByIdAndRemove({ _id: req.user.userID }, { useFindAndModify: false }, (err, user) => {
     if (err) {
       return res.status(400).json({
         error: "Failed to delete user",

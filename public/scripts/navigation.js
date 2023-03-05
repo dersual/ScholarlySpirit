@@ -1,15 +1,21 @@
-import { handleEvents, displayPages } from "./mainFunctions.js"; 
-
+import { handleEvents, displayPages } from "./mainFunctions.js";
+//Check if page status is logged in localStorage
+if (JSON.parse(localStorage.getItem("LoginStatus"))) {
+  setTimeout(function () {
+    displayPages(
+      document.getElementsByClassName("homePage")[0],
+      document.getElementsByClassName("dashboard")[0]
+    );
+    //display sign-out arrow
+    document.getElementById("sign-out").style.display = "flex";
+  }, 750);
+}
 // DOM for when logging in and sign up
 // Get login buttons and attach event listeners
 var loginButtons = document.getElementsByClassName("LoginContainer")[0].children;
-handleEvents(loginButtons[0], "click", displayLandingPageForms, "add", [], true);
-Array(...document.getElementsByClassName("other-opt")).forEach((element) => {
-  handleEvents(element.children[0], "click", displayLandingPageForms, "add", [], true);
-});
-handleEvents(loginButtons[1].children[0], "click", displayLandingPageForms, "add", [], true);
 
-function displayLandingPageForms(el) {
+
+export function displayLandingPageForms(el) {
   // Get the login and signup forms from the DOM
   var loginForm = document.getElementsByClassName("login-form")[0];
   var signupForm = document.getElementsByClassName("signup-form")[0];
@@ -20,7 +26,7 @@ function displayLandingPageForms(el) {
     .children[0].setAttribute("displayedOnMobile", false);
 
   // Show the appropriate login/signup button
-  loginButtons[2].style.display = "block";
+  loginButtons[2].style.display = "flex";
   loginButtons[0].style.display = "none";
   loginButtons[1].style.display = "none";
 
@@ -28,27 +34,22 @@ function displayLandingPageForms(el) {
   loginButtons[0].parentElement.style.borderRadius = "50px";
 
   // If the login button was clicked, show the login form and fade it in
-  if (el === loginButtons[0] || el === document.getElementsByClassName("login-opt")[0].children[0]) {
-    loginForm.style.display = "block";
-    signupForm.style.display = "none";
-    setTimeout(() => {
-      loginForm.style.opacity = 1;
-    }, 100);
+  if (
+    el === loginButtons[0] ||
+    el === document.getElementsByClassName("login-opt")[0].children[0]
+  ) {
+    displayPages(signupForm, loginForm);
   }
   // If the signup button was clicked, show the signup form and fade it in
   else if (
     el === loginButtons[1].children[0] ||
     el === document.getElementsByClassName("signup-opt")[0].children[0]
   ) {
-    signupForm.style.display = "block";
+    signupForm.getElementsByTagName("span")[0].style.display = "none";
     Array(...signupForm.getElementsByTagName("input")).forEach((input) => {
       input.value = "";
     });
-    signupForm.getElementsByTagName("span")[0].style.display = "none";
-    loginForm.style.display = "none";
-    setTimeout(() => {
-      signupForm.style.opacity = 1;
-    }, 100);
+    displayPages(loginForm, signupForm);
   }
 }
 // get all elements with the class 'arrow' from the DOM
@@ -62,12 +63,15 @@ Array(...arrow).forEach((element) => {
   parent.style.marginTop = "10px";
   parent.style.marginLeft = "5%";
   parent.style.left = element.dataset.xPos;
-  parent.style.width = "clamp(75px, 26%, 80px)";
+  //parent.style.width = "clamp(75px, 26%, 80px)";
   parent.style.overflowX = "visible";
   parent.style.zIndex = 2;
   parent.style.display = "none";
   parent.style.cursor = "pointer";
   parent.style.textAlign = "left";
+  //parent.style.justifyContent = "center";
+  parent.style.flexDirection = "row";
+  parent.style.alignItems = "center";
   // get the list of targets to be closed by clicking on the arrow
   var closedTargets = element.dataset.closeTarget.split(",");
   // get the list of targets to be opened by clicking on the arrow
@@ -111,44 +115,23 @@ Array(...arrow).forEach((element) => {
       ]);
     }
   }
-  // assign the click event to hide the parent node when it is clicked
-  handleEvents(parent, "click", function (el) {
+  // assign the click event to hide the parent node when it is clicked and set data displays content to ""
+  handleEvents(
+    parent,
+    "click",
+    function (el) {
       el.style.display = "none"; 
-    }, "add", [], true);
+      Array(...document.getElementsByClassName("dataDisplayContainer")).forEach(display => { 
+        display.innerHTML = "";
+      }) 
+    },
+    "add",
+    [],
+    true
+  );
 });
 
-//display schoolCodeForm
-handleEvents(
-  document.querySelector("div.schoolCodePage > div.LoginContainer > button:first-of-type"),
-  "click",
-  function () {
-    document.querySelector("div.schoolCodePage > div.LoginContainer").children[4].style.display =
-      "block";
-    for (var i = 0; i < 4; i++) {
-      //display addCodeForm
-      displayPages(
-        document.querySelector("div.schoolCodePage > div.LoginContainer").children[i],
-        document.getElementsByClassName("addCodeForm")[0],
-        "flex"
-      );
-    }
-  }
-);
-handleEvents(
-  document.querySelector("div.schoolCodePage > div.LoginContainer > button:nth-child(4)"),
-  "click",
-  function () {
-    document.querySelector("div.schoolCodePage > div.LoginContainer").children[4].style.display =
-      "block";
-    for (var i = 0; i < 4; i++) {
-      displayPages(
-        document.querySelector("div.schoolCodePage > div.LoginContainer").children[i],
-        document.getElementsByClassName("createSchoolForm")[0],
-        "flex"
-      );
-    }
-  }
-);
+//change max & min of numbered inputs based on what they have
 var minGradeInput = document.getElementsByClassName("lowestGradeLvlInput")[0];
 var maxGradeInput = document.getElementsByClassName("highestGradeLvlInput")[0];
 function imposeMinMaxGrades(el) {
@@ -164,6 +147,7 @@ function imposeMinMaxGrades(el) {
     imposeMinMax(el);
   }, 850);
 }
+//Change their values if their values are beyond max and min
 function imposeMinMax(el) {
   if (el.value != "") {
     if (parseInt(el.value) < parseInt(el.min)) {
@@ -179,13 +163,42 @@ minGradeInput.oninput = function () {
 };
 maxGradeInput.oninput = function () {
   imposeMinMaxGrades(maxGradeInput);
-}; 
-//set attributes for dahsboard-tabs
-Array(...document.getElementsByClassName("dashboard-tab")).forEach(tab => { 
-  tab.setAttribute("displayedOnMobile", false)  
-  tab.setAttribute("toggled", false) 
-  if(tab === document.getElementById("home")) { 
-    tab.setAttribute("toggled", true)
-  }
-})
+};
 
+//set attributes for dashboard-tabs
+Array(...document.getElementsByClassName("dashboard-tab")).forEach((tab) => {
+  tab.setAttribute("displayedOnMobile", false);
+  tab.setAttribute("toggled", false);
+  if (tab === document.getElementById("home")) {
+    tab.setAttribute("toggled", true); 
+  }
+  handleEvents(tab, "click", function () {
+    Array(...document.getElementsByClassName("dashboard-tab")).forEach((element) => {
+      element.setAttribute("toggled", false); 
+      Array(...document.getElementsByClassName("dataDisplayContainer")).forEach(display => { 
+        display.innerHTML = "";
+      }) 
+    });
+    tab.setAttribute("toggled", true);
+  });
+}); 
+
+//set attributes for elements in overlay div
+Array(...document.getElementById("overlay").children).forEach((element) => {
+  element.setAttribute("toggled", false);
+});
+handleEvents(document.getElementById("sign-out"), "click", function () {
+  localStorage.clear();
+  window.location.reload();
+});
+handleEvents(document.getElementById("home"), "click", function () {
+  Array(...document.getElementsByClassName("main-container")).forEach((element) => {
+    displayPages(
+      element,
+      document.getElementsByClassName("selectionSection-container")[0],
+      "flex"
+    );
+  });
+  //display sign-out arrow
+  document.getElementById("sign-out").style.display = "flex";
+}); 

@@ -45,7 +45,8 @@ and run the middleware in each file.
 */
 const fs = require("fs");
 fs.readdirSync(path.join(__dirname, "backend", "Routing")).forEach((file) => {
-  const route = require(`./backend/Routing/${file}`);
+  const route = require(`./backend/Routing/${file}`); 
+  console.log(file)
   app.use(route);
 });
 /* 

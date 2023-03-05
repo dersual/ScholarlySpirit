@@ -14,7 +14,7 @@
       content="ScholarlySpirit is an application designed track & encourage student participation at school events."
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="./styles/style.css"/>
+    <link rel="stylesheet" type="text/css" href="./styles/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!----Open Sans Font with weights of 300, 500, 800 -->
@@ -53,7 +53,7 @@
             data-x-pos="-10px"
             data-y-pos="-20px"
             class="arrow left"
-          ></i> 
+          ></i>
           <p>Go Back</p>
         </div>
         <!--Login and Sign Up Forms -->
@@ -93,7 +93,7 @@
             data-x-pos="-10px"
             data-y-pos="-15px"
             class="arrow left"
-          ></i> 
+          ></i>
           <p>Go Back</p>
         </div>
         <h2>Hey, you're not in a school yet</h2>
@@ -113,8 +113,9 @@
             data-display-type="block, block, block"
             data-x-pos="5px"
             data-y-pos="120px"
-            class="arrow left"  
-            ></i> 
+            class="arrow left"
+          >
+          </i>
           <p>Go Back</p>
         </div>
         <form method="post" class="schoolForm addCodeForm">
@@ -125,7 +126,7 @@
             placeholder="Input unqiue code for your school"
             required
             name="schoolCode"
-          /> 
+          />
           <span>This School Code Doesn't Exist</span>
           <button type="submit">Submit</button>
         </form>
@@ -164,44 +165,38 @@
     <!--Main Dashboard for Teachers--->
     <div class="dashboard page">
       <!--Navigation-->
-      <nav>  
-        <div class = "dashboard-tab" id ="sign-out">
+      <nav>
+        <div class="dashboard-tab" id="sign-out">
           <i
             data-close-target=".dashboard"
             data-open-target=".homePage"
             data-opentarget-exclusive
             data-display-type="flex"
-            data-x-pos="45%"
-            data-y-pos="0px"
+            data-x-pos="0"
+            data-y-pos="0"
             class="arrow left"
-          ></i> 
-          <p>Go Back</p>
+          ></i>
+          <p>Sign Out</p>
         </div>
-        <div class = "dashboard-tab" id = "profile">
+        <div class="dashboard-tab" id="profile">
           <span><i class="fa-solid fa-user"></i></span>
-          <span>Profile</span> 
-        </div>   
-        <!---
-        <div>
-          <span><i class="fa-solid fa-gears"></i></span>
-          <span>Settings</span>
-        </div>  
-      -->
-        <div id = "home" class = "dashboard-tab"> 
-          <span><i class="fa-solid fa-house-chimney"></i></span> 
+          <span>Profile</span>
+        </div>
+        <div id="home" class="dashboard-tab">
+          <span><i class="fa-solid fa-house-chimney"></i></span>
           <span>Dashboard</span>
         </div>
-        <div class = "dashboard-tab">
+        <div id="faculty" class="dashboard-tab">
           <span><i class="fa-solid fa-chalkboard-user"></i></span>
           <span>Faculty</span>
         </div>
-        <div class = "dashboard-tab"> 
-          <span><i class="fa-solid fa-question"></i></span> 
+        <div id="help" class="dashboard-tab">
+          <span><i class="fa-solid fa-question"></i></span>
           <span>Help</span>
         </div>
       </nav>
-      <!--Sections-->
-      <div class="section-container">
+      <!--Selection Sections-->
+      <div class="main-container dashboard-main-container selectionSection-container">
         <section class="events-tab">
           <h1>Events</h1>
         </section>
@@ -212,27 +207,128 @@
           <h1>Student Body</h1>
         </section>
       </div>
+      <!--Events Section-->
+      <div class="main-container dashboard-main-container eventsSection-container">
+        <div>
+          <i
+            data-close-target=".eventsSection-container"
+            data-open-target=".selectionSection-container"
+            data-opentarget-exclusive
+            data-display-type="flex"
+            data-x-pos="0"
+            data-y-pos="0"
+            class="arrow left"
+          ></i>
+          <p>Go Back</p>
+        </div>
+      </div>
+      <!--Rewards Section-->
+      <div class="main-container dashboard-main-container rewardsSection-container">
+        <div>
+          <i
+            data-close-target=".rewardsSection-container"
+            data-open-target=".selectionSection-container"
+            data-opentarget-exclusive
+            data-display-type="flex"
+            data-x-pos="0"
+            data-y-pos="0"
+            class="arrow left"
+          ></i>
+          <p>Go Back</p>
+        </div>
+      </div>
+      <!--Students Section-->
+      <div class="main-container dashboard-main-container studentsSection-container">
+        <div>
+          <i
+            data-close-target=".studentsSection-container"
+            data-open-target=".selectionSection-container"
+            data-opentarget-exclusive
+            data-display-type="flex"
+            data-x-pos="0"
+            data-y-pos="0"
+            class="arrow left"
+          ></i>
+          <p>Go Back</p>
+        </div>
+        <form id="getStudentForm" class="main-searchbar">
+          <label>Students</label>
+          <input placeholder="Enter Student's Name" autocomplete="off" name="name" type="text" />
+          <div>
+            Filters <span><i class="fa-solid fa-sliders"></i></span>
+          </div>
+          <div>
+            Add New Students <span><i class="fa-solid fa-plus"></i></span>
+          </div>
+        </form>
+        <div class="dataDisplayContainer"></div>
+      </div>
+      <!--My Profile-->
+      <div></div>
+      <!--Faculty-->
+      <div class="main-container facultySection-container">
+        <div id="getFacultyForm" class="main-searchbar">
+          <label>Faculty</label>
+          <input
+            id="facultyInput"
+            placeholder="Enter Teacher's Name"
+            autocomplete="off"
+            name="name"
+            type="text"
+          />
+        </div>
+        <div id="facultyDisplay" class="dataDisplayContainer"></div> 
+        <template data-search-template> 
+          <div class = "card" data-container>  
+            <div class = "title" data-title></div> 
+            <div class = "body" data-body></div>  
+            <div class = "extra-body" data-body-extra></div>
+            <div class="adminBody" data-admin-body> 
+              <button>Kick Member</button>
+            </div>
+          </div>
+        </template> 
+      </div>
     </div>
-    <!--Events Section-->
     <!--Overlay Section-->
     <div id="overlay" class="overlay">
       <div id="after-register-notice">
-        <p> 
-          <h1>Notice After User Signup</h1>
-          A new user account has been created with the credentials you provided.<br> <br>For the last
-          step, please go to the email address you provided and verify that it is the correct account.
-          <b>  
-            DISCLAIMER: IF YOU DO NOT VERIFY WITHIN THE NEXT 15 MINUTES, THE ACCOUNT YOU HAVE JUST CREATED WILL BE DELETED.
+        <h1>Notice After User Signup</h1>
+        <p>
+          A new user account has been created with the credentials you provided.
+          <br />
+          <br />
+          For the last step, please go to the email address you provided and verify that it is the
+          correct account.
+          <b>
+            DISCLAIMER: IF YOU DO NOT VERIFY WITHIN THE NEXT 15 MINUTES, THE ACCOUNT YOU HAVE JUST
+            CREATED WILL BE DELETED.
           </b>
-        </p>  
+        </p>
         <div>
-        <button class = "overlay-buttons">Ok &gt;</button> 
+          <button class="overlay-buttons">Ok &gt;</button>
+        </div>
       </div>
+      <div id="invalidAuthorization">
+        <h1>Something Went Wrong</h1>
+        <p>
+          The program got an error when we started authorizing the user's actions so we WILL be
+          signing this you out for security reasons.
+        </p>
+        <p>Just sign back in to continue the activity you were doing.</p>
+        <div>
+          <button class="overlay-buttons">Ok &gt;</button>
+        </div>
+      </div>
+      <div id="newStudentFormContainer">
+        <form><button></button></form>
+        <form></form>
       </div>
     </div>
-    <!--scripts--> 
-    <script src="scripts/mainFunctions.js" type = "module" defer></script> 
-    <script src="scripts/handlingData.js" type = "module" defer></script> 
-   <script src = "scripts/navigation.js" type = "module" defer></script>
+    <!--scripts-->
+    <script src="scripts/mainFunctions.js" type="module" defer></script>
+    <script src="scripts/handlingData.js" type="module" defer></script>
+    <script src="scripts/navigation.js" type="module" defer></script>
+    <script src="scripts/events.js" type="module" defer></script>
   </body>
 </html>
