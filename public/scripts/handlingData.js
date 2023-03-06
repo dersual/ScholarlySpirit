@@ -230,7 +230,8 @@ try {
       localStorage.setItem('accessToken', JSON.stringify(response.headers.get('access-token')));
       localStorage.setItem('refreshToken', JSON.stringify(response.headers.get('refresh-token')));
     }
-    const data = await response.json();
+    const data = await response.json(); 
+    await displayStudents(); 
     return data;
   }
 } catch (error) {
@@ -238,19 +239,34 @@ try {
 }
 } 
 export async function uploadStudents(event) { 
-  event.preventDefault(); 
+  event.preventDefault();  
+  try {
+    
 const fileInput = document.getElementById("uploadCreateStudent");
-const file = fileInput.files[0];
-
-const formData = new FormData();
-formData.append('file', file); 
-fetch('/upload', {
+const file = fileInput.files[0]; 
+const response = await fetch('/upload', {
   method: 'POST', 
-  headers:{ 
-
+  headers:{  
+    Authorization: `Bearer ${accessToken}`,
+      'Refresh-Token': refreshToken,
   },
-  body: formData,
-})
+  body: file,
+}) 
+if (!response.ok) {
+  const error = await response.json();
+  throw new Error(error.error);
+} else {
+  if (response.headers.get('refresh-token')) {
+    localStorage.setItem('accessToken', JSON.stringify(response.headers.get('access-token')));
+    localStorage.setItem('refreshToken', JSON.stringify(response.headers.get('refresh-token')));
+  }
+  const data = await response.json(); 
+  await displayStudents(); 
+  return data;
+}
+} catch (error) {
+    
+}
 } 
 export async function useSchoolCodeAndRegister(event) {
   event.preventDefault();
@@ -305,8 +321,8 @@ export async function displayFaculty(event) {
     //generate cards
     setTimeout(function () {
       document.getElementById('facultyDisplay').innerHTML = '';
-      generateSearchCards(user, document.getElementById('facultyDisplay'), '', 'userCard');
-      generateSearchCards(faculty, document.getElementById('facultyDisplay'), user[0].accessPermissions);
+      generateSearchCards(user, document.getElementById('facultyDisplay'), '', 'userCard',"[data-search-template]");
+      generateSearchCards(faculty, document.getElementById('facultyDisplay'), user[0].accessPermissions,"", "[data-search-template]");
     }, 500);
 
     //regenerate cards
@@ -366,25 +382,23 @@ export async function displayStudents(event) {
 }
 function setNewRefreshToken() {}
 //call setUpUser function to be called when the form is submitted
-function generateSearchCards(data, appendElement, role = 'member', addClass = undefined, extraBody = undefined) {
+function generateSearchCards(data, appendElement, role = 'member', addClass = undefined, template) {
   data.forEach((element) => {
-    const cardTemplate = document.querySelector('[data-search-template]');
+    const cardTemplate = document.querySelector(template);
     const card = cardTemplate.content.cloneNode(true).children[0];
-    if (addClass) {
+    if (addClass !== undefined || addClass.length === 0) {
       card.classList.add(addClass);
     }
-    if (extraBody) {
-      const cardXtraBody = card.querySelector('[data-body-extra]'); 
-      cardXtraBody.innerHTML = extraBody;
-      cardXtraBody.style.display = 'block';
-    }
+
     if (role === 'admin') {
       card.querySelector('[data-admin-body]').style.display = 'block';
     }
     const title = card.querySelector('[data-title]');
-    const body = card.querySelector('[data-body]');
-    title.textContent = element.name;
-    body.textContent = element.email;
+    const body = card.querySelectorAll('[data-body]'); 
+    title.textContent = element.name;  
+    for(var i = 0; i < body.length; i++){  
+      body[i].textContent = element[i+1]
+    }
     appendElement.append(card);
   });
 }
