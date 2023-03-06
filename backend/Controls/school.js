@@ -29,7 +29,8 @@ exports.getSchool = async (req, res) => {
   try {
     const school = await School.findById(req.user.userSchoolCode);
     return res.status(200).json(school);
-  } catch (error) {
+  } catch (error) { 
+    console.error(error)
     return res.status(400).json({
       error: "School not found",
     });
@@ -62,7 +63,7 @@ exports.handleRolesOnJoin = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error });
+    return res.status(500).json({ error: error.message });
   }
 };
 exports.getAllFaculty = async (req, res) => {
@@ -79,7 +80,8 @@ exports.getAllFaculty = async (req, res) => {
         (individualStaff.name.includes(val.name) || individualStaff.email.includes(val.email))
     );
     return res.status(200).json({ faculty, user });
-  } catch (error) {
+  } catch (error) { 
+    console.error(error)
     throw new Error(error);
   }
 };
@@ -99,7 +101,8 @@ exports.changeSchoolCode = async (req, res) => {
     const admin = await User.findById({ _id: req.user.userID });
     await mail.sendSchoolCode(admin.email, newSchool._id);
     return;
-  } catch (error) {
+  } catch (error) { 
+    console.error(error)
     throw new Error("Could not change School Code");
   }
 };

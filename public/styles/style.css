@@ -552,11 +552,12 @@ div:has(form:nth-child(3)) > .newDataFormArrow {
   width: 100%;
 } 
 .dataDisplayContainer > h1 { 
-  font-weight: 800; 
-  font-family:"Montserrat", sans-serif; 
-  position:absolute; 
-  left:50%; 
-  transform:translateX(-50%)
+  font-weight: 800;
+  font-family: "Montserrat", sans-serif;
+  grid-column: 1/span 8;
+  grid-row: 1;
+  justify-self: center;
+  display:none; 
 }
 .card {
   border: var(--darkest-color) 1px solid;

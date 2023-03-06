@@ -5,7 +5,11 @@ const studentSchema = new Schema({
     type: String,
     required: true,
   },
-  points: 0,
+  points: { 
+    type:Number, 
+    default: 0, 
+    required: true
+  },
   grade: {
     type: Number,
     required: true,

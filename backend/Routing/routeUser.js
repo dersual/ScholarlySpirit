@@ -15,7 +15,7 @@ router.post("/setup-user", async (req, res) => {
       res.json({ email: req.body.email, name: req.body.name, password: password });
     }
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).json({ error:error.messagevent });
   }
 });
 router.post("/register", async (req, res) => {

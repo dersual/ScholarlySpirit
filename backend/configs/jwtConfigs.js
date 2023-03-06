@@ -21,14 +21,15 @@ async function generateRefreshToken(payload) {
     );
     await user.save();
     return refreshToken;
-  } catch (error) {
+  } catch (error) { 
+    console.error(error)
     throw new Error("Refresh Token could not be generated");
   }
 }
 async function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
-  const refreshToken = req.headers["refresh-token"];
+  const refreshToken = req.headers["refresh-token"]; 
   if (!token || !refreshToken) {
     return res.status(401).json({ error: "Token or Refresh Token not found" });
   }
@@ -65,7 +66,8 @@ async function authenticateToken(req, res, next) {
       res.header("access-token", newAccessToken)
       res.header("refresh-token", newRefreshToken);
       next();
-    } catch (error) {
+    } catch (error) {  
+      console.error(error)
       return res.status(401).json({ error: error.message });
     }
   }

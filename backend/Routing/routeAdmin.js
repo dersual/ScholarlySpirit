@@ -32,20 +32,32 @@ router.post("/changeSchoolCode", auth.authenticateToken, async (req, res) => {
       res.status(400).json({ error: error.message });
     }
   } else {
-    res.status(401).json({ error: "Not Permited" });
+    res.status(401).json({ error: "Not Permited", alertUser:true });
   }
 });
-router.delete("/kick/:id", auth.authenticateToken, async (req, res) => {
-  if (req.user.userPermissions === "admin") {
+router.delete("/kickUser/:email", auth.authenticateToken, async (req, res) => {
+  if (req.user.userPermissions === "admin") { 
+    const admin = UserModel.findById({ _id: req.user.userID });  
+    
   } else {
-    res.status(401).json({ error: "Not Permited" });
+    res.status(401).json({ error: "Not Permited", alertUser: true });
+  }
+}); 
+router.delete("/kickStudent/:email", auth.authenticateToken, async (req, res) => {
+  if (req.user.userPermissions === "admin") { 
+    const admin = UserModel.findById({ _id: req.user.userID });  
+    
+  } else {
+    res.status(401).json({ error: "Not Permited", alertUser: true });
   }
 });
 //delete all students and events etc.
 router.delete("/endOfSchoolYear", auth.authenticateToken, async (req, res) => {
-  if (req.user.userPermissions === "admin") {
+  if (req.user.userPermissions === "admin") { 
+    const admin = UserModel.findById({ _id: req.user.userID }); 
+
   } else {
-    res.status(401).json({ error: "Not Permited" });
+    res.status(401).json({ error: "Not Permited", alertUser:true });
   }
 });
 

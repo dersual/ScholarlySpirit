@@ -210,20 +210,20 @@
             class="arrow left"
           ></i>
           <p>Go Back</p>
-        </div> 
+        </div>
         <div id="getEventForm" class="main-searchbar">
-          <label>Students</label>
+          <label>Events</label>
           <input placeholder="Enter Event Name" autocomplete="off" name="name" type="text" />
           <div id="eventFilter" class="filters">
             <span>Filters <i class="fa-solid fa-sliders"></i></span>
             <div class="sortBy">
               <label>Sort By: </label>
               <div class="optionsContainer">
-                <input name="sortType" type="radio" value="Sporting" checked="checked" id="getStudentInput" /><label>Sporting</label>
-                <input name="sortType" type="radio" value="Non-Sporting" /><label>Non-Sporting</label> 
-                <input name="sortType" type="radio" value="Points" /><label>Points</label> 
-                <input name="sortType" type="radio" value="Oldest" /><label>Oldest</label> 
-                <input name = "sortType" type ="radio" value = "Recent"/><label>Most Recent</label>
+                <input name="sortType" type="radio" value="Sporting" /><label>Sporting</label>
+                <input name="sortType" type="radio" value="Non-Sporting" /><label>Non-Sporting</label>
+                <input name="sortType" type="radio" value="Points" /><label>Points</label>
+                <input name="sortType" type="radio" value="Oldest" /><label>Oldest</label>
+                <input name="sortType" type="radio" value="Recent" checked="checked" /><label>Most Recent</label>
               </div>
             </div>
           </div>
@@ -231,7 +231,7 @@
             Add New Events <span><i class="fa-solid fa-plus"></i></span>
           </div>
         </div>
-        <div id = "eventDisplay" class="dataDisplayContainer"> 
+        <div id="eventDisplay" class="dataDisplayContainer">
           <h1>Add Some Events</h1>
         </div>
       </div>
@@ -266,16 +266,22 @@
         </div>
         <div id="getStudentForm" class="main-searchbar">
           <label>Students</label>
-          <input placeholder="Enter Student's Name" autocomplete="off" name="name" type="text" />
+          <input
+            id="getStudentInput"
+            placeholder="Enter Student's Name"
+            autocomplete="off"
+            name="name"
+            type="text"
+          />
           <div id="studentFilter" class="filters">
             <span>Filters <i class="fa-solid fa-sliders"></i></span>
             <div class="sortBy">
               <label>Sort By: </label>
               <div class="optionsContainer">
-                <input name="sortType" type="radio" value="Grade" checked="checked" id="getStudentInput" /><label
+                <input name="sortType" type="radio" value="Grade" checked="checked" id = "gradeInput"/><label
                   >Grade</label
                 >
-                <input name="sortType" type="radio" value="Points" /><label>Points</label>
+                <input name="sortType" type="radio" value="Points" id = "pointsInput"/><label>Points</label>
               </div>
             </div>
           </div>
@@ -283,7 +289,7 @@
             Add New Students <span><i class="fa-solid fa-plus"></i></span>
           </div>
         </div>
-        <div id = "studentDisplay" class="dataDisplayContainer"> 
+        <div id="studentDisplay" class="dataDisplayContainer">
           <h1>Add Some Students</h1>
         </div>
       </div>
@@ -329,12 +335,12 @@
       <div id="invalidAuthorization">
         <h1>Something Went Wrong</h1>
         <p>
-          The program got an error when we started authorizing the user's actions so we WILL be signing this you
+          The program got an error when we started authorizing the user's actions so we will be signing this you
           out for security reasons.
         </p>
         <p>Just sign back in to continue the activity you were doing.</p>
         <div>
-          <button class="overlay-buttons">Ok &gt;</button>
+          <button id ="invalidAuthorizationButton" class="overlay-buttons">Ok &gt;</button>
         </div>
       </div>
       <div id="newStudentFormContainer" class="newDataForm">
@@ -350,16 +356,16 @@
           ></i>
           <p>Go Back</p>
         </div>
-        <form>
+        <form id = "manualCreateStudent">
           <h1>Create New Student Manually</h1>
-          <div><label>Name</label><input name="name" type="text" required style=/></div>
-          <div><label>Email</label><input name="email" type="email" required /></div>
-          <div><label>Grade</label> <input name="grade" required type="number" /></div>
+          <div><label>Name</label><input autocomplete="off" name="name" type="text" required style=/></div>
+          <div><label>Email</label><input autocomplete="off" name="email" type="email" required /></div>
+          <div><label>Grade</label> <input autocomplete="off" name="grade" required type="number" /></div>
           <div>
             <button class="overlay-buttons" type="submit" style="margin-top: 5px" id="submitManual">Submit</button>
           </div>
         </form>
-        <form>
+        <form id = "uploadCreateStudent">
           <h1>Upload Students Via Text File</h1>
           <p>It should look like this</p>
           <img alt="how-to-upload" src="/Assets/howtoupload.png" />
