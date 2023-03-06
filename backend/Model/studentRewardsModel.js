@@ -8,13 +8,13 @@ const rewardSchema = new Schema({
   type: {
     type: String,
     required: true,
-    enum: ["duration-based", "instant-based"],  
-    default:"instant-based"
-  }, 
-  active: { 
+    enum: ["duration-based", "instant-based"],
+    default: "instant-based",
+  },
+  active: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
 const reward = mongoose.model("reward", rewardSchema);
 module.exports = reward;

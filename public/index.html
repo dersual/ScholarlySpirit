@@ -23,10 +23,7 @@
       rel="stylesheet"
     />
     <!----Open Montserrat with weights of 400, 800 -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&display=swap" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/eb633b28da.js" crossorigin="anonymous"></script>
   </head>
   <body>
@@ -137,14 +134,7 @@
           <div>
             <div>
               <label>Lowest Grade Level</label>
-              <input
-                class="lowestGradeLvlInput"
-                type="number"
-                name="lowestGradeLevel"
-                required
-                min="1"
-                max="12"
-              />
+              <input class="lowestGradeLvlInput" type="number" name="lowestGradeLevel" required min="1" max="12" />
             </div>
             <div>
               <label>Highest Grade Level</label>
@@ -190,7 +180,7 @@
           <span><i class="fa-solid fa-chalkboard-user"></i></span>
           <span>Faculty</span>
         </div>
-        <div id="help" class="dashboard-tab">
+        <div href="" target="_blank" id="help" class="dashboard-tab">
           <span><i class="fa-solid fa-question"></i></span>
           <span>Help</span>
         </div>
@@ -220,6 +210,29 @@
             class="arrow left"
           ></i>
           <p>Go Back</p>
+        </div> 
+        <div id="getEventForm" class="main-searchbar">
+          <label>Students</label>
+          <input placeholder="Enter Event Name" autocomplete="off" name="name" type="text" />
+          <div id="eventFilter" class="filters">
+            <span>Filters <i class="fa-solid fa-sliders"></i></span>
+            <div class="sortBy">
+              <label>Sort By: </label>
+              <div class="optionsContainer">
+                <input name="sortType" type="radio" value="Sporting" checked="checked" id="getStudentInput" /><label>Sporting</label>
+                <input name="sortType" type="radio" value="Non-Sporting" /><label>Non-Sporting</label> 
+                <input name="sortType" type="radio" value="Points" /><label>Points</label> 
+                <input name="sortType" type="radio" value="Oldest" /><label>Oldest</label> 
+                <input name = "sortType" type ="radio" value = "Recent"/><label>Most Recent</label>
+              </div>
+            </div>
+          </div>
+          <div id="newEventForm">
+            Add New Events <span><i class="fa-solid fa-plus"></i></span>
+          </div>
+        </div>
+        <div id = "eventDisplay" class="dataDisplayContainer"> 
+          <h1>Add Some Events</h1>
         </div>
       </div>
       <!--Rewards Section-->
@@ -251,17 +264,28 @@
           ></i>
           <p>Go Back</p>
         </div>
-        <form id="getStudentForm" class="main-searchbar">
+        <div id="getStudentForm" class="main-searchbar">
           <label>Students</label>
           <input placeholder="Enter Student's Name" autocomplete="off" name="name" type="text" />
-          <div>
-            Filters <span><i class="fa-solid fa-sliders"></i></span>
+          <div id="studentFilter" class="filters">
+            <span>Filters <i class="fa-solid fa-sliders"></i></span>
+            <div class="sortBy">
+              <label>Sort By: </label>
+              <div class="optionsContainer">
+                <input name="sortType" type="radio" value="Grade" checked="checked" id="getStudentInput" /><label
+                  >Grade</label
+                >
+                <input name="sortType" type="radio" value="Points" /><label>Points</label>
+              </div>
+            </div>
           </div>
-          <div>
+          <div id="newStudentForm">
             Add New Students <span><i class="fa-solid fa-plus"></i></span>
           </div>
-        </form>
-        <div class="dataDisplayContainer"></div>
+        </div>
+        <div id = "studentDisplay" class="dataDisplayContainer"> 
+          <h1>Add Some Students</h1>
+        </div>
       </div>
       <!--My Profile-->
       <div></div>
@@ -269,25 +293,19 @@
       <div class="main-container facultySection-container">
         <div id="getFacultyForm" class="main-searchbar">
           <label>Faculty</label>
-          <input
-            id="facultyInput"
-            placeholder="Enter Teacher's Name"
-            autocomplete="off"
-            name="name"
-            type="text"
-          />
+          <input id="facultyInput" placeholder="Enter Teacher's Name" autocomplete="off" name="name" type="text" />
         </div>
-        <div id="facultyDisplay" class="dataDisplayContainer"></div> 
-        <template data-search-template> 
-          <div class = "card" data-container>  
-            <div class = "title" data-title></div> 
-            <div class = "body" data-body></div>  
-            <div class = "extra-body" data-body-extra></div>
-            <div class="adminBody" data-admin-body> 
+        <div id="facultyDisplay" class="dataDisplayContainer"></div>
+        <template data-search-template>
+          <div class="card" data-container>
+            <div class="title" data-title></div>
+            <div class="body" data-body></div>
+            <div class="extra-body" data-body-extra></div>
+            <div class="adminBody" data-admin-body>
               <button>Kick Member</button>
             </div>
           </div>
-        </template> 
+        </template>
       </div>
     </div>
     <!--Overlay Section-->
@@ -298,11 +316,10 @@
           A new user account has been created with the credentials you provided.
           <br />
           <br />
-          For the last step, please go to the email address you provided and verify that it is the
-          correct account.
+          For the last step, please go to the email address you provided and verify that it is the correct account.
           <b>
-            DISCLAIMER: IF YOU DO NOT VERIFY WITHIN THE NEXT 15 MINUTES, THE ACCOUNT YOU HAVE JUST
-            CREATED WILL BE DELETED.
+            DISCLAIMER: IF YOU DO NOT VERIFY WITHIN THE NEXT 15 MINUTES, THE ACCOUNT YOU HAVE JUST CREATED WILL BE
+            DELETED.
           </b>
         </p>
         <div>
@@ -312,17 +329,48 @@
       <div id="invalidAuthorization">
         <h1>Something Went Wrong</h1>
         <p>
-          The program got an error when we started authorizing the user's actions so we WILL be
-          signing this you out for security reasons.
+          The program got an error when we started authorizing the user's actions so we WILL be signing this you
+          out for security reasons.
         </p>
         <p>Just sign back in to continue the activity you were doing.</p>
         <div>
           <button class="overlay-buttons">Ok &gt;</button>
         </div>
       </div>
-      <div id="newStudentFormContainer">
-        <form><button></button></form>
-        <form></form>
+      <div id="newStudentFormContainer" class="newDataForm">
+        <div class="newDataFormArrow">
+          <i
+            data-close-target=".overlay"
+            data-open-target="#newStudentFormContainer, #newStudentFormContainer"
+            data-display-type="none"
+            data-opentarget-exclusive="[0]"
+            data-x-pos="-10px"
+            data-y-pos="0"
+            class="arrow left"
+          ></i>
+          <p>Go Back</p>
+        </div>
+        <form>
+          <h1>Create New Student Manually</h1>
+          <div><label>Name</label><input name="name" type="text" required style=/></div>
+          <div><label>Email</label><input name="email" type="email" required /></div>
+          <div><label>Grade</label> <input name="grade" required type="number" /></div>
+          <div>
+            <button class="overlay-buttons" type="submit" style="margin-top: 5px" id="submitManual">Submit</button>
+          </div>
+        </form>
+        <form>
+          <h1>Upload Students Via Text File</h1>
+          <p>It should look like this</p>
+          <img alt="how-to-upload" src="/Assets/howtoupload.png" />
+          <div>
+            <label>Upload Text File</label>
+            <input id="studentUpload" name="studentFile" type="file" />
+          </div>
+          <div>
+            <button id="submitUpload" class="overlay-buttons" type="Submit">Submit</button>
+          </div>
+        </form>
       </div>
     </div>
     <!--scripts-->

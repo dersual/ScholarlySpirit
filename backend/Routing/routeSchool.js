@@ -19,7 +19,7 @@ router.post("/createSchool", async (req, res) => {
 router.post("/handleFacultyRoleInSchool/:id/:schoolCode", async (req, res) => {
  await School.handleRolesOnJoin(req, res);
 }); 
-router.get("/getFaculty", auth.authenticateToken, async (req, res) => {
+router.post("/getFaculty", auth.authenticateToken, async (req, res) => {
   try {    
    await School.getAllFaculty(req, res); 
   } catch (error) {  

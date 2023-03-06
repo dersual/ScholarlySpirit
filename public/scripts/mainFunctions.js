@@ -5,14 +5,7 @@
 // type: Default is add, but if anything else remove event listener
 // params: Array of parameters to pass to funct
 // usingThis: Boolean that indicates if 'this' should be passed to funct
-export function handleEvents(
-  element,
-  event,
-  funct,
-  type = "add",
-  params = [],
-  usingThis = false
-) {
+export function handleEvents(element, event, funct, type = "add", params = [], usingThis = false) {
   var newFunct = null;
 
   // Check if params array is empty

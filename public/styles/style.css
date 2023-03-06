@@ -53,11 +53,11 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   background-image: linear-gradient(45deg, #dddadc7d, #0d31d080, #07f1f193),
-    url("/Assets/ivan-aleksic-PDRFeeDniCk-unsplash.jpg");
+    url('/Assets/ivan-aleksic-PDRFeeDniCk-unsplash.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0;
-  font-family: Arial, Helvetica, sans-serif, monospace, "Times New Roman", "Open Sans", "Montserrat";
+  font-family: Arial, Helvetica, sans-serif, monospace, 'Times New Roman', 'Open Sans', 'Montserrat';
 }
 
 img,
@@ -111,7 +111,7 @@ h6 {
   border-radius: 10px !important;
   text-align: left !important;
 }
-#overlay > *[toggled="false"] {
+#overlay > *[toggled='false'] {
   display: none !important;
 }
 #overlay > div > div {
@@ -133,14 +133,14 @@ h6 {
   overflow-x: visible;
 }
 @media screen and (max-width: 1040px) {
-  .homePage > div:first-child[displayedOnMobile="false"] {
+  .homePage > div:first-child[displayedOnMobile='false'] {
     display: none;
   }
 }
 .homePage > div:first-child {
   width: max(60%, 340px);
   color: white;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   padding: 20px;
   text-align: center;
 }
@@ -188,24 +188,16 @@ h6 {
   box-shadow: var(--shadow-elevation-high);
   background-color: white;
   gap: max(1vw, 8px);
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: clamp(12px, 2.5vw, 15px);
 }
-.LoginContainer > button,
-.landingPageForm > button,
-form > button,
-.overlay-buttons,
-.card > .adminBody > button {
+button {
   background-color: var(--main-color);
   border-radius: 30px;
   border: none;
   color: var(--lightest-color);
 }
-.LoginContainer > button:hover,
-.landingPageForm > button:hover,
-form > button:hover,
-.overlay-buttons:hover, 
-.card > .adminBody > button:hover  {
+button:hover {
   background-color: #0478fc;
   color: azure;
   cursor: pointer;
@@ -218,7 +210,7 @@ form > button:hover,
   font-size: 13px;
 }
 p.other-opt > span {
-  color: rgb(0, 153, 255); 
+  color: rgb(0, 153, 255);
   text-decoration: underline;
   cursor: pointer;
   display: inline;
@@ -234,7 +226,7 @@ p.other-opt {
   opacity: 0;
   padding: 5px 10px;
   text-align: left;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   color: var(--dark-textColor);
 }
 .landingPageForm > h2,
@@ -334,8 +326,8 @@ div > div > div:has(.arrow) {
   margin-top: 5px;
   text-align: center;
 }
-.schoolForm > div > div > input[type="number"]::-webkit-inner-spin-button,
-.schoolForm > div > div > input[type="number"]::-webkit-outer-spin-button {
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
@@ -376,6 +368,8 @@ div > div > div:has(.arrow) {
 .eventsSection-container {
   flex-direction: column;
   align-items: center;
+  scroll-behavior: smooth;
+  padding: clamp(5px, 5vw, 30px);
 }
 .dashboard-main-container {
   background: linear-gradient(30deg, var(--main-color), var(--light-mainColor));
@@ -408,7 +402,7 @@ div > div > div:has(.arrow) {
   width: max(50%, 200px);
   text-align: center;
   height: calc(100vh / 3.25);
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   color: #205da4;
   font-weight: 100;
   border: #c5c3c6 solid 2px;
@@ -439,25 +433,109 @@ div > div > div:has(.arrow) {
   width: 85%;
   font-weight: 800;
   text-align: center;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   color: var(--dark-textColor);
   cursor: pointer;
   border: solid 2px var(--darkest-color);
   border-radius: 15px;
 }
-.main-searchbar > div:hover {
+.main-searchbar > .filters {
+  display: flex;
+  gap: clamp(1.5px, 2.5vw, 3px);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.filters > .sortBy {
+  transition: 1.25s;
+}
+.filters > .sortBy[toggled='true'] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-height: 200px;
+}
+.filters > .sortBy[toggled='false'] {
+  display: none;
+  max-height: 0px;
+}
+.sortBy > label {
+  margin-right: 1.5px;
+}
+.optionsContainer > * {
+  display: inline;
+}
+.optionsContainer > input {
+  margin-left: 2.5px;
+  margin-right: 1.5px;
+}
+.filters > span > i {
+  top: min(2.5px, 0.5vw);
+}
+.newDataForm[toggled='true'] {
+  display: flex;
+  flex-direction: row;
+}
+.newDataForm[toggled='false'] {
+  display: none;
+}
+#newStudentFormContainer > form:nth-child(2) {
+  grid-column: 1;
+}
+#newStudentFormContainer > form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  border: solid 1px var(--dark-textColor);
+  width: max-content;
+  padding: 10px;
+}
+#newStudentFormContainer[toggled='true'] {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  width: 75%;
+  max-height: 500px;
+}
+#newStudentFormContainer > form:nth-child(1) > div > button {
+  margin-top: 5px;
+}
+form > h1 {
+  font-size: clamp(10px, 15vw, 30px);
+  text-align: center;
+  width: 85%;
+  border-bottom: solid 1px var(--dark-textColor);
+}
+form > div > input {
+  padding: 5px 10px;
+  margin: 8px 0;
+  margin-top: 0;
+  border-radius: 10px;
+  border: 1px solid var(--dark-textColor);
+}
+div:has(form:nth-child(3)) > .newDataFormArrow {
+  grid-column: 1/2;
+  align-self: start;
+  justify-self: stretch;
+}
+.main-searchbar > div:hover,
+.main-searchbar > div:has(*[toggled='true']) {
   background-color: var(--dark-textColor);
-  color: var(--darkest-color);
+  color: var(--lightest-color);
 }
 .main-searchbar > label {
   text-decoration: underline;
   text-underline-offset: 5px;
   font-size: clamp(45px, 5vw, 5em);
   text-decoration-thickness: clamp(5px, 0.75vw, 10px);
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 800;
+  overflow-y: hidden;
 }
-.main-searchbar > input[type="text"] {
+.main-searchbar > input[type='text'] {
+  padding: 5px 10px;
   padding: 10px;
   background: var(--lightest-color);
   border-radius: 50px;
@@ -470,8 +548,15 @@ div > div > div:has(.arrow) {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
   margin-top: 1rem;
-  gap: 0.85rem; 
-  width:80%; 
+  gap: 0.85rem;
+  width: 100%;
+} 
+.dataDisplayContainer > h1 { 
+  font-weight: 800; 
+  font-family:"Montserrat", sans-serif; 
+  position:absolute; 
+  left:50%; 
+  transform:translateX(-50%)
 }
 .card {
   border: var(--darkest-color) 1px solid;
@@ -481,28 +566,32 @@ div > div > div:has(.arrow) {
   box-shadow: var(--shadow-elevation-medium);
   background-color: transparent;
   backdrop-filter: blur(20px);
-  font-family: "Montserrat", "Open Sans", sans-serif;
+  font-family: 'Montserrat', 'Open Sans', sans-serif;
+  overflow-y: hidden;
 }
 .card > .title {
-  font-family: "Montserrat", sans-serif;
-  font-size: 1.2rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(1rem, 2vw 1.2rem);
 }
-.card > .body, .card > .extra-body {
-  font-family: "Montserrat", sans-serif;
-  font-size: 0.8rem; 
-}    
-.card > .extra-body { 
-  display:none
+.card > .body,
+.card > .extra-body {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(0.6rem, 1.25vw, 0.8rem);
+}
+.card > .extra-body {
+  display: none;
 }
 .card > .adminBody {
   width: 100%;
   padding-left: 10px;
-  padding-right: 10px; 
-  display:none; 
-  margin-top:.8rem
+  padding-right: 10px;
+  display: none;
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
+  font-size: 1rem;
 }
-.card > .adminBody > button { 
-  width: 100%; 
+.card > .adminBody > button {
+  width: 100%;
 }
 .userCard {
   border: var(--light-mainColor) 1px solid !important;
@@ -511,8 +600,8 @@ div > div > div:has(.arrow) {
 .facultySection-container > * > label {
   color: var(--lightest-color);
 }
-.adminShown { 
-  display:none; 
+.adminShown {
+  display: none;
 }
 .dashboard > nav {
   width: max(15%, 50px);
@@ -536,6 +625,7 @@ div > div > div:has(.arrow) {
   height: calc(100% / 6);
   width: 80%;
   background: var(--grey-color);
+  box-shadow: var(--shadow-elevation-low);
 }
 .dashboard-tab:first-child {
   border-top: none;
@@ -553,29 +643,29 @@ div > div > div:has(.arrow) {
 .dashboard-tab > span:nth-child(2) {
   font-size: clamp(12px, 5vw, 18px);
 }
-@media screen and (max-width: 550px) {
-  .dashboard-tab[displayedOnMobile="false"] > *:nth-child(2) {
+@media screen and (max-width: 725px) {
+  .dashboard-tab[displayedOnMobile='false'] > *:nth-child(2) {
     display: none !important;
   }
 }
-.dashboard-tab[toggled="false"] > * {
+.dashboard-tab[toggled='false'] > * {
   color: var(--dark-textColor);
 }
-.dashboard-tab[toggled="false"]:hover {
+.dashboard-tab[toggled='false']:hover {
   background-color: var(--dark-textColor);
   border: var(--dark-textColor);
 }
-.dashboard-tab[toggled="false"]:hover > * {
+.dashboard-tab[toggled='false']:hover > * {
   color: var(--grey-color);
 }
-#sign-out[toggled="false"]:hover > .arrow {
+#sign-out[toggled='false']:hover > .arrow {
   color: var(--grey-color);
   border-right: solid var(--grey-color) 3px;
   border-left: solid 3px transparent;
   border-bottom: solid var(--grey-color) 3px;
   border-top: solid 3px transparent;
 }
-.dashboard-tab[toggled="true"] {
+.dashboard-tab[toggled='true'] {
   color: var(--main-color);
   background-color: var(--dark-textColor);
   border: var(--dark-textColor);

@@ -35,7 +35,7 @@ router.post("/login", async (req, res) => {
       await user.save();
       const accessToken = auth.generateAccessToken(userdata);
       const refreshToken = await auth.generateRefreshToken(userdata);
-      return res.status(200).json({ accessToken: accessToken, refreshToken: refreshToken }); 
+      return res.status(200).json({ accessToken: accessToken, refreshToken: refreshToken });
     } else {
       throw new Error("Username or Password is wrong");
     }

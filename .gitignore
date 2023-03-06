@@ -1,4 +1,4 @@
 node_modules/  
 .env 
 request.rest  
-public/scripts/.prettierrc.json 
+.prettierrc.js 

@@ -14,9 +14,7 @@ export async function setUpUser(event) {
   document.getElementsByClassName("arrow")[1].parentNode.style.display = "flex";
   try {
     // Get the form data
-    const formdata = new URLSearchParams(
-      new FormData(document.getElementsByClassName("signup-form")[0])
-    );
+    const formdata = new URLSearchParams(new FormData(document.getElementsByClassName("signup-form")[0]));
     // Send the form data to the server
     const response = await fetch("/setup-user", {
       method: "POST",
@@ -26,9 +24,7 @@ export async function setUpUser(event) {
     if (!response.ok) {
       // If the response status is 409 (Conflict), display an error message
       if (response.status === 409) {
-        document
-          .getElementsByClassName("signup-form")[0]
-          .getElementsByTagName("span")[0].style.display = "block";
+        document.getElementsByClassName("signup-form")[0].getElementsByTagName("span")[0].style.display = "block";
       }
       // Throw an error
       const error = await response.json();
@@ -37,10 +33,7 @@ export async function setUpUser(event) {
       // If the response is OK, log the response and return the JSON data
       const data = await response.json();
       // Process the JSON data returned from the server
-      displayPages(
-        document.getElementsByClassName("homePage")[0],
-        document.getElementsByClassName("schoolCodePage")[0]
-      );
+      displayPages(document.getElementsByClassName("homePage")[0], document.getElementsByClassName("schoolCodePage")[0]);
       sessionStorage.setItem("email", data.email);
       sessionStorage.setItem("name", data.name);
       sessionStorage.setItem("password", data.password);
@@ -70,9 +63,7 @@ async function createSchool() {
     });
     if (!response.ok) {
       if (response.status === 409) {
-        document
-          .getElementsByClassName("schoolForm")[1]
-          .getElementsByTagName("span")[0].style.display = "block";
+        document.getElementsByClassName("schoolForm")[1].getElementsByTagName("span")[0].style.display = "block";
       }
       const error = await response.json();
       throw new Error(error.error);
@@ -151,31 +142,31 @@ async function login() {
     throw new Error(error.message);
   }
 }
-async function getData(fetchUrl) {
+async function getData(fetchUrl, inputElement) {
   const accessToken = JSON.parse(localStorage.getItem("accessToken"));
   const refreshToken = JSON.parse(localStorage.getItem("refreshToken"));
-  try {
+  const searchInputs = {
+    name: inputElement.value.toLowerCase(),
+    email: inputElement.value.toLowerCase(),
+  };
+  try { 
+    //this is actually a req.post as we have actually inputing values from the search 
     const response = await fetch(fetchUrl, {
-      method: "GET",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
         "Refresh-Token": refreshToken,
       },
+      body: JSON.stringify(searchInputs),
     });
     if (!response.ok) {
       const error = await response.json();
       throw new Error(error.error);
     } else {
       if (response.headers.get("refresh-token")) {
-        localStorage.setItem(
-          "accessToken",
-          JSON.stringify(response.headers.get("access-token"))
-        );
-        localStorage.setItem(
-          "refreshToken",
-          JSON.stringify(response.headers.get("refresh-token"))
-        );
+        localStorage.setItem("accessToken", JSON.stringify(response.headers.get("access-token")));
+        localStorage.setItem("refreshToken", JSON.stringify(response.headers.get("refresh-token")));
       }
       const data = await response.json();
       return data;
@@ -184,17 +175,17 @@ async function getData(fetchUrl) {
     throw new Error(error.message);
   }
 }
-async function getFaculty() {
+async function getFaculty(inputElement) {
   try {
-    const data = await getData("/getFaculty");
+    const data = await getData("/getFaculty", inputElement);
     return data;
   } catch (error) {
     throw new Error(error.message);
   }
 }
-async function getStudents() {
+async function getStudents(inputElement) {
   try {
-    const data = await getData("/getStudents");
+    const data = await getData("/getStudents", inputElement);
     return data;
   } catch (error) {
     throw new Error(error.message);
@@ -228,10 +219,7 @@ export async function loginAndDisplayDashboard(event) {
   try {
     await login();
     // Hide the home page and display the dashboard
-    displayPages(
-      document.getElementsByClassName("homePage")[0],
-      document.getElementsByClassName("dashboard")[0]
-    );
+    displayPages(document.getElementsByClassName("homePage")[0], document.getElementsByClassName("dashboard")[0]);
     Array(...document.getElementsByClassName("dashboard-tab")).forEach((tab) => {
       tab.setAttribute("displayedOnMobile", false);
       tab.setAttribute("toggled", false);
@@ -250,55 +238,57 @@ export async function loginAndDisplayDashboard(event) {
 export async function displayFaculty(event) {
   event.preventDefault();
   try {
-    document.getElementById("facultyDisplay").innerHTML = "";
-    let val = document.getElementById("facultyInput").value.toLowerCase();
-    const data = await getFaculty();
-    const faculty = data.staff;
+    const data = await getFaculty(document.getElementById("facultyInput"));
+    const faculty = data.faculty;
     const user = data.user;
-    let facultyFiltered = faculty.filter(
-      (staff) =>
-        staff.name !== user[0].name &&
-        (staff.name.includes(val) || staff.email.includes(val))
-    );
-    generateSearchCards(user, document.getElementById("facultyDisplay"), "", "userCard");
-    generateSearchCards(
-      facultyFiltered,
-      document.getElementById("facultyDisplay"),
-      user[0].accessPermissions
-    );
+    //generate cards 
+    setTimeout(function () { 
+      document.getElementById("facultyDisplay").innerHTML = "";
+      generateSearchCards(user, document.getElementById("facultyDisplay"), "", "userCard");
+      generateSearchCards(faculty, document.getElementById("facultyDisplay"), user[0].accessPermissions);
+    }, 500);
+
     //regenerate cards
     setTimeout(function () {
-      if (
-        document.getElementById("facultyDisplay").children.length >
-        user.length + facultyFiltered.length
-      ) {
+      if (document.getElementById("facultyDisplay").children.length > user.length + faculty.length) {
         document.getElementById("facultyDisplay").innerHTML = "";
-        generateSearchCards(
-          user,
-          document.getElementById("facultyDisplay"),
-          "",
-          "userCard"
-        );
-        generateSearchCards(
-          facultyFiltered,
-          document.getElementById("facultyDisplay"),
-          user[0].accessPermissions
-        );
+        generateSearchCards(user, document.getElementById("facultyDisplay"), "", "userCard");
+        generateSearchCards(faculty, document.getElementById("facultyDisplay"), user[0].accessPermissions);
       }
     }, 1000);
+  } catch (error) {
+    alert(`Sorry an error just occured and it says, ${error.message}`);
+  }
+} 
+export async function displayStudents(event) { 
+  event.preventDefault();    
+  try {
+    const data = await getStudents(document.getElementById("getStudentInput")) 
+    const students = data.student;  
+    if(students.length === 0){ 
+      document.getElementById("").style.display = "block"
+    } else {
+    //generate cards 
+    setTimeout(function () { 
+      document.getElementById("studentDisplay").innerHTML = "";
+      generateSearchCards(students, document.getElementById("studentDisplay"), "", "userCard");
+    }, 500);
+
+    //regenerate cards
+    setTimeout(function () {
+      if (document.getElementById("studentDisplay").children.length > user.length + faculty.length) {
+        document.getElementById("studentDisplay").innerHTML = "";
+        generateSearchCards(students, document.getElementById("studentDisplay"), "", "userCard");
+      }
+    }, 1000); 
+  }
   } catch (error) {
     alert(`Sorry an error just occured and it says, ${error.message}`);
   }
 }
 function setNewRefreshToken() {}
 //call setUpUser function to be called when the form is submitted
-function generateSearchCards(
-  data,
-  appendElement,
-  role = "member",
-  addClass = undefined,
-  extraBody = undefined
-) {
+function generateSearchCards(data, appendElement, role = "member", addClass = undefined, extraBody = undefined) {
   data.forEach((element) => {
     const cardTemplate = document.querySelector("[data-search-template]");
     const card = cardTemplate.content.cloneNode(true).children[0];

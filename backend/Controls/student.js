@@ -5,11 +5,23 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 const bcrypt = require("bcryptjs");
 const Student = require("../Model/studentModel.js");
-const mongoose = require("mongoose");
-exports.createAStudent = async (req, res) => {};
-exports.createStudents = async (req, res) => { 
-  
+const mongoose = require("mongoose"); 
+exports.createAStudent = async (req, res) => { 
+  try { 
+    const studentAttributes = { 
+      name:req.body.name,  
+      email: req.body.email, 
+      grade: req.body.grade,  
+      studentCode: req.user.userSchoolCode 
+    }
+    const student = new Student(studentAttributes) 
+    await student.save(); 
+    return;
+  } catch (error) { 
+    throw new Error("Failed to create Student")
+  }
 };
+
 exports.getAStudent = async (req, res) => { 
     try {
         const student = await Student.findById(req.params.id);
@@ -32,4 +44,10 @@ exports.getStudents = async (req, res) => {
   } catch (error) {
     throw new Error(error)
   }
-  }    
+  }     
+  exports.deleteStudent = async (req, res) => { 
+
+  } 
+  exports.deleteStudents = async (req, res) => { 
+
+  }

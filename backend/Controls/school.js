@@ -66,13 +66,19 @@ exports.handleRolesOnJoin = async (req, res) => {
   }
 };
 exports.getAllFaculty = async (req, res) => {
+  const val = req.body;
   try {
     const staff = await User.find({ schoolCode: req.user.userSchoolCode }, { name: 1, email: 1 });
     const user = await User.find(
       { _id: req.user.userID },
       { name: 1, accessPermissions: 1, email: 1 }
     );
-    return res.status(200).json({ staff, user });
+    const faculty = staff.filter(
+      (individualStaff) =>
+        individualStaff.name !== user[0].name &&
+        (individualStaff.name.includes(val.name) || individualStaff.email.includes(val.email))
+    );
+    return res.status(200).json({ faculty, user });
   } catch (error) {
     throw new Error(error);
   }
@@ -80,8 +86,8 @@ exports.getAllFaculty = async (req, res) => {
 
 exports.changeSchoolCode = async (req, res) => {
   try {
-    const school = School.findById({ _id: req.user.userSchoolCode });
-    const newSchool = School.create({ ...school.toObject(), _id: mongoose.Types.ObjectId() });
+    const school = await School.findById({ _id: req.user.userSchoolCode });
+    const newSchool = await School.create({ ...school.toObject(), _id: mongoose.Types.ObjectId() });
     await newSchool.save();
     await User.updateMany({ schoolCode: req.user.userSchoolCode }, { schoolCode: newSchool._id });
     await Student.updateMany(
@@ -90,8 +96,9 @@ exports.changeSchoolCode = async (req, res) => {
     );
     await Event.updateMany({ schoolCode: req.user.userSchoolCode }, { schoolCode: newSchool._id });
     await school.deleteOne();
-    const admin = User.findById({ _id: req.user.userID });
+    const admin = await User.findById({ _id: req.user.userID });
     await mail.sendSchoolCode(admin.email, newSchool._id);
+    return;
   } catch (error) {
     throw new Error("Could not change School Code");
   }
