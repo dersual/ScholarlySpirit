@@ -334,7 +334,8 @@ export async function displayStudents(event) {
       }, 1000)
     } else {
       //generate cards
-      setTimeout(function () {
+      setTimeout(function () { 
+        
         document.getElementById('studentDisplay').innerHTML = '';
         generateSearchCards(
           students,

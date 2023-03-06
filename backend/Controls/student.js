@@ -59,24 +59,12 @@ exports.getStudents = async (req, res) => {
         .json({ students: students, alertUser: true, message: 'You have no students uploaded in this School.' });
     const studentFiltered = students.filter(
       (student) => student.name.includes(val.name) || student.email.includes(val.email)
-    );  
-    let studentNames = []
-    let studentEmails = []
-    let studentPoints = []
-    let studentGrade = []
-    studentFiltered.forEach(student => {   
-      studentNames.push(student.name) 
-      studentEmails.push(student.email) 
-      studentPoints.push(JSON.stringify(student.points)) 
-      studentGrade.push(JSON.stringify(student.grade))
+    );    
+    studentFiltered.forEach(student => { 
+      student.grade = JSON.stringify(student.grade) 
+      student.points = JSON.stringify(student.points)
     })
-    const studentBody = { 
-      name: studentNames,  
-      email: studentEmails, 
-      points: studentPoints, 
-      grade: studentGrade
-    } 
-    return res.status(200).json({ student: studentBody, user: User });
+    return res.status(200).json({ student: studentFiltered, user: User });
   } catch (error) {
     throw new Error(error);
   }
