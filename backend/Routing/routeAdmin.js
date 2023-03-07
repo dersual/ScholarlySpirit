@@ -13,6 +13,7 @@ const Student = require("../Controls/student");
 const studentModel = require("../Model/studentModel");
 const EventModel = require("../Model/eventModel.js");
 const Event = require("../Controls/event.js");
+const { authenticateToken } = require("../configs/jwtConfigs");
 router.post("/changeSchoolCode", auth.authenticateToken, async (req, res) => {
   if (req.user.userPermissions === "admin") {
     try {
@@ -46,11 +47,15 @@ router.delete("/kickUser/:email", auth.authenticateToken, async (req, res) => {
 router.delete("/kickStudent/:email", auth.authenticateToken, async (req, res) => {
   if (req.user.userPermissions === "admin") { 
     const admin = UserModel.findById({ _id: req.user.userID });  
-    
+    try { 
+      
+    } catch (error) {
+      
+    }
   } else {
     res.status(401).json({ error: "Not Permited", alertUser: true });
   }
-});
+}); 
 //delete all students and events etc.
 router.delete("/endOfSchoolYear", auth.authenticateToken, async (req, res) => {
   if (req.user.userPermissions === "admin") { 

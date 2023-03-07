@@ -13,9 +13,10 @@ router.post("/setup-user", async (req, res) => {
     } else {
       const password = await bcrypt.hash(req.body.password, 10);
       res.json({ email: req.body.email, name: req.body.name, password: password });
-    }
+    } 
+    req.body.password
   } catch (error) {
-    res.status(400).json({ error:error.messagevent });
+    res.status(400).json({ error:error.message });
   }
 });
 router.post("/register", async (req, res) => {

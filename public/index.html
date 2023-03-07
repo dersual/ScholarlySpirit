@@ -213,21 +213,23 @@
         </div>
         <div id="getEventForm" class="main-searchbar">
           <label>Events</label>
-          <input placeholder="Enter Event Name" autocomplete="off" name="name" type="text" />
+          <input id="getEventsInput" placeholder="Enter Event Name" autocomplete="off" name="name" type="text" />
           <div id="eventFilter" class="filters">
             <span>Filters <i class="fa-solid fa-sliders"></i></span>
             <div class="sortBy">
               <label>Sort By: </label>
               <div class="optionsContainer">
-                <input name="sortType" type="radio" value="Sporting" /><label>Sporting</label>
-                <input name="sortType" type="radio" value="Non-Sporting" /><label>Non-Sporting</label>
-                <input name="sortType" type="radio" value="Points" /><label>Points</label>
-                <input name="sortType" type="radio" value="Oldest" /><label>Oldest</label>
-                <input name="sortType" type="radio" value="Recent" checked="checked" /><label>Most Recent</label>
+                <input name="sortType" type="radio" id="sporting" value="Sporting" /><label>Sporting</label>
+                <input name="sortType" type="radio" id="nonSporting" value="Non-Sporting" /><label
+                  >Non-Sporting</label
+                >
+                <input name="sortType" type="radio" id="points" value="Points" checked="checked" /><label
+                  >Points</label
+                >
               </div>
             </div>
           </div>
-          <div id="newEventForm">
+          <div class="newGetDataForm" id="newEventForm">
             Add New Events <span><i class="fa-solid fa-plus"></i></span>
           </div>
         </div>
@@ -278,23 +280,21 @@
             <div class="sortBy">
               <label>Sort By: </label>
               <div class="optionsContainer">
-                <input name="sortType" type="radio" value="Grade" checked="checked" id = "gradeInput"/><label
+                <input name="sortType" type="radio" value="Grade" checked="checked" id="gradeInput" /><label
                   >Grade</label
                 >
-                <input name="sortType" type="radio" value="Points" id = "pointsInput"/><label>Points</label>
+                <input name="sortType" type="radio" value="Points" id="pointsInput" /><label>Points</label>
               </div>
             </div>
           </div>
-          <div id="newStudentForm">
+          <div class="newGetDataForm" id="newStudentForm">
             Add New Students <span><i class="fa-solid fa-plus"></i></span>
           </div>
         </div>
-        <div id="studentDisplay" class="dataDisplayContainer">
-          <h1>Add Some Students</h1>
-        </div>
+        <div id="studentDisplay" class="dataDisplayContainer"></div>
       </div>
       <!--My Profile-->
-      <div></div>
+      <div class="main-container myProfileSection-container"></div>
       <!--Faculty-->
       <div class="main-container facultySection-container">
         <div id="getFacultyForm" class="main-searchbar">
@@ -307,29 +307,34 @@
             <div class="title" data-title></div>
             <div class="body" data-body></div>
             <div class="adminBody" data-admin-body>
-              <button>Kick Member</button>
+              <button>Kick</button>
             </div>
           </div>
-        </template> 
-        <template data-search-user-template>
+        </template>
+        <template data-search-student-template>
           <div class="card" data-container>
             <div class="title" data-title></div>
             <div class="body" data-body></div>
-            <div class="body" data-body></div> 
+            <div class="body" data-body></div>
             <div class="body" data-body></div>
             <div class="adminBody" data-admin-body>
-              <button>Kick Member</button>
+              <button>Kick</button>
             </div>
           </div>
-        </template> 
-        <template data-search-user-template>
-          <div class="card" data-container>
+        </template>
+        <template data-search-event-template>
+          <div class="card evenCard" data-container>
             <div class="title" data-title></div>
             <div class="body" data-body></div>
-            <div class="body" data-body></div> 
             <div class="body" data-body></div>
+            <div class="body" data-body></div>
+            <div class="getStudentInEventForm" data-body>
+              <form>
+                <input type="text" class="getStudentInEventInput" name="name" placeholder="Enter Name" />
+              </form>
+            </div>
             <div class="adminBody" data-admin-body>
-              <button>Kick Member</button>
+              <button>Delete</button>
             </div>
           </div>
         </template>
@@ -361,7 +366,7 @@
         </p>
         <p>Just sign back in to continue the activity you were doing.</p>
         <div>
-          <button id ="invalidAuthorizationButton" class="overlay-buttons">Ok &gt;</button>
+          <button id="invalidAuthorizationButton" class="overlay-buttons">Ok &gt;</button>
         </div>
       </div>
       <div id="newStudentFormContainer" class="newDataForm">
@@ -377,7 +382,7 @@
           ></i>
           <p>Go Back</p>
         </div>
-        <form id = "manualCreateStudent">
+        <form id="manualCreateStudent">
           <h1>Create New Student Manually</h1>
           <div><label>Name</label><input autocomplete="off" name="name" type="text" required style=/></div>
           <div><label>Email</label><input autocomplete="off" name="email" type="email" required /></div>
@@ -386,7 +391,7 @@
             <button class="overlay-buttons" type="submit" style="margin-top: 5px" id="submitManual">Submit</button>
           </div>
         </form>
-        <form id = "uploadCreateStudent">
+        <form id="uploadCreateStudent">
           <h1>Upload Students Via Text File</h1>
           <p>It should look like this</p>
           <img alt="how-to-upload" src="/Assets/howtoupload.png" />
@@ -397,6 +402,53 @@
           <div>
             <button id="submitUpload" class="overlay-buttons" type="Submit">Submit</button>
           </div>
+        </form>
+      </div>
+      <div id="newEventFormContainer" class="newDataForm">
+        <div class="newDataFormArrow">
+          <i
+            data-close-target=".overlay"
+            data-open-target="#newStudentFormContainer, #newStudentFormContainer"
+            data-display-type="none"
+            data-opentarget-exclusive="[0]"
+            data-x-pos="-10px"
+            data-y-pos="0"
+            class="arrow left"
+          ></i>
+          <p>Go Back</p>
+        </div>
+        <form>
+          <h1>Create Event</h1>
+          <label>Type</label>
+          <div>
+            <input class = "eventTypeInput" id ="non-sportingInput" name="type" value="Non-Sporting" type="radio" /><label>Non-Sporting</label>
+            <input class = "eventTypeInput" id ="sportingInput" name="type" value="Sporting" type="radio" /><label>Sporting</label>
+          </div> 
+          <label>Name</label> 
+           <select class ="nameSelection" name = "name" id = "Sporting-Names"> 
+            <option value = "Basketball">Basketball</option> 
+            <option value ="Volleyball">Volleyball</option> 
+            <option value = "Football">Football</option> 
+            <option value = "Soccer">Soccer</option> 
+            <option value = "Track">Track</option> 
+            <option value = "Custom">Custom</option>
+           </select>   
+           <select class ="nameSelection" name = "name" id = "Nonsporting-Names"> 
+            <option value = "Band Concert">Band Concert</option> 
+            <option value ="Orchestra Concert">Orchestra Concert</option> 
+            <option value = "School Dance">School Dance</option> 
+            <option value = "School Play">School Play</option> 
+            <option value = "Choir Concert">Choir Concert</option> 
+            <option value = "Custom">Custom</option>
+           </select>  
+           <input id ="customName" type="text"/>  
+           <label>Date</label> 
+           <input type ="date" name = "dateEnding" id = "dateEnding" /> 
+           <label>Reward Points</label> 
+           <input type = "number", name = "points"/> 
+           <div> 
+            <button class = "overlay-buttons">Submit</button>
+           </div>
         </form>
       </div>
     </div>

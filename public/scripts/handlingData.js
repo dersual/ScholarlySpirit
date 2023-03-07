@@ -1,4 +1,4 @@
-import { handleEvents, displayPages } from './mainFunctions.js';
+import { displayPages } from './mainFunctions.js';
 //Everything regarding DOM manipulation
 // Declare empty objects for user and school data
 let user = {};
@@ -6,7 +6,7 @@ let school = {};
 
 //Fetching routes(involves sending & getting data)
 // This function is called when the user submits the signup form, prepares user data for sign up function later
-
+//call setUpUser function to be called when the form is submitted
 export async function setUpUser(event) {
   // Prevent the default form submission behavior
   event.preventDefault();
@@ -32,6 +32,9 @@ export async function setUpUser(event) {
     } else {
       // If the response is OK, log the response and return the JSON data
       const data = await response.json();
+      if (data.alertUser === true) {
+        alert(data.message);
+      }
       // Process the JSON data returned from the server
       displayPages(document.getElementsByClassName('homePage')[0], document.getElementsByClassName('schoolCodePage')[0]);
       sessionStorage.setItem('email', data.email);
@@ -41,7 +44,7 @@ export async function setUpUser(event) {
   } catch (error) {
     // Log the error
     if (error.message !== 'Account Seems To Have Already Been Made') {
-     console.error(error.message);
+      console.error(error.message);
     }
   }
 }
@@ -69,6 +72,9 @@ async function createSchool() {
       throw new Error(error.error);
     } else {
       const data = await response.json();
+      if (data.alertUser === true) {
+        alert(data.message);
+      }
       sessionStorage.setItem('schoolCode', data._id);
     }
   } catch (error) {
@@ -97,6 +103,9 @@ async function register() {
       throw new Error(error.error);
     } else {
       const data = await response.json();
+      if (data.alertUser === true) {
+        alert(data.message);
+      }
       sessionStorage.setItem('id', data._id);
       var url = '/handleFacultyRoleInSchool/' + data._id + '/' + data.schoolCode;
       const response2 = await fetch(url, {
@@ -134,6 +143,9 @@ async function login() {
       throw new Error(error.error);
     } else {
       const data = await response.json();
+      if (data.alertUser === true) {
+        alert(data.message);
+      }
       localStorage.setItem('accessToken', JSON.stringify(data.accessToken));
       localStorage.setItem('refreshToken', JSON.stringify(data.refreshToken));
       localStorage.setItem('LoginStatus', 'true');
@@ -143,12 +155,13 @@ async function login() {
   }
 }
 async function getData(fetchUrl, inputElement, sortType) {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   const accessToken = JSON.parse(localStorage.getItem('accessToken'));
   const refreshToken = JSON.parse(localStorage.getItem('refreshToken'));
   const searchInputs = {
-    name: inputElement.value.toLowerCase(),
-    email: inputElement.value.toLowerCase(), 
-    sortType: sortType
+    name: inputElement.value.toLowerCase().trim(),
+    email: inputElement.value.toLowerCase().trim(),
+    sortType: sortType,
   };
   try {
     //this is actually a req.post as we have actually inputing values from the search
@@ -168,10 +181,10 @@ async function getData(fetchUrl, inputElement, sortType) {
       if (response.headers.get('refresh-token')) {
         localStorage.setItem('accessToken', JSON.stringify(response.headers.get('access-token')));
         localStorage.setItem('refreshToken', JSON.stringify(response.headers.get('refresh-token')));
-      } 
-      const data = await response.json(); 
-      if(data.alertUser === true) { 
-        alert(data.message)
+      }
+      const data = await response.json();
+      if (data.alertUser === true) {
+        alert(data.message);
       }
       return data;
     }
@@ -183,91 +196,155 @@ async function getData(fetchUrl, inputElement, sortType) {
     ) {
       document.getElementById('overlay').style.display = 'block';
       document.getElementById('invalidAuthorization').setAttribute('toggled', true);
-     } else {
-      console.error(error)
+    } else {
+      console.error(error);
       throw new Error(error.message);
     }
   }
 }
 async function getFaculty(inputElement) {
   try {
-    const data = await getData('/getFaculty', inputElement, "");
+    const data = await getData('/getFaculty', inputElement, '');
     return data;
   } catch (error) {
     throw new Error(error.message);
   }
 }
 async function getStudents(inputElement) {
-  try { 
-    const studentSortType = document.getElementById("gradeInput").checked ? 'Grade' : 'Points';
+  try {
+    const studentSortType = document.getElementById('gradeInput').checked ? 'Grade' : 'Points';
     const data = await getData('/getStudents', inputElement, studentSortType);
     return data;
-  } catch (error) {  
-   console.error(error)
+  } catch (error) {
+    console.error(error);
     throw new Error(error.message);
   }
-} 
-export async function createAStudent (event) { 
-event.preventDefault();  
-const accessToken = JSON.parse(localStorage.getItem('accessToken'));
-const refreshToken = JSON.parse(localStorage.getItem('refreshToken')); 
-const form = document.querySelector("#manualCreateStudent");
-const formData = new FormData(form);
-try {
-  const response = await fetch("/createStudent",{
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      'Refresh-Token': refreshToken,
-    },
-    body: (new URLSearchParams(formData))
-  }) 
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error);
-  } else {
-    if (response.headers.get('refresh-token')) {
-      localStorage.setItem('accessToken', JSON.stringify(response.headers.get('access-token')));
-      localStorage.setItem('refreshToken', JSON.stringify(response.headers.get('refresh-token')));
-    }
-    const data = await response.json(); 
-    await displayStudents(); 
-    return data;
-  }
-} catch (error) {
-  console.error(error)
 }
-} 
-export async function uploadStudents(event) { 
-  event.preventDefault();  
+async function getEvents(inputElement) {
   try {
-    
-const fileInput = document.getElementById("uploadCreateStudent");
-const file = fileInput.files[0]; 
-const response = await fetch('/upload', {
-  method: 'POST', 
-  headers:{  
-    Authorization: `Bearer ${accessToken}`,
-      'Refresh-Token': refreshToken,
-  },
-  body: file,
-}) 
-if (!response.ok) {
-  const error = await response.json();
-  throw new Error(error.error);
-} else {
-  if (response.headers.get('refresh-token')) {
-    localStorage.setItem('accessToken', JSON.stringify(response.headers.get('access-token')));
-    localStorage.setItem('refreshToken', JSON.stringify(response.headers.get('refresh-token')));
+    const eventSortType =
+      document.querySelector('input[name="sortType"]:checked').value === 'Sporting'
+        ? 'Sporting'
+        : document.querySelector('input[name="sortType"]:checked').value === 'Non-Sporting'
+        ? 'Non-Sporting'
+        : 'Points';  
+        console.log(eventSortType)
+    const data = await getData('/getEvents', inputElement, eventSortType);  
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error.message);
   }
-  const data = await response.json(); 
-  await displayStudents(); 
-  return data;
 }
-} catch (error) {
-    
-}
+export async function createAStudent(event) {
+  event.preventDefault();
+  const accessToken = JSON.parse(localStorage.getItem('accessToken'));
+  const refreshToken = JSON.parse(localStorage.getItem('refreshToken'));
+  const form = document.querySelector('#manualCreateStudent');
+  const formData = new FormData(form);
+  try {
+    const response = await fetch('/createStudent', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Refresh-Token': refreshToken,
+      },
+      body: new URLSearchParams(formData),
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error);
+    } else {
+      if (response.headers.get('refresh-token')) {
+        localStorage.setItem('accessToken', JSON.stringify(response.headers.get('access-token')));
+        localStorage.setItem('refreshToken', JSON.stringify(response.headers.get('refresh-token')));
+      }
+      const data = await response.json();
+      if (data.alertUser === true) {
+        alert(data.message);
+      }
+      await displayStudents(event);
+      return data;
+    }
+  } catch (error) {
+    console.error(error);
+  }
 } 
+export async function createAnEvent (event) {  
+  event.preventDefault();
+  const accessToken = JSON.parse(localStorage.getItem('accessToken'));
+  const refreshToken = JSON.parse(localStorage.getItem('refreshToken'));
+  const form = document.querySelector('#manualCreateStudent');
+  const formData = new FormData(form);
+  try {
+    const response = await fetch('/createStudent', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Refresh-Token': refreshToken,
+      },
+      body: new URLSearchParams(formData),
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error);
+    } else {
+      if (response.headers.get('refresh-token')) {
+        localStorage.setItem('accessToken', JSON.stringify(response.headers.get('access-token')));
+        localStorage.setItem('refreshToken', JSON.stringify(response.headers.get('refresh-token')));
+      }
+      const data = await response.json();
+      if (data.alertUser === true) {
+        alert(data.message);
+      }
+      await displayEvents(event);
+      return data;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+export async function kick(event) {
+  event.preventDefault();
+  try {
+  } catch (error) {}
+}
+export async function uploadStudents(event) {
+  event.preventDefault();
+  try {
+    const accessToken = JSON.parse(localStorage.getItem('accessToken'));
+    const refreshToken = JSON.parse(localStorage.getItem('refreshToken'));
+    const fileInput = document.getElementById('studentUpload');
+    const file = fileInput.files[0];
+    const formData = new FormData();
+    formData.append('file', file);
+    const response = await fetch('/uploadStudents', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Refresh-Token': refreshToken,
+      },
+      body: formData,
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error);
+    } else {
+      if (response.headers.get('refresh-token')) {
+        localStorage.setItem('accessToken', JSON.stringify(response.headers.get('access-token')));
+        localStorage.setItem('refreshToken', JSON.stringify(response.headers.get('refresh-token')));
+      }
+      const data = await response.json();
+      if (data.alertUser === true) {
+        alert(data.message);
+      }
+      await displayStudents(event);
+      return data;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
 export async function useSchoolCodeAndRegister(event) {
   event.preventDefault();
   // Convert form data to object
@@ -278,7 +355,7 @@ export async function useSchoolCodeAndRegister(event) {
   try {
     await register();
   } catch (error) {
-   console.error(error.message);
+    console.error(error.message);
   }
 }
 
@@ -288,7 +365,7 @@ export async function createSchoolAndRegister(event) {
     await createSchool();
     await register();
   } catch (error) {
-   console.error(error.message);
+    console.error(error.message);
   }
 }
 export async function loginAndDisplayDashboard(event) {
@@ -308,7 +385,7 @@ export async function loginAndDisplayDashboard(event) {
     document.getElementById('sign-out').style.display = 'flex';
   } catch (error) {
     if (error.message !== 'Username or Password is wrong') {
-     console.error(error.message);
+      console.error(error.message);
     }
   }
 }
@@ -321,20 +398,32 @@ export async function displayFaculty(event) {
     //generate cards
     setTimeout(function () {
       document.getElementById('facultyDisplay').innerHTML = '';
-      generateSearchCards(user, document.getElementById('facultyDisplay'), '', 'userCard',"[data-search-template]");
-      generateSearchCards(faculty, document.getElementById('facultyDisplay'), user[0].accessPermissions,"", "[data-search-template]");
+      generateSearchCards(user, document.getElementById('facultyDisplay'), '', 'userCard', '[data-search-template]');
+      generateSearchCards(
+        faculty,
+        document.getElementById('facultyDisplay'),
+        user[0].accessPermissions,
+        undefined,
+        '[data-search-template]'
+      );
     }, 500);
 
     //regenerate cards
     setTimeout(function () {
       if (document.getElementById('facultyDisplay').children.length > user.length + faculty.length) {
         document.getElementById('facultyDisplay').innerHTML = '';
-        generateSearchCards(user, document.getElementById('facultyDisplay'), '', 'userCard');
-        generateSearchCards(faculty, document.getElementById('facultyDisplay'), user[0].accessPermissions);
+        generateSearchCards(user, document.getElementById('facultyDisplay'), '', 'userCard', '[data-search-template]');
+        generateSearchCards(
+          faculty,
+          document.getElementById('facultyDisplay'),
+          user[0].accessPermissions,
+          undefined,
+          '[data-search-template]'
+        );
       }
     }, 1000);
-  } catch (error) { 
-    console.error(error.message); 
+  } catch (error) {
+    console.error(error.message);
   }
 }
 export async function displayStudents(event) {
@@ -342,51 +431,88 @@ export async function displayStudents(event) {
   try {
     const data = await getStudents(document.getElementById('getStudentInput'));
     const students = data.student;
-    const user = data.user; 
-    console.log(students)
-    if (!students || students === undefined||students.length === 0 ) {
-      setTimeout(function(){ 
-        document.querySelector('#studentDisplay > h1').style.display = 'block';
-      }, 1000)
-    } else {
-      //generate cards
-      setTimeout(function () { 
-        
+    const user = data.user;
+    //generate cards
+    setTimeout(function () {
+      document.getElementById('studentDisplay').innerHTML = '';
+      generateSearchCards(
+        students,
+        document.getElementById('studentDisplay'),
+        user.accessPermissions,
+        undefined,
+        '[data-search-student-template]'
+      );
+    }, 500);
+
+    //regenerate cards
+    setTimeout(function () {
+      if (document.getElementById('studentDisplay').children.length > students.length) {
         document.getElementById('studentDisplay').innerHTML = '';
         generateSearchCards(
           students,
           document.getElementById('studentDisplay'),
           user.accessPermissions,
           undefined,
-          `Grade: ${students.grade} <br/> Points: ${students.point}`
+          '[data-search-student-template]'
         );
-      }, 500);
-
-      //regenerate cards
-      setTimeout(function () {
-        if (document.getElementById('studentDisplay').children.length > students.length) {
-          document.getElementById('studentDisplay').innerHTML = '';
-          generateSearchCards(
-            students,
-            document.getElementById('studentDisplay'),
-            user.accessPermissions,
-            undefined,
-            `Grade: ${JSON.stringify(students.grade)} <br/> Points: ${JSON.stringify(students.point)}`
-          );
-        }
-      }, 1000);
-    }
+      }
+    }, 1000);
   } catch (error) {
-    console.error(error.message)
+    console.error(error.message);
   }
 }
-function setNewRefreshToken() {}
-//call setUpUser function to be called when the form is submitted
+export async function displayEvents(event) {
+  event.preventDefault();
+  try {
+    const data = await getEvents(document.getElementById('getEventsInput'));
+    const events = data.events; 
+    console.log(events)
+    const user = data.user; 
+    console.log(user)
+    //generate cards
+    setTimeout(function () {
+      document.getElementById('eventDisplay').innerHTML = '';
+      generateSearchCards(
+        events,
+        document.getElementById('eventDisplay'),
+        user.accessPermissions,
+        undefined,
+        '[data-search-event-template]'
+      );
+    }, 500);
+
+    //regenerate cards
+    setTimeout(function () {
+      if (document.getElementById('studentDisplay').children.length > events.length) {
+        document.getElementById('eventDisplay').innerHTML = '';
+      generateSearchCards(
+        events,
+        document.getElementById('eventDisplay'),
+        user.accessPermissions,
+        undefined,
+        '[data-search-event-template]'
+        );
+      }
+    }, 1000);
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+//generate cards 
 function generateSearchCards(data, appendElement, role = 'member', addClass = undefined, template) {
+  if (!data || data === undefined || data.length === 0) {
+    setTimeout(function () {
+      if (appendElement.children.length === 0) {
+        const newh1 = document.createElement('h1');
+        newh1.textContent = 'No Data To Be Displayed';
+        appendElement.append(newh1);
+      }
+    }, 1000);
+  }
   data.forEach((element) => {
     const cardTemplate = document.querySelector(template);
     const card = cardTemplate.content.cloneNode(true).children[0];
-    if (addClass !== undefined || addClass.length === 0) {
+    if (addClass !== undefined) {
       card.classList.add(addClass);
     }
 
@@ -394,10 +520,16 @@ function generateSearchCards(data, appendElement, role = 'member', addClass = un
       card.querySelector('[data-admin-body]').style.display = 'block';
     }
     const title = card.querySelector('[data-title]');
-    const body = card.querySelectorAll('[data-body]'); 
-    title.textContent = element.name;  
-    for(var i = 0; i < body.length; i++){  
-      body[i].textContent = element[i+1]
+    const body = card.querySelectorAll('[data-body]');
+    title.textContent = element.name;
+    let incrementExtension = 0;
+    for (var i = 0; i < body.length + incrementExtension; i++) {
+      const property = Object.keys(element)[i];
+      if (property != '_id' && property != 'name') {
+        body[i - incrementExtension].textContent = element[property];
+      } else {
+        incrementExtension++;
+      }
     }
     appendElement.append(card);
   });

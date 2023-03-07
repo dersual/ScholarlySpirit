@@ -160,7 +160,12 @@ Array(...document.getElementsByClassName('sortBy')).forEach((element) => {
 Array(...document.getElementsByClassName('newDataForm')).forEach((element) => {
   element.setAttribute('toggled', false);
 });
+const nextYear = new Date().getFullYear() + 1;
 
+// Get the date input element by its ID
+const dateInput = document.getElementById('dateEnding');
+// Set the maximum value of the date input to next year
+dateInput.max = `${nextYear}-12-31`;
 export function displayAddDataForms(parentAddElement) {
   let elementSelector = parentAddElement + 'Container';
   console.log(elementSelector);
@@ -174,7 +179,7 @@ export function displayAddDataForms(parentAddElement) {
     document.getElementById('overlay').style.display =  getComputedStyle(element).display; 
     document.querySelector(".newDataFormArrow").style.display = "block"
   }
-}
+} 
 //parentFilterElement is a string that represents a class, id, element tag, etc.
 export function displayFilters(parentFilterElement) {
   let elementSelector = parentFilterElement + '> .sortBy';

@@ -5,6 +5,21 @@ const EventModel = require("../Model/eventModel.js");
 const Event = require("../Controls/event.js"); 
 const auth = require("../configs/jwtConfigs"); 
 router.post("/createEvent", auth.authenticateToken ,async(req, res) => { 
-
+await Event.createEvent(req, res)
+})  
+router.post("/getEvents", auth.authenticateToken, async(req, res) => { 
+    try {
+        await Event.getEvents(req, res);
+      } catch (error) {
+        console.error(error);
+        res.status(401).json({ error: error.message });
+      }
 }) 
+router.post("/addStudentInEvent", auth.authenticateToken, async(req,res) => { 
+    try {
+        
+    } catch (error) {
+        
+    }
+})
 module.exports = router

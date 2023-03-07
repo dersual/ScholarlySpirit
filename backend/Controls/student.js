@@ -9,9 +9,9 @@ const mongoose = require('mongoose');
 const user = require('../Model/userModel.js');
 const student = require('../Model/studentModel.js');
 exports.createAStudent = async (req, res) => {
-  try {
-    console.log(req.body, req.user.userSchoolCode);
-    if (Student.find({ email: req.body.email, schoolCode: req.user.userSchoolCode })) {
+  try { 
+    const foundStudent = await Student.find({ email: req.body.email, schoolCode: req.user.userSchoolCode })
+    if (foundStudent.length != 0) {
       res.status(202).json({ alertUser: true, message: 'You already have a student with this email' });
     }
     const studentAttributes = {
@@ -47,24 +47,33 @@ exports.getAStudent = async (req, res) => {
 exports.getStudents = async (req, res) => {
   try {
     const User = await user.findById({ _id: req.user.userID });
-    const val = req.body;
+    const val = req.body;   
+    console.log(val)
     const sortType = val.sortType === 'Points' ? '-points' : '-grade';
     const students = await Student.find(
       { schoolCode: req.user.userSchoolCode },
       { name: 1, email: 1, grade: 1, points: 1 }
-    ).sort(sortType);
-    if (students.length === 0)
-      return res
-        .status(202)
-        .json({ students: students, alertUser: true, message: 'You have no students uploaded in this School.' });
+    ).sort(sortType); 
+    if (students.length === 0) {
+      return res.status(202).json({
+        students: students, 
+        user: User,
+        alertUser: true,
+        message: 'You have no students uploaded in this School.',
+      });
+    }
     const studentFiltered = students.filter(
-      (student) => student.name.includes(val.name) || student.email.includes(val.email)
-    );    
-    studentFiltered.forEach(student => { 
-      student.grade = JSON.stringify(student.grade) 
-      student.points = JSON.stringify(student.points)
-    })
-    return res.status(200).json({ student: studentFiltered, user: User });
+      (student) => student.name.toLowerCase().includes(val.name.toLowerCase().trim()) ||
+      student.email.toLowerCase().includes(val.email.toLowerCase().trim())
+    ); 
+    console.log(studentFiltered, req.body)
+    const modifiedStudents = studentFiltered.map((student) => ({
+      name: student.name,
+      email: student.email,
+      grade: 'Grade ' + JSON.stringify(student.grade),
+      points: JSON.stringify(student.points) + ' Points',
+    }));
+    return res.status(200).json({ student: modifiedStudents, user: User });
   } catch (error) {
     throw new Error(error);
   }

@@ -67,19 +67,23 @@ exports.notifyAdminOnJoinedMember = async (email, name, schoolName) => {
   }
 };
 exports.notifyMembersOnJoinedStudents = async (email, registeredStudents, unRegisteredStudents) => {
-  try {
+  try { 
+    console.log(registeredStudents)
     const allRegisteredStudents = () => {
       if (registeredStudents.length === 0) return 'None';
-      for (student of registeredStudents) {
-        return student.name;
+      for (student of registeredStudents) { 
+        return student.name
       }
-    };
+    }; 
+    console.log(unRegisteredStudents)
     const allUnRegisteredStudents = () => {
       if (unRegisteredStudents.length === 0) return 'None';
       for (student of unRegisteredStudents) {
         return student.name;
       }
-    };
+    }; 
+    console.log(allUnRegisteredStudents(), allRegisteredStudents()) 
+    console.log(email)
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: email,
@@ -126,7 +130,22 @@ exports.notifyStudentOnRegistration = async (student) => {
   } catch (error) {
     throw new Error('Error in notifying students on registration');
   }
-};
+}; 
+exports.notifyMembersOnEventCreation = async (email, event) => { 
+  try {
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: 'Notification on Student Registration in Scholarly Spirit',
+      html: `Hi! <br/> <br/> 
+          A new event called ${event.name} just got created. 
+          <br/> <br/> From: Scholarly Spirit`,
+    };
+    await transporter.sendMail(mailOptions);
+  } catch (error) {
+    throw new Error('Error in notifying members on new event');
+  }
+}
 exports.notifyStudentOfNewPoints = async (studentEmail, pointsRewarded, event) => {
   try {
     const mailOptions = {

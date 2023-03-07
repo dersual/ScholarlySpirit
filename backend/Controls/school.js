@@ -72,7 +72,7 @@ exports.getAllFaculty = async (req, res) => {
     const staff = await User.find({ schoolCode: req.user.userSchoolCode }, { name: 1, email: 1 });
     const user = await User.find(
       { _id: req.user.userID },
-      { name: 1, accessPermissions: 1, email: 1 }
+      { name: 1, email: 1, accessPermissions: 1 }
     );
     const faculty = staff.filter(
       (individualStaff) =>

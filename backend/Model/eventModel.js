@@ -12,11 +12,7 @@ const eventSchema = new Schema({
   },
   dateEnding: {
     type: Date,
-    required: true,
-  },
-  isActive: { 
-    type:Boolean,  
-    default:true 
+    required: true, 
   },
   schoolCode: {
     type: mongoose.Schema.ObjectId, 
@@ -25,7 +21,7 @@ const eventSchema = new Schema({
   },
   pointsRewarded: {
     type: Number,
-    required: true,
+    required: true,  
   },
   studentParticipating: [{ type: mongoose.Schema.Types.ObjectId, ref: "Student" }],
 });

@@ -51,9 +51,19 @@ Array(...overlayButtons).forEach((button) => {
   });
 });
 handleEvents(document.getElementById('facultyInput'), 'input', data.displayFaculty);
-handleEvents(document.getElementById('getStudentInput'), 'input', data.displayStudents);
-handleEvents(document.getElementsByClassName('students-tab')[0], 'click', data.displayStudents);
-handleEvents(document.getElementById("manualCreateStudent"), "submit", data.createAStudent); 
+handleEvents(document.getElementById('getStudentInput'), 'input', data.displayStudents); 
+handleEvents(document.getElementById("getEventsInput"), "input", data.displayEvents)
+handleEvents(document.getElementsByClassName('students-tab')[0], 'click', data.displayStudents); 
+handleEvents(document.getElementsByClassName("events-tab")[0], "click", data.displayEvents)
+handleEvents(document.getElementById("manualCreateStudent"), "submit", data.createAStudent);  
+handleEvents(document.getElementById("uploadCreateStudent"), "submit", data.uploadStudents); 
+
+
+
+
+
+
+
 // navigation events
 var loginButtons = document.getElementsByClassName('LoginContainer')[0].children;
 handleEvents(loginButtons[0], 'click', navigate.displayLandingPageForms, 'add', [], true);
@@ -117,3 +127,19 @@ handleEvents(document.getElementById('faculty'), 'click', function () {
 });
 handleEvents(document.getElementById('studentFilter'), 'click', navigate.displayFilters, 'add', ['#studentFilter']);
 handleEvents(document.getElementById('newStudentForm'), 'click', navigate.displayAddDataForms, 'add', ['#newStudentForm']);
+handleEvents(document.getElementById("eventFilter"), "click", navigate.displayFilters, "add", ["#eventFilter"]) 
+handleEvents(document.getElementById('newEventForm'), 'click', navigate.displayAddDataForms, 'add', ['#newEventForm']); 
+const nameSelection = document.querySelectorAll(".nameSelection");
+handleEvents(nameSelection[0], "change", function(){ 
+  const customNameInput = document.getElementById("customName"); 
+  if (nameSelection[0].value === "Custom" || nameSelection[1].value === "Custom") {
+    customNameInput.style.display = "block";
+  } else {
+    customNameInput.style.display = "none";
+  }
+}) 
+handleEvents(document.getElementById("customName"), "input", function(){ 
+  Array(...document.getElementsByClassName('nameSelection')).forEach(element => {  
+    element.value = document.getElementById("customName").value 
+  })
+})
