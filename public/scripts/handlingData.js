@@ -1,8 +1,6 @@
 import { displayPages } from './mainFunctions.js';
 //Everything regarding DOM manipulation
 // Declare empty objects for user and school data
-let user = {};
-let school = {};
 
 //Fetching routes(involves sending & getting data)
 // This function is called when the user submits the signup form, prepares user data for sign up function later
@@ -152,6 +150,21 @@ async function login() {
     }
   } catch (error) {
     throw new Error(error.message);
+  }
+} 
+export async function deleteUser(event) {  
+   event.preventDefault();
+  try { 
+  } catch (error) {
+    
+  }
+} 
+export async function deleteStudent(event) {  
+  event.preventDefault();
+  try {
+    
+  } catch (error) {
+    
   }
 }
 async function getData(fetchUrl, inputElement, sortType) {

@@ -78,5 +78,18 @@ exports.getStudents = async (req, res) => {
     throw new Error(error);
   }
 };
-exports.deleteStudent = async (req, res) => {};
-exports.deleteStudents = async (req, res) => {};
+exports.deleteStudent = async (req, res) => { 
+  student.findByIdAndRemove({ _id: req.user.userID }, { useFindAndModify: false }, (err, student) => {
+    if (err) {
+      return res.status(400).json({
+        error: "Failed to delete user",
+      });
+    }
+    res.status(200).json({
+      message: "Deletion was a success",
+    });
+  });
+};
+exports.deleteStudents = async (req, res) => { 
+  
+};

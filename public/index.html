@@ -168,10 +168,6 @@
           ></i>
           <p>Sign Out</p>
         </div>
-        <div class="dashboard-tab" id="profile">
-          <span><i class="fa-solid fa-user"></i></span>
-          <span>Profile</span>
-        </div>
         <div id="home" class="dashboard-tab">
           <span><i class="fa-solid fa-house-chimney"></i></span>
           <span>Dashboard</span>
@@ -180,7 +176,7 @@
           <span><i class="fa-solid fa-chalkboard-user"></i></span>
           <span>Faculty</span>
         </div>
-        <div href="" target="_blank" id="help" class="dashboard-tab">
+        <div href="https://github.com/Lightnindrummer/ScholarlySpirit" target="_blank" id="help" class="dashboard-tab">
           <span><i class="fa-solid fa-question"></i></span>
           <span>Help</span>
         </div>
@@ -293,8 +289,6 @@
         </div>
         <div id="studentDisplay" class="dataDisplayContainer"></div>
       </div>
-      <!--My Profile-->
-      <div class="main-container myProfileSection-container"></div>
       <!--Faculty-->
       <div class="main-container facultySection-container">
         <div id="getFacultyForm" class="main-searchbar">
@@ -306,7 +300,7 @@
           <div class="card" data-container>
             <div class="title" data-title></div>
             <div class="body" data-body></div>
-            <div class="adminBody" data-admin-body>
+            <div class="adminBody" email data-admin-body>
               <button>Kick</button>
             </div>
           </div>
@@ -317,7 +311,7 @@
             <div class="body" data-body></div>
             <div class="body" data-body></div>
             <div class="body" data-body></div>
-            <div class="adminBody" data-admin-body>
+            <div class="adminBody" email data-admin-body>
               <button>Kick</button>
             </div>
           </div>
@@ -417,7 +411,7 @@
           ></i>
           <p>Go Back</p>
         </div>
-        <form>
+        <form id = "createEventForm">
           <h1>Create Event</h1>
           <label>Type</label>
           <div>

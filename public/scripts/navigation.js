@@ -85,9 +85,9 @@ Array(...arrow).forEach((element) => {
           switch (Array(...arrow).indexOf(specificArrow)) {
             case 0:
               element.removeAttribute('displayedOnMobile');
-              break;   
-            case 4: 
-              element.setAttribute("toggled", false) 
+              break;
+            case 4:
+              element.setAttribute('toggled', false);
           }
         },
         'add',
@@ -95,7 +95,7 @@ Array(...arrow).forEach((element) => {
       );
     });
   }
-  // assign the click event to all open targets and closed targets 
+  // assign the click event to all open targets and closed targets
   for (var r = 0; r < closedTargets.length; r++) {
     for (var c = 0; c < openTargets.length; c++) {
       handleEvents(parent, 'click', displayPages, 'add', [
@@ -106,18 +106,12 @@ Array(...arrow).forEach((element) => {
     }
   }
   // assign the click event to hide the parent node when it is clicked and set data displays content to ""
-  handleEvents(
-    parent,
-    'click',
-    function (el) {
+  handleEvents(parent, 'click', function (el) {
       el.style.display = 'none';
       Array(...document.getElementsByClassName('dataDisplayContainer')).forEach((display) => {
         display.innerHTML = '';
       });
-    },
-    'add',
-    [],
-    true
+    },'add', [], true
   );
 });
 
@@ -174,12 +168,12 @@ export function displayAddDataForms(parentAddElement) {
   if (element.getAttribute('toggled') === 'true') {
     document.getElementById('overlay').style.display = 'none';
     element.setAttribute('toggled', false);
-  } else {  
-    element.setAttribute('toggled', true);   
-    document.getElementById('overlay').style.display =  getComputedStyle(element).display; 
-    document.querySelector(".newDataFormArrow").style.display = "block"
+  } else {
+    element.setAttribute('toggled', true);
+    document.getElementById('overlay').style.display = getComputedStyle(element).display;
+    document.querySelector('.newDataFormArrow').style.display = 'block';
   }
-} 
+}
 //parentFilterElement is a string that represents a class, id, element tag, etc.
 export function displayFilters(parentFilterElement) {
   let elementSelector = parentFilterElement + '> .sortBy';

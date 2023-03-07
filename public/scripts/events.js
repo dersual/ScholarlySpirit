@@ -57,7 +57,7 @@ handleEvents(document.getElementsByClassName('students-tab')[0], 'click', data.d
 handleEvents(document.getElementsByClassName("events-tab")[0], "click", data.displayEvents)
 handleEvents(document.getElementById("manualCreateStudent"), "submit", data.createAStudent);  
 handleEvents(document.getElementById("uploadCreateStudent"), "submit", data.uploadStudents); 
-
+handleEvents(document.getElementById("createEventForm"), "submit", data.createAnEvent);
 
 
 
@@ -128,7 +128,7 @@ handleEvents(document.getElementById('faculty'), 'click', function () {
 handleEvents(document.getElementById('studentFilter'), 'click', navigate.displayFilters, 'add', ['#studentFilter']);
 handleEvents(document.getElementById('newStudentForm'), 'click', navigate.displayAddDataForms, 'add', ['#newStudentForm']);
 handleEvents(document.getElementById("eventFilter"), "click", navigate.displayFilters, "add", ["#eventFilter"]) 
-handleEvents(document.getElementById('newEventForm'), 'click', navigate.displayAddDataForms, 'add', ['#newEventForm']); 
+handleEvents(document.getElementById('newEventForm'), 'click', navigate.displayAddDataForms, 'add', ['#newEventForm']);  
 const nameSelection = document.querySelectorAll(".nameSelection");
 handleEvents(nameSelection[0], "change", function(){ 
   const customNameInput = document.getElementById("customName"); 

@@ -68,14 +68,12 @@ exports.updateUser = async (req, res) => {
 };
 
 exports.deleteUser = async (req, res) => {
-  User.findByIdAndRemove({ _id: req.user.userID }, { useFindAndModify: false }, (err, user) => {
+  User.findByIdAndRemove({ _id: req.params.id }, { useFindAndModify: false }, (err, user) => {
     if (err) {
       return res.status(400).json({
         error: "Failed to delete user",
       });
-    }
-    res.json({
-      message: "Deletion was a success",
-    });
+    } 
+    return;
   });
 };

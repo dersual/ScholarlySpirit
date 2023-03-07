@@ -13,44 +13,42 @@ const Student = require("../Controls/student");
 const studentModel = require("../Model/studentModel");
 const EventModel = require("../Model/eventModel.js");
 const Event = require("../Controls/event.js");
-const { authenticateToken } = require("../configs/jwtConfigs");
-router.post("/changeSchoolCode", auth.authenticateToken, async (req, res) => {
-  if (req.user.userPermissions === "admin") {
-    try {
-      await School.changeSchoolCode(req, res);
-      const admin = UserModel.findById({ _id: req.user.userID });
-      const payload = {
-        userID: admin._id,
-        userSchoolCode: admin.schoolCode,
-        userPermissions: admin.accessPermissions,
-      };
-      admin.refreshTokens = [];
-      await admin.save();
-      const accessToken = await auth.generateAccessToken(payload);
-      const refreshToken = await auth.generateRefreshToken(payload);
-      return res.status(200).json({ accessToken: accessToken, refreshToken: refreshToken });
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  } else {
-    res.status(401).json({ error: "Not Permited", alertUser:true });
+const { authenticateToken } = require("../configs/jwtConfigs"); 
+async function  changeTheSchoolCode () { 
+  try {
+    await School.changeSchoolCode(req, res);
+    const admin = UserModel.findById({ _id: req.user.userID });
+    const payload = {
+      userID: admin._id,
+      userSchoolCode: admin.schoolCode,
+      userPermissions: admin.accessPermissions,
+    };
+    admin.refreshTokens = [];
+    await admin.save();
+    const accessToken = await auth.generateAccessToken(payload);
+    const refreshToken = await auth.generateRefreshToken(payload);
+    return res.status(200).json({ accessToken: accessToken, refreshToken: refreshToken });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
-});
+}
+ 
 router.delete("/kickUser/:email", auth.authenticateToken, async (req, res) => {
   if (req.user.userPermissions === "admin") { 
-    const admin = UserModel.findById({ _id: req.user.userID });  
-    
+  await User.deleteUser(req, res);   
+  await changeTheSchoolCode();
   } else {
     res.status(401).json({ error: "Not Permited", alertUser: true });
   }
 }); 
 router.delete("/kickStudent/:email", auth.authenticateToken, async (req, res) => {
   if (req.user.userPermissions === "admin") { 
-    const admin = UserModel.findById({ _id: req.user.userID });  
     try { 
-      
-    } catch (error) {
-      
+      const student = await studentModel.find({email:req.params.email})
+      req.params.id  = student.id; 
+      await Student.deleteStudent(req, res)
+    } catch (error) { 
+      res.status(401).json({error:error.message})
     }
   } else {
     res.status(401).json({ error: "Not Permited", alertUser: true });
