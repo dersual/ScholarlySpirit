@@ -63,11 +63,23 @@ A computer program designed to track student and reward participation at school 
 _How It Works_  
 Creating an account is relatively simple.
 
-1. Navigate to
+1. Navigate to the Sign Up Form by clicking the link
+2. Enter the required fields asked in the form   
+    - Full Name 
+    - Email Address 
+    - Password 
+    - Password can be anything just make sure that it's secure and that you will remember it
+3. Submit this form and then choose whether you are joining a school or creating one   
+    - If you are joining a school enter the school code unique to that school  
+    - If you are creating a school, enter the school's name and the lowest grade and highest grade in your school 
+4. Submit this form and after this form you will be informed that a confirmation email has been sent to your email address. 
+5. Make sure to confirm your email address, as your account will be deleted in 15 minutes if you do not and 
 </div>
 </section>
   </div>
   <div style="width: 50%; padding: 0 10px;">
     <!-- Markdown content for the second column goes here -->
+
+
   </div>
 </div>

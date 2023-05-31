@@ -45,7 +45,6 @@ router.post('/uploadStudents', auth.authenticateToken, upload.single('file'), as
       schoolCode: req.user.userSchoolCode,
       accessPermissions: "admin",
     });
-    console.log('new Students: ', newStudents);
 
     const notifyStudents = async () => {
       const notifications = newStudents.map((student) => mail.notifyStudentOnRegistration(student));
@@ -55,7 +54,6 @@ router.post('/uploadStudents', auth.authenticateToken, upload.single('file'), as
      await mail.notifyMembersOnJoinedStudents(admin[0].email, newStudents, studentsNotRegistered ); 
      await notifyStudents()
     // Insert the student documents into the databas
-    console.log(newStudents);
     await StudentModel.insertMany(newStudents);
     fs.unlink(req.file.path, (error) => {
       if (error) {
@@ -65,7 +63,6 @@ router.post('/uploadStudents', auth.authenticateToken, upload.single('file'), as
       }
     });
   } catch (error) {
-    console.log(error);
     res.status(400).json({ error: error.message });
   }
 });
@@ -83,7 +80,6 @@ router.post('/createStudent', auth.authenticateToken, async (req, res) => {
       schoolCode: req.user.userSchoolCode,
       accessPermissions: "admin",
     });  
-    console.log(admins[0])
     const User = await user.findById({ _id: req.user.userID }, { name: 1, accessPermissions: 1, email: 1 });
     await mail.notifyStudentOnRegistration(student);
     await mail.notifyMembersOnJoinedStudent(User.email, student);

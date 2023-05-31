@@ -12,7 +12,7 @@ export async function setUpUser(event) {
   document.getElementsByClassName('arrow')[1].parentNode.style.display = 'flex';
   try {
     // Get the form data
-    const formdata = new URLSearchParams(new FormData(document.getElementsByClassName('signup-form')[0]));
+    const formdata = new URLSearchParams(new FormData(document.getElementsByClassName('form_signup')[0]));
     // Send the form data to the server
     const response = await fetch('/setup-user', {
       method: 'POST',
@@ -22,7 +22,7 @@ export async function setUpUser(event) {
     if (!response.ok) {
       // If the response status is 409 (Conflict), display an error message
       if (response.status === 409) {
-        document.getElementsByClassName('signup-form')[0].getElementsByTagName('span')[0].style.display = 'block';
+        document.getElementsByClassName('form_signup')[0].getElementsByTagName('span')[0].style.display = 'block';
       }
       // Throw an error
       const error = await response.json();
@@ -34,7 +34,7 @@ export async function setUpUser(event) {
         alert(data.message);
       }
       // Process the JSON data returned from the server
-      displayPages(document.getElementsByClassName('homePage')[0], document.getElementsByClassName('schoolCodePage')[0]);
+      displayPages(document.getElementsByClassName('page_home')[0], document.getElementsByClassName('schoolInfo_container')[0]);
       sessionStorage.setItem('email', data.email);
       sessionStorage.setItem('name', data.name);
       sessionStorage.setItem('password', data.password);
@@ -49,7 +49,7 @@ export async function setUpUser(event) {
 //Create School
 async function createSchool() {
   try {
-    var newData = new FormData(document.getElementsByClassName('createSchoolForm')[0]);
+    var newData = new FormData(document.getElementsByClassName('form_createSchool')[0]);
     var lowestGradeLvl = newData.get('lowestGradeLevel');
     var highestGradeLvl = newData.get('highestGradeLevel');
     var allGrades = [];
@@ -64,7 +64,7 @@ async function createSchool() {
     });
     if (!response.ok) {
       if (response.status === 409) {
-        document.getElementsByClassName('schoolForm')[1].getElementsByTagName('span')[0].style.display = 'block';
+        document.getElementsByClassName('schoolInfo_form')[1].getElementsByTagName('span')[0].style.display = 'block';
       }
       const error = await response.json();
       throw new Error(error.error);
@@ -95,7 +95,7 @@ async function register() {
     if (!response.ok) {
       // If not Ok throw an error
       if (response.status === 404) {
-        document.querySelector('.addCodeForm > span').style.display = 'block';
+        document.querySelector('form_addCode > span').style.display = 'block';
       }
       const error = await response.json();
       throw new Error(error.error);
@@ -127,7 +127,7 @@ async function register() {
 }
 async function login() {
   try {
-    const formData = new FormData(document.getElementsByClassName('login-form')[0]);
+    const formData = new FormData(document.getElementsByClassName('form_login')[0]);
     const dataForFetch = new URLSearchParams(formData);
     const response = await fetch('/login', {
       method: 'POST',
@@ -136,7 +136,7 @@ async function login() {
     if (!response.ok) {
       const error = await response.json();
       if (error.error === 'Username or Password is wrong') {
-        document.querySelector('.login-form > span').style.display = 'block';
+        document.querySelector('.form_login > span').style.display = 'block';
       }
       throw new Error(error.error);
     } else {
@@ -287,10 +287,10 @@ export async function createAnEvent (event) {
   event.preventDefault();
   const accessToken = JSON.parse(localStorage.getItem('accessToken'));
   const refreshToken = JSON.parse(localStorage.getItem('refreshToken'));
-  const form = document.querySelector('#manualCreateStudent');
+  const form = document.querySelector('#createEventForm');
   const formData = new FormData(form);
   try {
-    const response = await fetch('/createStudent', {
+    const response = await fetch('/createEvent', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -319,7 +319,8 @@ export async function createAnEvent (event) {
 }
 export async function kick(event) {
   event.preventDefault();
-  try {
+  try {  
+    
   } catch (error) {}
 }
 export async function uploadStudents(event) {
@@ -386,7 +387,7 @@ export async function loginAndDisplayDashboard(event) {
   try {
     await login();
     // Hide the home page and display the dashboard
-    displayPages(document.getElementsByClassName('homePage')[0], document.getElementsByClassName('dashboard')[0]);
+    displayPages(document.getElementsByClassName('page_home')[0], document.getElementsByClassName('dashboard')[0]);
     Array(...document.getElementsByClassName('dashboard-tab')).forEach((tab) => {
       tab.setAttribute('displayedOnMobile', false);
       tab.setAttribute('toggled', false);
@@ -409,7 +410,7 @@ export async function displayFaculty(event) {
     const faculty = data.faculty;
     const user = data.user;
     //generate cards
-    setTimeout(function () {
+  
       document.getElementById('facultyDisplay').innerHTML = '';
       generateSearchCards(user, document.getElementById('facultyDisplay'), '', 'userCard', '[data-search-template]');
       generateSearchCards(
@@ -419,22 +420,7 @@ export async function displayFaculty(event) {
         undefined,
         '[data-search-template]'
       );
-    }, 500);
-
-    //regenerate cards
-    setTimeout(function () {
-      if (document.getElementById('facultyDisplay').children.length > user.length + faculty.length) {
-        document.getElementById('facultyDisplay').innerHTML = '';
-        generateSearchCards(user, document.getElementById('facultyDisplay'), '', 'userCard', '[data-search-template]');
-        generateSearchCards(
-          faculty,
-          document.getElementById('facultyDisplay'),
-          user[0].accessPermissions,
-          undefined,
-          '[data-search-template]'
-        );
-      }
-    }, 1000);
+    
   } catch (error) {
     console.error(error.message);
   }
@@ -446,7 +432,7 @@ export async function displayStudents(event) {
     const students = data.student;
     const user = data.user;
     //generate cards
-    setTimeout(function () {
+   
       document.getElementById('studentDisplay').innerHTML = '';
       generateSearchCards(
         students,
@@ -455,21 +441,7 @@ export async function displayStudents(event) {
         undefined,
         '[data-search-student-template]'
       );
-    }, 500);
 
-    //regenerate cards
-    setTimeout(function () {
-      if (document.getElementById('studentDisplay').children.length > students.length) {
-        document.getElementById('studentDisplay').innerHTML = '';
-        generateSearchCards(
-          students,
-          document.getElementById('studentDisplay'),
-          user.accessPermissions,
-          undefined,
-          '[data-search-student-template]'
-        );
-      }
-    }, 1000);
   } catch (error) {
     console.error(error.message);
   }
@@ -478,12 +450,9 @@ export async function displayEvents(event) {
   event.preventDefault();
   try {
     const data = await getEvents(document.getElementById('getEventsInput'));
-    const events = data.events; 
-    console.log(events)
+    const events = data.event; 
     const user = data.user; 
-    console.log(user)
-    //generate cards
-    setTimeout(function () {
+    //generate cards  
       document.getElementById('eventDisplay').innerHTML = '';
       generateSearchCards(
         events,
@@ -492,21 +461,7 @@ export async function displayEvents(event) {
         undefined,
         '[data-search-event-template]'
       );
-    }, 500);
-
-    //regenerate cards
-    setTimeout(function () {
-      if (document.getElementById('studentDisplay').children.length > events.length) {
-        document.getElementById('eventDisplay').innerHTML = '';
-      generateSearchCards(
-        events,
-        document.getElementById('eventDisplay'),
-        user.accessPermissions,
-        undefined,
-        '[data-search-event-template]'
-        );
-      }
-    }, 1000);
+   
   } catch (error) {
     console.error(error.message);
   }

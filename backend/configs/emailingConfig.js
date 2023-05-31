@@ -68,22 +68,18 @@ exports.notifyAdminOnJoinedMember = async (email, name, schoolName) => {
 };
 exports.notifyMembersOnJoinedStudents = async (email, registeredStudents, unRegisteredStudents) => {
   try { 
-    console.log(registeredStudents)
     const allRegisteredStudents = () => {
       if (registeredStudents.length === 0) return 'None';
       for (student of registeredStudents) { 
         return student.name
       }
     }; 
-    console.log(unRegisteredStudents)
     const allUnRegisteredStudents = () => {
       if (unRegisteredStudents.length === 0) return 'None';
       for (student of unRegisteredStudents) {
         return student.name;
       }
     }; 
-    console.log(allUnRegisteredStudents(), allRegisteredStudents()) 
-    console.log(email)
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: email,

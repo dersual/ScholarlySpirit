@@ -32,92 +32,114 @@
         You are using an <strong>outdated</strong> browser. Please
         <a href="#">upgrade your browser</a> to improve your experience.
       </p>
-    <!-landing page-->
-    <div class="homePage">
-      <div>
+    <!-Landing page -->
+    <div class="page page_home">
+      <div class="home_text_container">
         <h1>Scholarly Spirit</h1>
         <h3>Designed to track & encourage student participation at school events.</h3>
       </div>
-      <div class="LoginContainer">
+      <div class="container-standard home_form_container">
         <button>Log in</button>
         <p class="other-opt">Don't Have An Account? <span>Sign Up</span></p>
-        <div>
-          <i
-            data-close-target=".login-form, .signup-form"
-            data-open-target=".LoginContainer > button:first-child, .LoginContainer > p.other-opt:nth-child(2), .homePage > div:first-child"
-            data-display-type="block, block"
-            data-opentarget-exclusive="[2]"
-            data-x-pos="-10px"
-            data-y-pos="-20px"
-            class="arrow left"
-          ></i>
-          <p>Go Back</p>
-        </div>
+
         <!--Login and Sign Up Forms -->
-        <form action="/login" method="post" class="login-form landingPageForm">
+        <form action="/login" method="post" class="form form_login">
+          <header class="header header_enterForms">
+            <div>
+              <i
+                data-close-target=".form_login"
+                data-open-target=".home_form_container > button:first-child, .home_form_container > p.other-opt:nth-child(2), .page_home > div:first-child"
+                data-display-type="block, block"
+                data-opentarget-exclusive="[2]"
+                data-x-pos="-10px"
+                data-y-pos="-20px"
+                class="arrow left fa-solid fa-arrow-left"
+              ></i>
+            </div>
+          </header>
           <h2>Login</h2>
           <label>Email Address</label>
-          <input autocomplete="off" name="email" required type="email" />
+          <input class="input input_text" autocomplete="off" name="email" required type="email" />
           <label>Password</label>
-          <input name="password" required type="password" />
+          <input class="input input_text" name="password" required type="password" />
           <span>Email Address or Password is incorrect</span>
-          <button class="landing-page-submit" type="submit">Login</button>
+          <button class="form_login-submit" type="submit">Login</button>
           <p class="other-opt signup-opt">Don't Have An Account? <span>Sign Up</span></p>
         </form>
-        <form action="/register" method="post" class="signup-form landingPageForm">
+
+        <form action="/register" method="post" class="form form_signup">
+          <header class="header header_enterForms">
+            <div>
+              <i
+                data-close-target=".form_signup"
+                data-open-target=".home_form_container > button:first-child, .home_form_container > p.other-opt:nth-child(2), .home_text_container"
+                data-display-type="block, block"
+                data-opentarget-exclusive="[2]"
+                data-x-pos="-10px"
+                data-y-pos="-20px"
+                class="arrow left fa-solid fa-arrow-left"
+              ></i>
+            </div>
+          </header>
           <h2>Register Account</h2>
           <label>Name (First & Last Name)</label>
-          <input autocomplete="off" name="name" required type="text" />
+          <input class="input input_text" autocomplete="off" name="name" required type="text" />
           <label>Email Address</label>
-          <input autocomplete="off" name="email" required type="email" />
+          <input class="input input_text" autocomplete="off" name="email" required type="email" />
           <label>Password</label>
-          <input name="password" required type="password" />
+          <input class="input input_text" name="password" required type="password" />
           <span>Email already linked with an account</span>
-          <button class="landing-page-submit" type="submit">Sign Up</button>
+          <button class="form_signup-submit" type="submit">Sign Up</button>
           <p class="other-opt login-opt">Have An Account? <span>Login</span></p>
         </form>
       </div>
     </div>
+
     <!--Page for School Code -->
-    <div class="schoolCodePage page">
-      <div class="LoginContainer">
-        <div>
-          <i
-            data-close-target=".schoolCodePage"
-            data-open-target=".homePage"
-            data-display-type="flex"
-            data-opentarget-exclusive
-            data-x-pos="-10px"
-            data-y-pos="-15px"
-            class="arrow left"
-          ></i>
-          <p>Go Back</p>
-        </div>
-        <h2>Hey, you're not in a school yet</h2>
-        <button>
-          <span style="color: #fff; font-size: 2.5em"><i class="fa-solid fa-plus"></i></span>
-          <span>Join A School</span>
-        </button>
-        <button>
-          <span style="color: #fff; font-size: 2.5em"><i class="fa-solid fa-school"></i></span>
-          <span>Create A New School</span>
-        </button>
-        <div>
-          <i
-            data-close-target=".addCodeForm, .createSchoolForm"
-            data-open-target=".schoolCodePage > .LoginContainer > div, .schoolCodePage > .LoginContainer > h2, .schoolCodePage > .LoginContainer > button:first-of-type, div.schoolCodePage > div.LoginContainer > button:nth-child(4) "
-            data-opentarget-exclusive
-            data-display-type="block, block, block"
-            data-x-pos="5px"
-            data-y-pos="120px"
-            class="arrow left"
-          >
-          </i>
-          <p>Go Back</p>
-        </div>
-        <form method="post" class="schoolForm addCodeForm">
+    <div class="schoolInfo_container">
+      <div class="container-standard schoolInfo_form_container">
+        <header class="header header_schoolInfoForm">
+          <div>
+            <i
+              data-close-target=".schoolInfo_container"
+              data-open-target=".page_home"
+              data-display-type="flex"
+              data-opentarget-exclusive
+              data-x-pos="-10px"
+              data-y-pos="-15px"
+              class="arrow left fa-solid fa-arrow-left"
+            ></i>
+          </div>
+        </header>
+        <main>
+          <h2>Hey, you're not in a school yet</h2>
+          <button id="button_toAddCodeForm">
+            <span style="color: #fff; font-size: 2.5em"><i class="fa-solid fa-plus"></i></span>
+            <span>Join A School</span>
+          </button>
+          <button id="button_toCreateSchoolForm">
+            <span style="color: #fff; font-size: 2.5em"><i class="fa-solid fa-school"></i></span>
+            <span>Create A New School</span>
+          </button>
+        </main>
+        <form method="post" class="schoolInfo_form form_addCode form">
+          <header class="header header_schoolInfoForm">
+            <div>
+              <i
+                data-close-target=".form_addCode"
+                data-open-target=".schoolInfo_form_container > main, .schoolInfo_form_container > header"
+                data-opentarget-exclusive
+                data-display-type
+                data-x-pos="5px"
+                data-y-pos="120px"
+                class="arrow left fa-solid fa-arrow-left"
+              >
+              </i>
+            </div>
+          </header>
           <label>School Code</label>
           <input
+            class="input input-text"
             autocomplete="off"
             type="text"
             placeholder="Input unqiue code for your school"
@@ -127,19 +149,46 @@
           <span>This School Code Doesn't Exist</span>
           <button type="submit">Submit</button>
         </form>
-        <form method="post" class="schoolForm createSchoolForm">
+        <form method="post" class="schoolInfo_form form_createSchool form">
+          <header class="header header_schoolInfoForm">
+            <div>
+              <i
+                data-close-target=".form_createSchool"
+                data-open-target=".schoolInfo_form_container > main, .schoolInfo_form_container > header"
+                data-opentarget-exclusive
+                data-display-type
+                data-x-pos="5px"
+                data-y-pos="120px"
+                class="arrow left fa-solid fa-arrow-left"
+              >
+              </i>
+            </div>
+          </header>
           <label>School Name</label>
-          <input autocomplete="off" type="text" name="name" required />
+          <input class="input input-text" autocomplete="off" type="text" name="name" required />
           <span>School Seems to have already been made</span>
           <div>
             <div>
-              <label>Lowest Grade Level</label>
-              <input class="lowestGradeLvlInput" type="number" name="lowestGradeLevel" required min="1" max="12" />
+              <label>
+                Lowest <br />
+                Grade Level
+              </label>
+              <input
+                class="input input_lowestGradeLvlInput"
+                type="number"
+                name="lowestGradeLevel"
+                required
+                min="1"
+                max="12"
+              />
             </div>
             <div>
-              <label>Highest Grade Level</label>
+              <label>
+                Highest <br />
+                Grade Level
+              </label>
               <input
-                class="highestGradeLvlInput"
+                class="input input_highestGradeLvlInput"
                 type="number"
                 name="highestGradeLevel"
                 required
@@ -164,9 +213,13 @@
             data-display-type="flex"
             data-x-pos="0"
             data-y-pos="0"
-            class="arrow left"
+            class="fa-solid fa-right-to-bracket fa-rotate-180 arrow left"
           ></i>
           <p>Sign Out</p>
+        </div>
+        <div class="dashboard-tab" id="profile">
+          <span><i class="fa-solid fa-user"></i></span>
+          <span>Profile</span>
         </div>
         <div id="home" class="dashboard-tab">
           <span><i class="fa-solid fa-house-chimney"></i></span>
@@ -176,11 +229,17 @@
           <span><i class="fa-solid fa-chalkboard-user"></i></span>
           <span>Faculty</span>
         </div>
-        <div href="https://github.com/Lightnindrummer/ScholarlySpirit" target="_blank" id="help" class="dashboard-tab">
+        <div
+          href="https://github.com/Lightnindrummer/ScholarlySpirit"
+          target="_blank"
+          id="help"
+          class="dashboard-tab"
+        >
           <span><i class="fa-solid fa-question"></i></span>
           <span>Help</span>
         </div>
       </nav>
+
       <!--Selection Sections-->
       <div class="main-container dashboard-main-container selectionSection-container">
         <section class="events-tab">
@@ -203,25 +262,23 @@
             data-display-type="flex"
             data-x-pos="0"
             data-y-pos="0"
-            class="arrow left"
+            class="arrow left fa-solid fa-arrow-left"
           ></i>
-          <p>Go Back</p>
         </div>
         <div id="getEventForm" class="main-searchbar">
-          <label>Events</label>
+          <label for = "getEventsInput">Events</label>
           <input id="getEventsInput" placeholder="Enter Event Name" autocomplete="off" name="name" type="text" />
           <div id="eventFilter" class="filters">
             <span>Filters <i class="fa-solid fa-sliders"></i></span>
             <div class="sortBy">
               <label>Sort By: </label>
               <div class="optionsContainer">
-                <input name="sortType" type="radio" id="sporting" value="Sporting" /><label>Sporting</label>
-                <input name="sortType" type="radio" id="nonSporting" value="Non-Sporting" /><label
-                  >Non-Sporting</label
-                >
-                <input name="sortType" type="radio" id="points" value="Points" checked="checked" /><label
-                  >Points</label
-                >
+                <input name="sortType" type="radio" id="sporting" value="Sporting" /> 
+                <label for = "sporting">Sporting</label>
+                <input name="sortType" type="radio" id="nonSporting" value="Non-Sporting" />
+                <label for = "nonSporting">Non-Sporting</label>
+                <input name="sortType" type="radio" id="points" value="Points" checked="checked" />
+                <label for = "points">Points</label>
               </div>
             </div>
           </div>
@@ -243,9 +300,8 @@
             data-display-type="flex"
             data-x-pos="0"
             data-y-pos="0"
-            class="arrow left"
+            class="arrow left fa-solid fa-arrow-left"
           ></i>
-          <p>Go Back</p>
         </div>
       </div>
       <!--Students Section-->
@@ -258,12 +314,11 @@
             data-display-type="flex"
             data-x-pos="0"
             data-y-pos="0"
-            class="arrow left"
+            class="arrow left fa-solid fa-arrow-left"
           ></i>
-          <p>Go Back</p>
         </div>
         <div id="getStudentForm" class="main-searchbar">
-          <label>Students</label>
+          <label for = "getStudentInput">Students</label>
           <input
             id="getStudentInput"
             placeholder="Enter Student's Name"
@@ -276,10 +331,10 @@
             <div class="sortBy">
               <label>Sort By: </label>
               <div class="optionsContainer">
-                <input name="sortType" type="radio" value="Grade" checked="checked" id="gradeInput" /><label
-                  >Grade</label
-                >
-                <input name="sortType" type="radio" value="Points" id="pointsInput" /><label>Points</label>
+                <input name="sortType" type="radio" value="Grade" checked="checked" id="gradeInput" /> 
+                <label for = "gradeInput"> Grade </label>
+                <input name="sortType" type="radio" value="Points" id="pointsInput" /> 
+                <label for = "pointsInput">Points</label>
               </div>
             </div>
           </div>
@@ -292,7 +347,7 @@
       <!--Faculty-->
       <div class="main-container facultySection-container">
         <div id="getFacultyForm" class="main-searchbar">
-          <label>Faculty</label>
+          <label for = "facultyInput">Faculty</label>
           <input id="facultyInput" placeholder="Enter Teacher's Name" autocomplete="off" name="name" type="text" />
         </div>
         <div id="facultyDisplay" class="dataDisplayContainer"></div>
@@ -335,7 +390,8 @@
       </div>
     </div>
     <!--Overlay Section-->
-    <div id="overlay" class="overlay">
+    <div id="overlay" class="overlay"> 
+      <!--After Registration Notice-->
       <div id="after-register-notice">
         <h1>Notice After User Signup</h1>
         <p>
@@ -351,7 +407,8 @@
         <div>
           <button class="overlay-buttons">Ok &gt;</button>
         </div>
-      </div>
+      </div> 
+      <!--Notice for when token expires or there's been an invalid validation-->
       <div id="invalidAuthorization">
         <h1>Something Went Wrong</h1>
         <p>
@@ -372,15 +429,23 @@
             data-opentarget-exclusive="[0]"
             data-x-pos="-10px"
             data-y-pos="0"
-            class="arrow left"
+            class="arrow left fa-solid fa-arrow-left"
           ></i>
-          <p>Go Back</p>
         </div>
         <form id="manualCreateStudent">
           <h1>Create New Student Manually</h1>
-          <div><label>Name</label><input autocomplete="off" name="name" type="text" required style=/></div>
-          <div><label>Email</label><input autocomplete="off" name="email" type="email" required /></div>
-          <div><label>Grade</label> <input autocomplete="off" name="grade" required type="number" /></div>
+          <div>
+            <label>Name</label>
+            <input autocomplete="off" name="name" type="text" required />
+          </div>
+          <div>
+            <label>Email</label>
+            <input autocomplete="off" name="email" type="email" required />
+          </div>
+          <div>
+            <label>Grade</label>
+            <input autocomplete="off" name="grade" required type="number" />
+          </div>
           <div>
             <button class="overlay-buttons" type="submit" style="margin-top: 5px" id="submitManual">Submit</button>
           </div>
@@ -390,7 +455,7 @@
           <p>It should look like this</p>
           <img alt="how-to-upload" src="/Assets/howtoupload.png" />
           <div>
-            <label>Upload Text File</label>
+            <label for = "studentUpload">Upload Text File</label>
             <input id="studentUpload" name="studentFile" type="file" />
           </div>
           <div>
@@ -402,47 +467,48 @@
         <div class="newDataFormArrow">
           <i
             data-close-target=".overlay"
-            data-open-target="#newStudentFormContainer, #newStudentFormContainer"
+            data-open-target="#newEventFormContainer, #newEventFormContainer"
             data-display-type="none"
             data-opentarget-exclusive="[0]"
             data-x-pos="-10px"
             data-y-pos="0"
-            class="arrow left"
+            class="arrow left fa-solid fa-arrow-left"
           ></i>
-          <p>Go Back</p>
         </div>
-        <form id = "createEventForm">
+        <form id="createEventForm">
           <h1>Create Event</h1>
           <label>Type</label>
           <div>
-            <input class = "eventTypeInput" id ="non-sportingInput" name="type" value="Non-Sporting" type="radio" /><label>Non-Sporting</label>
-            <input class = "eventTypeInput" id ="sportingInput" name="type" value="Sporting" type="radio" /><label>Sporting</label>
-          </div> 
-          <label>Name</label> 
-           <select class ="nameSelection" name = "name" id = "Sporting-Names"> 
-            <option value = "Basketball">Basketball</option> 
-            <option value ="Volleyball">Volleyball</option> 
-            <option value = "Football">Football</option> 
-            <option value = "Soccer">Soccer</option> 
-            <option value = "Track">Track</option> 
-            <option value = "Custom">Custom</option>
-           </select>   
-           <select class ="nameSelection" name = "name" id = "Nonsporting-Names"> 
-            <option value = "Band Concert">Band Concert</option> 
-            <option value ="Orchestra Concert">Orchestra Concert</option> 
-            <option value = "School Dance">School Dance</option> 
-            <option value = "School Play">School Play</option> 
-            <option value = "Choir Concert">Choir Concert</option> 
-            <option value = "Custom">Custom</option>
-           </select>  
-           <input id ="customName" type="text"/>  
-           <label>Date</label> 
-           <input type ="date" name = "dateEnding" id = "dateEnding" /> 
-           <label>Reward Points</label> 
-           <input type = "number", name = "points"/> 
-           <div> 
-            <button class = "overlay-buttons">Submit</button>
-           </div>
+            <input class="eventTypeInput" id="non-sportingInput" name="type" value="Non-Sporting" type="radio" />
+            <label for="non-sportingInput">Non-Sporting</label>
+            <input selected="selected" class="eventTypeInput" id="sportingInput" name="type" value="Sporting" type="radio" />
+            <label for="sportingInput">Sporting</label>
+          </div>
+          <label>Name</label>
+          <select class="nameSelection" name="name" id="Sporting-Names">
+            <option value="Basketball">Basketball</option>
+            <option value="Volleyball">Volleyball</option>
+            <option value="Football">Football</option>
+            <option value="Soccer">Soccer</option>
+            <option value="Track">Track</option>
+            <option value="Custom">Custom</option>
+          </select>
+          <select class="nameSelection" name="name" id="Nonsporting-Names">
+            <option value="Band Concert">Band Concert</option>
+            <option value="Orchestra Concert">Orchestra Concert</option>
+            <option value="School Dance">School Dance</option>
+            <option value="School Play">School Play</option>
+            <option value="Choir Concert">Choir Concert</option>
+            <option value="Custom">Custom</option>
+          </select>
+          <input id="customName" type="text" />
+          <label for = "dateEnding">Date</label>
+          <input type="date" name="dateEnding" id="dateEnding" />
+          <label>Reward Points</label>
+          <input type="number" name="points" />
+          <div>
+            <button class="overlay-buttons">Submit</button>
+          </div>
         </form>
       </div>
     </div>

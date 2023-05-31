@@ -48,7 +48,6 @@ exports.getStudents = async (req, res) => {
   try {
     const User = await user.findById({ _id: req.user.userID });
     const val = req.body;   
-    console.log(val)
     const sortType = val.sortType === 'Points' ? '-points' : '-grade';
     const students = await Student.find(
       { schoolCode: req.user.userSchoolCode },
@@ -66,7 +65,6 @@ exports.getStudents = async (req, res) => {
       (student) => student.name.toLowerCase().includes(val.name.toLowerCase().trim()) ||
       student.email.toLowerCase().includes(val.email.toLowerCase().trim())
     ); 
-    console.log(studentFiltered, req.body)
     const modifiedStudents = studentFiltered.map((student) => ({
       name: student.name,
       email: student.email,
@@ -91,5 +89,5 @@ exports.deleteStudent = async (req, res) => {
   });
 };
 exports.deleteStudents = async (req, res) => { 
-  
+
 };

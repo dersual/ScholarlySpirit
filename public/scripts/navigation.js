@@ -2,22 +2,21 @@ import { handleEvents, displayPages } from './mainFunctions.js';
 //Check if page status is logged in localStorage
 if (JSON.parse(localStorage.getItem('LoginStatus'))) {
   setTimeout(function () {
-    displayPages(document.getElementsByClassName('homePage')[0], document.getElementsByClassName('dashboard')[0]);
+    displayPages(document.getElementsByClassName('page_home')[0], document.getElementsByClassName('dashboard')[0]);
     //display sign-out arrow
     document.getElementById('sign-out').style.display = 'flex';
-  }, 750);
+  }, 500);
 }
 // DOM for when logging in and sign up
 // Get login buttons and attach event listeners
-var loginButtons = document.getElementsByClassName('LoginContainer')[0].children;
-
 export function displayLandingPageForms(el) {
+  let loginButtons = document.getElementsByClassName('home_form_container')[0].children;
   // Get the login and signup forms from the DOM
-  var loginForm = document.getElementsByClassName('login-form')[0];
-  var signupForm = document.getElementsByClassName('signup-form')[0];
+  let loginForm = document.getElementsByClassName('form_login')[0];
+  let signupForm = document.getElementsByClassName('form_signup')[0];
 
   // Hide the title after forms appear on mobile screens
-  document.getElementsByClassName('homePage')[0].children[0].setAttribute('displayedOnMobile', false);
+  document.getElementsByClassName('page_home')[0].children[0].setAttribute('displayedOnMobile', false);
 
   // Show the appropriate login/signup button
   loginButtons[2].style.display = 'flex';
@@ -45,16 +44,11 @@ var arrow = document.getElementsByClassName('arrow');
 // loop through each 'arrow' element and assign events to its parent node
 Array(...arrow).forEach((element) => {
   // get the parent node of the 'arrow' element
-  var parent = element.parentNode;
+  var parent = element.parentNode,
+    allInputs = document.querySelectorAll('input');
   // set the parent node's position and display properties
-  parent.style.marginBottom = element.dataset.yPos;
-  parent.style.marginTop = '10px';
-  parent.style.marginLeft = '5%';
-  parent.style.left = element.dataset.xPos;
-  //parent.style.width = "clamp(75px, 26%, 80px)";
   parent.style.overflowX = 'visible';
   parent.style.zIndex = 2;
-  parent.style.display = 'none';
   parent.style.cursor = 'pointer';
   parent.style.textAlign = 'left';
   //parent.style.justifyContent = "center";
@@ -70,6 +64,7 @@ Array(...arrow).forEach((element) => {
   var exclusionIndexArr;
   var exclusiveTargetsArr = [];
   if (element.dataset.opentargetExclusive.length > 0) {
+    console.log(Array(...arrow).indexOf(element));
     // if there are exclusive targets, get their indices and remove them from the openTargets list
     exclusionIndexArr = JSON.parse(element.dataset.opentargetExclusive);
     exclusionIndexArr.forEach((index) => {
@@ -79,15 +74,23 @@ Array(...arrow).forEach((element) => {
     // loop through the exclusive targets and assign the click event to each one
     exclusiveTargetsArr.forEach((target) => {
       handleEvents(
-        parent,
+        element,
         'click',
         function (element, specificArrow) {
           switch (Array(...arrow).indexOf(specificArrow)) {
             case 0:
               element.removeAttribute('displayedOnMobile');
               break;
-            case 4:
+            case 1:
+              element.removeAttribute('displayedOnMobile');
+              break;
+            case 9:
               element.setAttribute('toggled', false);
+              break;
+            case 10:
+              console.log(element);
+              element.setAttribute('toggled', false);
+              break;
           }
         },
         'add',
@@ -98,34 +101,40 @@ Array(...arrow).forEach((element) => {
   // assign the click event to all open targets and closed targets
   for (var r = 0; r < closedTargets.length; r++) {
     for (var c = 0; c < openTargets.length; c++) {
-      handleEvents(parent, 'click', displayPages, 'add', [
+      handleEvents(element, 'click', displayPages, 'add', [
         document.querySelector(closedTargets[r]),
         document.querySelector(openTargets[c]),
         displayTypes[c],
       ]);
     }
   }
-  // assign the click event to hide the parent node when it is clicked and set data displays content to ""
-  handleEvents(parent, 'click', function (el) {
-      el.style.display = 'none';
-      Array(...document.getElementsByClassName('dataDisplayContainer')).forEach((display) => {
-        display.innerHTML = '';
+  handleEvents(
+    element,
+    'click',
+    function () {
+      Array(...allInputs).forEach((input) => {
+        if (input.defaultValue.length === 0 && input.type !== "radio") { 
+          input.value = ""; 
+        } 
       });
-    },'add', [], true
+    },
+    'add',
+    [],
+    false
   );
 });
 
 //change max & min of numbered inputs based on what they have
-var minGradeInput = document.getElementsByClassName('lowestGradeLvlInput')[0];
-var maxGradeInput = document.getElementsByClassName('highestGradeLvlInput')[0];
+var minGradeInput = document.getElementsByClassName('input_lowestGradeLvlInput')[0];
+var maxGradeInput = document.getElementsByClassName('input_highestGradeLvlInput')[0];
 function imposeMinMaxGrades(el) {
   setTimeout(function () {
     minGradeInput.max = parseInt(maxGradeInput.value);
     maxGradeInput.min = parseInt(minGradeInput.value);
-    if (minGradeInput.max === NaN) {
+    if (minGradeInput.max === 'NaN') {
       minGradeInput.max = 12;
     }
-    if (maxGradeInput.min === NaN) {
+    if (maxGradeInput.min === 'NaN') {
       maxGradeInput.min = 1;
     }
     imposeMinMax(el);
@@ -160,19 +169,15 @@ const nextYear = new Date().getFullYear() + 1;
 const dateInput = document.getElementById('dateEnding');
 // Set the maximum value of the date input to next year
 dateInput.max = `${nextYear}-12-31`;
+//show/create forms for adding new data
 export function displayAddDataForms(parentAddElement) {
   let elementSelector = parentAddElement + 'Container';
   console.log(elementSelector);
   let element = document.querySelector(elementSelector);
   console.log(element);
-  if (element.getAttribute('toggled') === 'true') {
-    document.getElementById('overlay').style.display = 'none';
-    element.setAttribute('toggled', false);
-  } else {
-    element.setAttribute('toggled', true);
-    document.getElementById('overlay').style.display = getComputedStyle(element).display;
-    document.querySelector('.newDataFormArrow').style.display = 'block';
-  }
+  element.setAttribute('toggled', true);
+  document.getElementById('overlay').style.display = getComputedStyle(element).display;
+  document.querySelector('.newDataFormArrow').style.display = 'block';
 }
 //parentFilterElement is a string that represents a class, id, element tag, etc.
 export function displayFilters(parentFilterElement) {
@@ -212,15 +217,4 @@ Array(...document.getElementsByClassName('dashboard-tab')).forEach((tab) => {
 //set attributes for elements in overlay div
 Array(...document.getElementById('overlay').children).forEach((element) => {
   element.setAttribute('toggled', false);
-});
-handleEvents(document.getElementById('sign-out'), 'click', function () {
-  localStorage.clear();
-  window.location.reload();
-});
-handleEvents(document.getElementById('home'), 'click', function () {
-  Array(...document.getElementsByClassName('main-container')).forEach((element) => {
-    displayPages(element, document.getElementsByClassName('selectionSection-container')[0], 'flex');
-  });
-  //display sign-out arrow
-  document.getElementById('sign-out').style.display = 'flex';
 });

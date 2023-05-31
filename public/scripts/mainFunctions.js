@@ -5,7 +5,7 @@
 // type: Default is add, but if anything else remove event listener
 // params: Array of parameters to pass to funct
 // usingThis: Boolean that indicates if 'this' should be passed to funct
-export function handleEvents(element, event, funct, type = "add", params = [], usingThis = false) {
+export function handleEvents(element, event, funct, type = 'add', params = [], usingThis = false) {
   var newFunct = null;
 
   // Check if params array is empty
@@ -25,14 +25,14 @@ export function handleEvents(element, event, funct, type = "add", params = [], u
 
   // If newFunct was created, add or remove the event listener using the new function
   if (newFunct !== null) {
-    if (type === "add") {
+    if (type === 'add') {
       element.addEventListener(event, newFunct);
     } else {
       element.removeEventListener(event, newFunct);
     }
   } else {
     // Otherwise, add or remove the event listener using the original function
-    if (type === "add") {
+    if (type === 'add') {
       element.addEventListener(event, funct);
     } else {
       element.removeEventListener(event, funct);
@@ -41,8 +41,8 @@ export function handleEvents(element, event, funct, type = "add", params = [], u
 }
 
 // function to display pages with a fade-in effect
-export function displayPages(prevPage, newPage, displayOpt = "block") {
-  prevPage.style.display = "none";
+export function displayPages(prevPage, newPage, displayOpt = 'block') {
+  prevPage.style.display = 'none';
   var opacity = 0;
   newPage.style.opacity = opacity;
   newPage.style.display = displayOpt;

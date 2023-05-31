@@ -16,6 +16,6 @@ const schoolSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,  
     ref: "schoolSettings"
   },
-});
+}); 
 const school = mongoose.model("School", schoolSchema);
 module.exports = school;

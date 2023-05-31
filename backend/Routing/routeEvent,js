@@ -4,8 +4,14 @@ const mail = require("../configs/emailingConfig");
 const EventModel = require("../Model/eventModel.js"); 
 const Event = require("../Controls/event.js"); 
 const auth = require("../configs/jwtConfigs"); 
-router.post("/createEvent", auth.authenticateToken ,async(req, res) => { 
-await Event.createEvent(req, res)
+router.post("/createEvent", auth.authenticateToken ,async(req, res) => {    
+try {
+  await Event.createEvent(req, res)
+} catch (error) {
+  console.error(error);
+  res.status(401).json({ error: error.message });
+}
+
 })  
 router.post("/getEvents", auth.authenticateToken, async(req, res) => { 
     try {
@@ -16,8 +22,8 @@ router.post("/getEvents", auth.authenticateToken, async(req, res) => {
       }
 }) 
 router.post("/addStudentInEvent", auth.authenticateToken, async(req,res) => { 
-    try {
-        
+    try { 
+      await Event.createEvent(req, res)
     } catch (error) {
         
     }

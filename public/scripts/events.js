@@ -3,15 +3,15 @@ import * as data from './handlingData.js';
 import * as navigate from './navigation.js';
 
 //set up handle data interactions
-handleEvents(document.getElementsByClassName('signup-form')[0], 'submit', data.setUpUser);
+handleEvents(document.getElementsByClassName('form_signup')[0], 'submit', data.setUpUser);
 
 //call createSchoolAndRegister function when called
-handleEvents(document.getElementsByClassName('createSchoolForm')[0], 'submit', data.createSchoolAndRegister);
+handleEvents(document.getElementsByClassName('form_createSchool')[0], 'submit', data.createSchoolAndRegister);
 
 //call useSchoolCodeAndRegist function when form submitted
-handleEvents(document.getElementsByClassName('addCodeForm')[0], 'submit', data.useSchoolCodeAndRegister);
+handleEvents(document.getElementsByClassName('form_addCode')[0], 'submit', data.useSchoolCodeAndRegister);
 //call loginAndDisplayDashboard when form submitted
-handleEvents(document.getElementsByClassName('login-form')[0], 'submit', data.loginAndDisplayDashboard);
+handleEvents(document.getElementsByClassName('form_login')[0], 'submit', data.loginAndDisplayDashboard);
 //displayFaculty on Faculty Tab click
 handleEvents(document.getElementById('faculty'), 'click', data.displayFaculty);
 var overlayButtons = document.getElementsByClassName('overlay-buttons');
@@ -46,26 +46,21 @@ Array(...overlayButtons).forEach((button) => {
       case 1:
         localStorage.clear();
         window.location.reload();
-        break
+        break;
     }
   });
 });
 handleEvents(document.getElementById('facultyInput'), 'input', data.displayFaculty);
-handleEvents(document.getElementById('getStudentInput'), 'input', data.displayStudents); 
-handleEvents(document.getElementById("getEventsInput"), "input", data.displayEvents)
-handleEvents(document.getElementsByClassName('students-tab')[0], 'click', data.displayStudents); 
-handleEvents(document.getElementsByClassName("events-tab")[0], "click", data.displayEvents)
-handleEvents(document.getElementById("manualCreateStudent"), "submit", data.createAStudent);  
-handleEvents(document.getElementById("uploadCreateStudent"), "submit", data.uploadStudents); 
-handleEvents(document.getElementById("createEventForm"), "submit", data.createAnEvent);
-
-
-
-
-
+handleEvents(document.getElementById('getStudentInput'), 'input', data.displayStudents);
+handleEvents(document.getElementById('getEventsInput'), 'input', data.displayEvents);
+handleEvents(document.getElementsByClassName('students-tab')[0], 'click', data.displayStudents);
+handleEvents(document.getElementsByClassName('events-tab')[0], 'click', data.displayEvents);
+handleEvents(document.getElementById('manualCreateStudent'), 'submit', data.createAStudent);
+handleEvents(document.getElementById('uploadCreateStudent'), 'submit', data.uploadStudents);
+handleEvents(document.getElementById('createEventForm'), 'submit', data.createAnEvent);
 
 // navigation events
-var loginButtons = document.getElementsByClassName('LoginContainer')[0].children;
+var loginButtons = document.getElementsByClassName('home_form_container')[0].children;
 handleEvents(loginButtons[0], 'click', navigate.displayLandingPageForms, 'add', [], true);
 Array(...document.getElementsByClassName('other-opt')).forEach((element) => {
   handleEvents(element.children[0], 'click', navigate.displayLandingPageForms, 'add', [], true);
@@ -73,27 +68,22 @@ Array(...document.getElementsByClassName('other-opt')).forEach((element) => {
 handleEvents(loginButtons[1].children[0], 'click', navigate.displayLandingPageForms, 'add', [], true);
 
 //display schoolCodeForm
-handleEvents(document.querySelector('div.schoolCodePage > div.LoginContainer > button:first-of-type'), 'click', function () {
-  document.querySelector('div.schoolCodePage > div.LoginContainer').children[4].style.display = 'block';
-  for (var i = 0; i < 4; i++) {
-    //display addCodeForm
-    displayPages(
-      document.querySelector('div.schoolCodePage > div.LoginContainer').children[i],
-      document.getElementsByClassName('addCodeForm')[0],
-      'flex'
-    );
-  }
+handleEvents(document.querySelector('#button_toAddCodeForm'), 'click', function () {
+  document.querySelector('.schoolInfo_form_container > header').style.display = 'none';
+  displayPages(
+    document.querySelector('.schoolInfo_form_container > main'),
+    document.getElementsByClassName('form_addCode')[0],
+    'flex'
+  );
 });
 //display create school form page
-handleEvents(document.querySelector('div.schoolCodePage > div.LoginContainer > button:nth-child(4)'), 'click', function () {
-  document.querySelector('div.schoolCodePage > div.LoginContainer').children[4].style.display = 'block';
-  for (var i = 0; i < 4; i++) {
-    displayPages(
-      document.querySelector('div.schoolCodePage > div.LoginContainer').children[i],
-      document.getElementsByClassName('createSchoolForm')[0],
-      'flex'
-    );
-  }
+handleEvents(document.querySelector('#button_toCreateSchoolForm'), 'click', function () {
+  document.querySelector('.schoolInfo_form_container > header').style.display = 'none';
+  displayPages(
+    document.querySelector('.schoolInfo_form_container > main'),
+    document.getElementsByClassName('form_createSchool')[0],
+    'flex'
+  );
 });
 
 //navigation for dashboard tabs and buttons
@@ -127,19 +117,32 @@ handleEvents(document.getElementById('faculty'), 'click', function () {
 });
 handleEvents(document.getElementById('studentFilter'), 'click', navigate.displayFilters, 'add', ['#studentFilter']);
 handleEvents(document.getElementById('newStudentForm'), 'click', navigate.displayAddDataForms, 'add', ['#newStudentForm']);
-handleEvents(document.getElementById("eventFilter"), "click", navigate.displayFilters, "add", ["#eventFilter"]) 
-handleEvents(document.getElementById('newEventForm'), 'click', navigate.displayAddDataForms, 'add', ['#newEventForm']);  
-const nameSelection = document.querySelectorAll(".nameSelection");
-handleEvents(nameSelection[0], "change", function(){ 
-  const customNameInput = document.getElementById("customName"); 
-  if (nameSelection[0].value === "Custom" || nameSelection[1].value === "Custom") {
-    customNameInput.style.display = "block";
+handleEvents(document.getElementById('eventFilter'), 'click', navigate.displayFilters, 'add', ['#eventFilter']);
+handleEvents(document.getElementById('newEventForm'), 'click', navigate.displayAddDataForms, 'add', ['#newEventForm']);
+const nameSelection = document.querySelectorAll('.nameSelection');
+handleEvents(nameSelection[0], 'change', function () {
+  const customNameInput = document.getElementById('customName');
+  if (nameSelection[0].value === 'Custom' || nameSelection[1].value === 'Custom') {
+    customNameInput.style.display = 'block';
   } else {
-    customNameInput.style.display = "none";
+    customNameInput.style.display = 'none';
   }
-}) 
-handleEvents(document.getElementById("customName"), "input", function(){ 
-  Array(...document.getElementsByClassName('nameSelection')).forEach(element => {  
-    element.value = document.getElementById("customName").value 
-  })
-})
+});
+handleEvents(document.getElementById('customName'), 'input', function () {
+  Array(...document.getElementsByClassName('nameSelection')).forEach((element) => {
+    element.value = document.getElementById('customName').value;
+  });
+});
+
+handleEvents(document.getElementById('sign-out'), 'click', function () {
+  localStorage.clear();
+  window.location.reload();
+});
+
+handleEvents(document.getElementById('home'), 'click', function () {
+  Array(...document.getElementsByClassName('main-container')).forEach((element) => {
+    displayPages(element, document.getElementsByClassName('selectionSection-container')[0], 'flex');
+  });
+  //display sign-out arrow
+  document.getElementById('sign-out').style.display = 'flex';
+});

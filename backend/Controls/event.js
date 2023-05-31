@@ -9,11 +9,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 exports.createEvent = async (req, res) => {
-  try {
+  try {  
+    console.log()
+    let name; 
+    if(req.body.type === "Non-Sporting") { 
+     name = req.body.name[1]
+    } 
+    else { 
+      name = req.body.name[0]
+    }
     const event = new eventModel({
       type: req.body.type,
-      name: req.body.name,
-      pointsRewarded: req.body.pointsRewarded,
+      name: name,
+      pointsRewarded: req.body.points,
       schoolCode: req.user.userSchoolCode,
       dateEnding: req.body.dateEnding,
     });
@@ -35,7 +43,7 @@ exports.getEvents = async (req, res) => {
     console.log(val);
     const sortType = val.sortType === 'Sporting' ? '-sporting' : val.sorType === 'Non-sporting' ? 'non-sporting' : 'points';
     const events = await eventModel
-      .find({ schoolCode: req.user.userSchoolCode }, { name: 1, type: 1, dateEnding: 1, points: 1 })
+      .find({ schoolCode: req.user.userSchoolCode }, { name: 1, type: 1, dateEnding: 1, pointsRewarded: 1 })
       .sort(sortType);
     if (events.length === 0) {
       return res.status(202).json({
@@ -50,9 +58,9 @@ exports.getEvents = async (req, res) => {
       name: event.name,
       type: event.type,
       dateEnding: 'Date Ending :' + event.dateEnding.toString('en-US'),
-      points: JSON.stringify(event.points) + ' Points',
+      points: JSON.stringify(event.pointsRewarded) + ' Points',
     })); 
-    console.log(User)
+    console.log(modifiedEvents)
     return res.status(200).json({ event: modifiedEvents, user: User });
   } catch (error) {
     throw new Error(error);
